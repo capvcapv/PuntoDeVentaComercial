@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Modelos.Negocio
+{
+    public class Cajas
+    {
+        public int id { get; set; }
+        public string nombre { get; set; }
+        public int almacen { get; set; }
+        public string conceptoFactura { get; set; }
+        public string conceptoGlobal { get; set; }
+
+        public override string ToString()
+        {
+            return nombre;
+        }
+    }
+
+    public class CajasDBContext
+    {
+        public static void guardar(Cajas a)
+        {
+            try
+            {
+                var db = new PetaPoco.Database("bd");
+                db.Save("Cajas", "id", a);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+            }
+        }
+
+        public static void actualizar(Cajas a)
+        {
+            try
+            {
+                var db = new PetaPoco.Database("bd");
+                db.Update("Cajas", "Id", a);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+            }
+        }
+
+        public static void eliminar(Cajas a)
+        {
+            try
+            {
+                var db = new PetaPoco.Database("bd");
+                db.Delete("Cajas", "Id", null,a.id);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+            }
+        }
+
+        public static Cajas obtener(int id)
+        {
+            try
+            {
+                var db = new PetaPoco.Database("bd");
+                return db.SingleOrDefault<Cajas>("select * from Cajas where id=" + id);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+
+            }
+        }
+
+        public static IEnumerable<Cajas> obtenerListado()
+        {
+            try
+            {
+                var db = new PetaPoco.Database("bd");
+                return db.Query<Cajas>("select * from Cajas order by id");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+    }
+}
