@@ -29,6 +29,8 @@ namespace TerminalPedidos
         private void Form1_Load(object sender, EventArgs e)
         {
 
+            cbConcepto.SelectedIndex = 0;
+
             acceso.ShowDialog();
 
             if (acceso.aceptado)
@@ -47,10 +49,35 @@ namespace TerminalPedidos
                     inicializaSDKComercial();
                     textBox1.Focus();
                     cargaAgentes();
+                    cargaAlmacenes();
                 }
 
             }
 
+        }
+
+        private void cargaAlmacenes()
+        {
+            AdminPAQSDK.fPosPrimerAlmacen();
+
+            while (AdminPAQSDK.fPosEOFAlmacen() != 1)
+            {
+                StringBuilder codigo = new StringBuilder().Append('\0', 30);
+                StringBuilder nombre = new StringBuilder().Append('\0', 60);
+                AdminPAQSDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 30);
+                AdminPAQSDK.fLeeDatoAlmacen("CNOMBREALMACEN", nombre, 60);
+                
+                if(codigo.ToString().Trim()== "1" || codigo.ToString().Trim() == "2" || codigo.ToString().Trim() == "3" || codigo.ToString().Trim() == "4")
+                {
+                    cbAlmacen.Items.Add(codigo.ToString() + " - " + nombre.ToString());
+                }
+
+                AdminPAQSDK.fPosSiguienteAlmacen();
+            }
+
+            //cbAlmacen.Items.RemoveAt(0);
+
+            cbAlmacen.SelectedIndex = 0;
         }
 
         private void cargaAgentes()
@@ -83,8 +110,8 @@ namespace TerminalPedidos
 
             Environment.CurrentDirectory = config.rutaBinarios;
 
-            AdminPAQSDK.fInicioSesionSDK("SUPERVISOR", "");
-            AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL");
+            AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "12345");
+            AdminPAQSDK.muestra_error(AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL"));
             AdminPAQSDK.muestra_error(AdminPAQSDK.fAbreEmpresa(config.empresa));
         }
 
@@ -128,7 +155,8 @@ namespace TerminalPedidos
                             part.codigo = codigo.ToString();
                             part.producto = producto.ToString();
                             //part.descuento = clienteActivo.descuento;
-                            part.precio = tPrecio.Text;
+                            part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
+                            part.precio = cbPrecio.Text;//tPrecio.Text;
                             part.cantidad = tCantidad.Value.ToString();
                             part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
 
@@ -137,6 +165,9 @@ namespace TerminalPedidos
                             dataGridView1.DataSource = null;
                             dataGridView1.DataSource = partidas;
                             actualizaTabla();
+
+                            cbPrecio.Items.Clear();
+                            cbPrecio.Refresh();
                         }
                         else
                         {
@@ -145,6 +176,7 @@ namespace TerminalPedidos
 
                         
                         tCantidad.Value = 1;
+                        limpiaProductosARX();
 
                     }
                     else
@@ -159,6 +191,12 @@ namespace TerminalPedidos
                                 
                 tCodigo.Text = "";
                 tPrecio.Text = (0.0).ToString("C");
+            }
+            else if (e.KeyValue == (int)Keys.F3)
+            {
+                frmCatalogoProductos ventanaCatalogo = new frmCatalogoProductos(this);
+                ventanaCatalogo.ShowDialog();
+                tCodigo.Focus();
             }
         }
 
@@ -219,6 +257,30 @@ namespace TerminalPedidos
 
         }
 
+        private void limpiaProductosARX()
+        {
+
+            if(cbConcepto.Text=="Remisión ARX")
+            {
+                foreach (DataGridViewRow a in dataGridView1.Rows)
+                {
+                    Partida partidaSeleccionada =a.DataBoundItem as Partida;
+
+                    if (partidaSeleccionada.producto.ToUpper().Contains("ARX"))
+                    {
+                        partidas.Remove(partidaSeleccionada);
+                    }
+                }
+
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = partidas;
+
+                actualizaTabla();
+            }
+
+            
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             frmCatalogoClientes clientes = new frmCatalogoClientes(this);
@@ -257,6 +319,12 @@ namespace TerminalPedidos
                     MessageBox.Show("Debe capturar un codigo de cliente válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            else if (e.KeyValue == (int)Keys.F3)
+            {
+                frmCatalogoClientes clientes = new frmCatalogoClientes(this);
+                clientes.ShowDialog();
+                textBox1.Focus();
+            }
         }
 
         private void bTerminar_Click(object sender, EventArgs e)
@@ -266,14 +334,29 @@ namespace TerminalPedidos
             if (clienteActivo != null)
             {
 
-                CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$","").Replace(",","")));
-                cal.ShowDialog();
+                //CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$","").Replace(",","")));
+                //cal.ShowDialog();
 
                 var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
 
                 SDKContpaq.SDKContpaq.Factura fac = new SDKContpaq.SDKContpaq.Factura();
                 fac.cliente = textBox1.Text;
-                fac.concepto = caja.conceptoFactura;
+
+                switch (cbConcepto.Text)
+                {
+                    case "Pedido":
+                        fac.concepto = caja.conceptoPedido;
+                        break;
+                    case "Remisión":
+                        fac.concepto = caja.conceptoFactura;
+                        break;
+                    case "Remisión ARX":
+                        fac.concepto = caja.conceptoRemision;
+                        break;
+                    default:
+                        break;
+                }
+
                 fac.agente = cbAgente.Text.Split('-')[0];
                 fac.referencia = turno.turnoActivo.id.ToString();
                 fac.part = new List<SDKContpaq.SDKContpaq.Partidas>();
@@ -281,11 +364,12 @@ namespace TerminalPedidos
                 foreach(var a in partidas)
                 {
                     SDKContpaq.SDKContpaq.Partidas part = new SDKContpaq.SDKContpaq.Partidas();
-                    part.Almancen = caja.almacen.ToString();
+                    //part.Almancen = caja.almacen.ToString();
                     part.Cantidad = a.cantidad;
                     part.Codigo = a.codigo;
                     part.Nombre = a.producto;
                     part.Precio = a.precio;
+                    part.Almancen = a.almacen;
 
                     fac.part.Add(part);
                 }
@@ -364,6 +448,34 @@ namespace TerminalPedidos
             monCode.ScanCible = (TextBox)sender;
             monCode.eKeyPressEvArg = (KeyPressEventArgs)e;
             monCode.Valide_KeyPress();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbConcepto_TextChanged(object sender, EventArgs e)
+        {
+            limpiaProductosARX();
+        }
+
+        private void cbPrecio_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.F3)
+            {
+                MessageBox.Show("prueba");
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmAutorizacionPrecio precio = new frmAutorizacionPrecio();
+            precio.ShowDialog();
+
+            cbPrecio.Items.Add(precio.precioNuevo);
+
+            cbPrecio.SelectedIndex = cbPrecio.Items.Count - 1;
         }
     }
 }

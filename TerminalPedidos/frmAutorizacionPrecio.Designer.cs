@@ -1,6 +1,7 @@
-﻿namespace TerminalPedidos
+﻿
+namespace TerminalPedidos
 {
-    partial class frmLogin
+    partial class frmAutorizacionPrecio
     {
         /// <summary>
         /// Required designer variable.
@@ -28,83 +29,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.label1 = new System.Windows.Forms.Label();
-            this.tNombre = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tClave = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tPrecio = new System.Windows.Forms.MaskedTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 22);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.Size = new System.Drawing.Size(209, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Usuario";
-            // 
-            // tNombre
-            // 
-            this.tNombre.Location = new System.Drawing.Point(15, 38);
-            this.tNombre.Name = "tNombre";
-            this.tNombre.Size = new System.Drawing.Size(257, 20);
-            this.tNombre.TabIndex = 1;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.label1.Text = "Ingrese la clave del usuario SUPERVISOR";
             // 
             // tClave
             // 
-            this.tClave.Location = new System.Drawing.Point(15, 98);
+            this.tClave.Location = new System.Drawing.Point(15, 36);
             this.tClave.Name = "tClave";
             this.tClave.PasswordChar = '*';
-            this.tClave.Size = new System.Drawing.Size(257, 20);
-            this.tClave.TabIndex = 4;
-            this.tClave.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tClave_KeyUp);
+            this.tClave.Size = new System.Drawing.Size(206, 20);
+            this.tClave.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 82);
+            this.label2.Location = new System.Drawing.Point(15, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Contraseña";
+            this.label2.Size = new System.Drawing.Size(107, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Ingrese nuevo precio";
+            // 
+            // tPrecio
+            // 
+            this.tPrecio.Location = new System.Drawing.Point(15, 99);
+            this.tPrecio.Mask = "$000,000.00";
+            this.tPrecio.Name = "tPrecio";
+            this.tPrecio.Size = new System.Drawing.Size(206, 20);
+            this.tPrecio.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(197, 160);
+            this.button1.Location = new System.Drawing.Point(15, 140);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
+            this.button1.Size = new System.Drawing.Size(206, 23);
+            this.button1.TabIndex = 4;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // frmLogin
+            // frmAutorizacionPrecio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(287, 204);
+            this.ClientSize = new System.Drawing.Size(241, 187);
+            this.ControlBox = false;
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.tClave);
+            this.Controls.Add(this.tPrecio);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.tNombre);
+            this.Controls.Add(this.tClave);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmLogin";
+            this.Name = "frmAutorizacionPrecio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Acceso";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmLogin_FormClosed);
-            this.Load += new System.EventHandler(this.frmLogin_Load);
+            this.Text = "Autorización de cambio de precio";
+            this.Load += new System.EventHandler(this.frmAutorizacionPrecio_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,10 +103,9 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tNombre;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.TextBox tClave;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.MaskedTextBox tPrecio;
         private System.Windows.Forms.Button button1;
     }
 }

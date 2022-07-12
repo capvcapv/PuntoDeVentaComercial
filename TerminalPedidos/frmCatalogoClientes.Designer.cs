@@ -53,6 +53,7 @@
             this.tCodigo.Size = new System.Drawing.Size(195, 20);
             this.tCodigo.TabIndex = 1;
             this.tCodigo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tCodigo_KeyUp);
             // 
             // tNombre
             // 
@@ -61,6 +62,7 @@
             this.tNombre.Size = new System.Drawing.Size(337, 20);
             this.tNombre.TabIndex = 3;
             this.tNombre.TextChanged += new System.EventHandler(this.tNombre_TextChanged);
+            this.tNombre.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tNombre_KeyUp);
             // 
             // label2
             // 
@@ -83,6 +85,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(647, 402);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+            this.dataGridView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyUp);
             // 
             // frmCatalogoClientes
             // 

@@ -23,18 +23,22 @@ namespace AdministradorPV
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            inicializaSDKComercial();
+           
             frmLogin acceso = new frmLogin();
             acceso.ShowDialog();
+
+            inicializaSDKComercial();
         }
 
         private void inicializaSDKComercial()
         {
-            Environment.CurrentDirectory = Modelos.Negocio.ConfigurationDBContext.obtener().rutaBinarios;
+            Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
-            AdminPAQSDK.fInicioSesionSDK("SUPERVISOR", "");
-            AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL");
-            AdminPAQSDK.muestra_error(AdminPAQSDK.fAbreEmpresa(Modelos.Negocio.ConfigurationDBContext.obtener().empresa));
+            Environment.CurrentDirectory = config.rutaBinarios;
+
+            AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "12345");
+            AdminPAQSDK.muestra_error(AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL"));
+            AdminPAQSDK.muestra_error(AdminPAQSDK.fAbreEmpresa(config.empresa));
         }
 
         private void terminaSDKComercial()

@@ -12,6 +12,8 @@ namespace Modelos.Negocio
         public int almacen { get; set; }
         public string conceptoFactura { get; set; }
         public string conceptoGlobal { get; set; }
+        public string conceptoPedido { get; set; }
+        public string conceptoRemision { get; set; }
 
         public override string ToString()
         {

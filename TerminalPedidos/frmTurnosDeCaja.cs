@@ -67,5 +67,15 @@ namespace TerminalPedidos
 
             this.Close();
         }
+
+        private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                turnoActivo = dataGridView1.CurrentRow.DataBoundItem as Modelos.Negocio.Turnos;
+
+                this.Close();
+            }
+        }
     }
 }

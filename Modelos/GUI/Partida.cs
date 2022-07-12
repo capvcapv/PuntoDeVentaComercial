@@ -13,5 +13,6 @@ namespace Modelos.GUI
         //public string descuento { get; set; }
         public string precio { get; set; }
         public string importe { get; set; }
+        public string almacen { get; set; }
     }
 }

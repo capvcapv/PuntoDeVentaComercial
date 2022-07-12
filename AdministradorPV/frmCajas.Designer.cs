@@ -43,6 +43,10 @@
             this.cbFactura = new System.Windows.Forms.ComboBox();
             this.cbFacturaGlobal = new System.Windows.Forms.ComboBox();
             this.cbAlmacen = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbPedidos = new System.Windows.Forms.ComboBox();
+            this.cbRemisionAlterna = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -176,12 +180,52 @@
             this.cbAlmacen.Size = new System.Drawing.Size(300, 21);
             this.cbAlmacen.TabIndex = 12;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(264, 237);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(93, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Concepto pedidos";
+            // 
+            // cbPedidos
+            // 
+            this.cbPedidos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPedidos.FormattingEnabled = true;
+            this.cbPedidos.Location = new System.Drawing.Point(267, 253);
+            this.cbPedidos.Name = "cbPedidos";
+            this.cbPedidos.Size = new System.Drawing.Size(300, 21);
+            this.cbPedidos.TabIndex = 14;
+            // 
+            // cbRemisionAlterna
+            // 
+            this.cbRemisionAlterna.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRemisionAlterna.FormattingEnabled = true;
+            this.cbRemisionAlterna.Location = new System.Drawing.Point(267, 299);
+            this.cbRemisionAlterna.Name = "cbRemisionAlterna";
+            this.cbRemisionAlterna.Size = new System.Drawing.Size(300, 21);
+            this.cbRemisionAlterna.TabIndex = 16;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(264, 283);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(129, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Concepto remision alterna";
+            // 
             // frmCajas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(583, 373);
+            this.Controls.Add(this.cbRemisionAlterna);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cbPedidos);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.cbAlmacen);
             this.Controls.Add(this.cbFacturaGlobal);
             this.Controls.Add(this.cbFactura);
@@ -220,5 +264,9 @@
         private System.Windows.Forms.ComboBox cbFactura;
         private System.Windows.Forms.ComboBox cbFacturaGlobal;
         private System.Windows.Forms.ComboBox cbAlmacen;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbPedidos;
+        private System.Windows.Forms.ComboBox cbRemisionAlterna;
+        private System.Windows.Forms.Label label6;
     }
 }

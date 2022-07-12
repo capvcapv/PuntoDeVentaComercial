@@ -92,6 +92,8 @@ namespace TerminalPedidos
 
             refrescaTabla();
 
+           
+
         }
 
         private void refrescaTabla()
@@ -157,9 +159,122 @@ namespace TerminalPedidos
             Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
 
             formularioPadre.tCodigo.Text = pro.codigo;
-            formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+            //formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+            formularioPadre.cbPrecio.Items.Clear();
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio1).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+
+            formularioPadre.cbPrecio.SelectedIndex = 0;
 
             this.Close();
+        }
+
+        private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                formularioPadre.tCodigo.Text = pro.codigo;
+                //formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio1).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+
+                formularioPadre.cbPrecio.SelectedIndex = 0;
+
+                this.Close();
+            }else if (e.KeyValue == (int)Keys.F3)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                frmExistencias exis = new frmExistencias();            
+                exis.codigoProducto = pro.codigo;
+                exis.ShowDialog();
+
+            }
+        }
+
+        private void tCodigo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                formularioPadre.tCodigo.Text = pro.codigo;
+                //formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio1).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+
+                formularioPadre.cbPrecio.SelectedIndex = 0;
+
+                this.Close();
+            }else if (e.KeyValue == (int)Keys.F3)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                frmExistencias exis = new frmExistencias();
+                exis.codigoProducto = pro.codigo;
+                exis.ShowDialog();
+
+            }
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                formularioPadre.tCodigo.Text = pro.codigo;
+                //formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio1).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+
+                formularioPadre.cbPrecio.SelectedIndex = 0;
+
+                this.Close();
+            }
+            else if (e.KeyValue == (int)Keys.F3)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                frmExistencias exis = new frmExistencias();
+                exis.codigoProducto = pro.codigo;
+                exis.ShowDialog();
+
+            }
         }
     }
 }

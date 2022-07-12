@@ -43,6 +43,7 @@
     <Compile Include="GUI\Cliente.cs" />
     <Compile Include="GUI\ComboboxItem.cs" />
     <Compile Include="GUI\Documentos.cs" />
+    <Compile Include="GUI\Existencia.cs" />
     <Compile Include="GUI\Partida.cs" />
     <Compile Include="GUI\Producto.cs" />
     <Compile Include="Models\PetaPoco.cs" />

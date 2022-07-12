@@ -109,5 +109,41 @@ namespace TerminalPedidos
 
             this.Close();
         }
+
+        private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Cliente clie = dataGridView1.CurrentRow.DataBoundItem as Cliente;
+
+                formularioPadre.textBox1.Text = clie.codigo;
+
+                this.Close();
+            }
+        }
+
+        private void tCodigo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Cliente clie = dataGridView1.CurrentRow.DataBoundItem as Cliente;
+
+                formularioPadre.textBox1.Text = clie.codigo;
+
+                this.Close();
+            }
+        }
+
+        private void tNombre_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                Cliente clie = dataGridView1.CurrentRow.DataBoundItem as Cliente;
+
+                formularioPadre.textBox1.Text = clie.codigo;
+
+                this.Close();
+            }
+        }
     }
 }

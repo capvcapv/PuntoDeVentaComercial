@@ -70,8 +70,9 @@
             this.textBox1.Location = new System.Drawing.Point(416, 7);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(373, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.TabIndex = 2;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // dataGridView1
             // 
@@ -84,9 +85,10 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(774, 415);
-            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+            this.dataGridView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyUp);
             // 
             // label2
             // 
@@ -256,8 +258,9 @@
             this.tCodigo.Location = new System.Drawing.Point(75, 7);
             this.tCodigo.Name = "tCodigo";
             this.tCodigo.Size = new System.Drawing.Size(276, 20);
-            this.tCodigo.TabIndex = 22;
+            this.tCodigo.TabIndex = 1;
             this.tCodigo.TextChanged += new System.EventHandler(this.tCodigo_TextChanged);
+            this.tCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tCodigo_KeyUp);
             // 
             // label11
             // 

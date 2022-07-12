@@ -35,6 +35,8 @@ namespace AdministradorPV
             seleccionaCombo(cajaActiva.almacen.ToString(), cbAlmacen);
             seleccionaCombo(cajaActiva.conceptoFactura, cbFactura);
             seleccionaCombo(cajaActiva.conceptoGlobal, cbFacturaGlobal);
+            seleccionaCombo(cajaActiva.conceptoPedido, cbPedidos);
+            seleccionaCombo(cajaActiva.conceptoRemision, cbRemisionAlterna);
         }
 
         private void seleccionaCombo(string pKey, ComboBox pCombo)
@@ -65,8 +67,8 @@ namespace AdministradorPV
                 StringBuilder id = new StringBuilder().Append('\0', 30);
                 StringBuilder nombre = new StringBuilder().Append('\0', 30);
 
-                AdminPAQSDK.fLeeDatoConceptoDocto("CIDCONCE01", id,30);
-                AdminPAQSDK.fLeeDatoConceptoDocto("CNOMBREC01", nombre, 30);
+                AdminPAQSDK.fLeeDatoConceptoDocto("CCODIGOCONCEPTO", id,30);
+                AdminPAQSDK.fLeeDatoConceptoDocto("CNOMBRECONCEPTO", nombre, 30);
 
                 ComboboxItem item = new ComboboxItem();
                 item.Text = nombre.ToString();
@@ -74,6 +76,8 @@ namespace AdministradorPV
 
                 cbFactura.Items.Add(item);
                 cbFacturaGlobal.Items.Add(item);
+                cbPedidos.Items.Add(item);
+                cbRemisionAlterna.Items.Add(item);
 
                 AdminPAQSDK.fPosSiguienteConceptoDocto();
             }
@@ -101,6 +105,8 @@ namespace AdministradorPV
             cbAlmacen.SelectedIndex = 1;
             cbFactura.SelectedIndex = 0;
             cbFacturaGlobal.SelectedIndex = 0;
+            cbPedidos.SelectedIndex = 0;
+            cbRemisionAlterna.SelectedIndex = 0;
 
             var listadoCajas = CajasDBContext.obtenerListado();
 
@@ -115,6 +121,7 @@ namespace AdministradorPV
             cbAlmacen.SelectedIndex = 1;
             cbFactura.SelectedIndex = 0;
             cbFacturaGlobal.SelectedIndex = 0;
+            cbPedidos.SelectedIndex = 0;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -125,6 +132,8 @@ namespace AdministradorPV
                 cajaActiva.almacen = Convert.ToInt32((cbAlmacen.SelectedItem as ComboboxItem).Value.ToString());
                 cajaActiva.conceptoFactura = (cbFactura.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoGlobal = (cbFacturaGlobal.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoPedido = (cbPedidos.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoRemision = (cbRemisionAlterna.SelectedItem as ComboboxItem).Value.ToString();
 
                 CajasDBContext.actualizar(cajaActiva);
             }
@@ -135,6 +144,8 @@ namespace AdministradorPV
                 cajaActiva.almacen = Convert.ToInt32((cbAlmacen.SelectedItem as ComboboxItem).Value.ToString());
                 cajaActiva.conceptoFactura = (cbFactura.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoGlobal = (cbFacturaGlobal.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoPedido = (cbPedidos.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoRemision = (cbRemisionAlterna.SelectedItem as ComboboxItem).Value.ToString();
 
                 CajasDBContext.guardar(cajaActiva);
             }
@@ -164,6 +175,8 @@ namespace AdministradorPV
                     cbAlmacen.SelectedIndex = 1;
                     cbFactura.SelectedIndex = 0;
                     cbFacturaGlobal.SelectedIndex = 0;
+                    cbPedidos.SelectedIndex = 0;
+                    cbRemisionAlterna.SelectedIndex = 0;
                 }
 
                 listBox1.Items.Clear();
