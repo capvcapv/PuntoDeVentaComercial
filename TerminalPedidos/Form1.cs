@@ -10,6 +10,8 @@ using SDKContpaq;
 using Modelos.GUI;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Configuration;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace TerminalPedidos
 {
@@ -19,6 +21,7 @@ namespace TerminalPedidos
         private Cliente clienteActivo;
         private frmLogin acceso = new frmLogin();
         private frmTurnosDeCaja turno;
+        private BindingSource binding;
 
         public Form1()
         {
@@ -50,6 +53,19 @@ namespace TerminalPedidos
                     textBox1.Focus();
                     cargaAgentes();
                     cargaAlmacenes();
+
+                    foreach(var agente in cbAgente.Items)
+                    {
+                        if (agente.ToString().Contains(acceso.usuarioActivo.nombre))
+                        {
+                            cbAgente.SelectedItem = agente;
+                        }
+                    }
+
+                    binding = new BindingSource();
+                    binding.DataSource = partidas;
+                    dataGridView1.DataSource = binding;     
+                    
                 }
 
             }
@@ -108,7 +124,24 @@ namespace TerminalPedidos
         {
             Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
-            Environment.CurrentDirectory = config.rutaBinarios;
+            string rutaComercial = "";
+
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Computación en Acción, SA CV\CONTPAQ I COMERCIAL");
+            if (key != null)
+            {
+                rutaComercial= key.GetValue("DIRECTORIOBASE").ToString();
+                
+                key.Close();
+            }
+            else
+            {
+                key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Computación en Acción, SA CV\CONTPAQ I COMERCIAL");
+                rutaComercial = key.GetValue("DIRECTORIOBASE").ToString();
+
+                key.Close();
+            }
+
+            Environment.CurrentDirectory = rutaComercial;
 
             AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "12345");
             AdminPAQSDK.muestra_error(AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL"));
@@ -160,10 +193,8 @@ namespace TerminalPedidos
                             part.cantidad = tCantidad.Value.ToString();
                             part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
 
-                            partidas.Add(part);
+                            binding.Add(part);
 
-                            dataGridView1.DataSource = null;
-                            dataGridView1.DataSource = partidas;
                             actualizaTabla();
 
                             cbPrecio.Items.Clear();
@@ -247,10 +278,15 @@ namespace TerminalPedidos
             if(MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Partida partidaSeleccionada = dataGridView1.CurrentRow.DataBoundItem as Partida;
-                partidas.Remove(partidaSeleccionada);
+                binding.Remove(partidaSeleccionada);
 
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = partidas;
+                dataGridView1.DataSource = binding;
+                System.Threading.Thread.Sleep(500);
+                dataGridView1.Refresh();
+
+                //dataGridView1.DataSource = null;
+                //dataGridView1.DataSource = partidas;
 
                 actualizaTabla();
             }
@@ -260,7 +296,7 @@ namespace TerminalPedidos
         private void limpiaProductosARX()
         {
 
-            if(cbConcepto.Text=="Remisión ARX")
+            if(cbConcepto.Text!="Remisión ARX" && cbConcepto.Text != "Pedido ARX")
             {
                 foreach (DataGridViewRow a in dataGridView1.Rows)
                 {
@@ -268,12 +304,14 @@ namespace TerminalPedidos
 
                     if (partidaSeleccionada.producto.ToUpper().Contains("ARX"))
                     {
-                        partidas.Remove(partidaSeleccionada);
+                        binding.Remove(partidaSeleccionada);
                     }
                 }
 
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = partidas;
+                dataGridView1.DataSource = binding;
+                System.Threading.Thread.Sleep(500);
+                dataGridView1.Refresh();
 
                 actualizaTabla();
             }
@@ -334,31 +372,46 @@ namespace TerminalPedidos
             if (clienteActivo != null)
             {
 
-                //CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$","").Replace(",","")));
-                //cal.ShowDialog();
+                CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$", "").Replace(",", "")));
+                cal.ShowDialog();
 
                 var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
 
                 SDKContpaq.SDKContpaq.Factura fac = new SDKContpaq.SDKContpaq.Factura();
                 fac.cliente = textBox1.Text;
 
+                string formato = "";
+                string titulo = "";
+
                 switch (cbConcepto.Text)
                 {
                     case "Pedido":
                         fac.concepto = caja.conceptoPedido;
+                        formato = "\\rptPedido.rpt";
+                        titulo = ".";
+                        break;
+                    case "Pedido ARX":
+                        fac.concepto = caja.conceptoPedido2;
+                        formato = "\\rptPedido.rpt";
+                        titulo = " ARX";
                         break;
                     case "Remisión":
                         fac.concepto = caja.conceptoFactura;
+                        formato = "\\rptTicket.rpt";
+                        titulo = ".";
                         break;
                     case "Remisión ARX":
                         fac.concepto = caja.conceptoRemision;
+                        formato = "\\rptTicket.rpt";
+                        titulo = " ARX";
                         break;
                     default:
                         break;
                 }
 
                 fac.agente = cbAgente.Text.Split('-')[0];
-                fac.referencia = turno.turnoActivo.id.ToString();
+                fac.referencia = cal.tReferencia.Text;
+                fac.observaciones = cal.tObservacion.Text;
                 fac.part = new List<SDKContpaq.SDKContpaq.Partidas>();
 
                 foreach(var a in partidas)
@@ -376,34 +429,22 @@ namespace TerminalPedidos
 
                 var folio=fac.creaFactura();
 
+                binding.DataSource = null;
                 partidas = new List<Partida>();
-
+                binding.DataSource = partidas;
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = partidas;
+                dataGridView1.DataSource = binding;
+
                 actualizaTabla();
 
-                var reporte = new ReportDocument();
-
-                string execPath = AppDomain.CurrentDomain.BaseDirectory;
-
-                reporte.Load(execPath + "\\rptTicket.rpt");
-
-                var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
-
-                var config = Modelos.Utilerias.ObtenerConfig.obtenerDatosSQL(ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last()));
-
-                reporte.DataSourceConnections[0].SetConnection(config.servidor, config.empresa, config.usuario, config.clave);
-
-                reporte.SetParameterValue("cfolio", folio);
-                reporte.SetParameterValue("cconcepto", caja.conceptoFactura);
-                reporte.SetParameterValue("cliente", clienteActivo.nombre);
-                reporte.SetParameterValue("domicilio", configuracion.direccion);
-                reporte.SetParameterValue("empresa", configuracion.nombre);
-
-                reporte.PrintToPrinter(1, true, 0, 0);
-
-
-                MessageBox.Show("Venta registrada en comercial.");
+                frmVisorFormato formatoVisor = new frmVisorFormato();
+                formatoVisor.formato = formato;
+                formatoVisor.folio = folio;
+                formatoVisor.concepto = fac.concepto;
+                formatoVisor.nombre = clienteActivo.nombre;
+                formatoVisor.titulo = titulo;
+                formatoVisor.agente = cbAgente.Text.Split('-')[0];
+                formatoVisor.ShowDialog();
 
             }
             else
@@ -417,8 +458,11 @@ namespace TerminalPedidos
         {
             partidas = new List<Partida>();
 
+            binding.DataSource = null;
+            binding.DataSource = partidas;
+
             dataGridView1.DataSource = null;
-            dataGridView1.DataSource = partidas;
+            dataGridView1.DataSource = binding;
             actualizaTabla();
         }
 

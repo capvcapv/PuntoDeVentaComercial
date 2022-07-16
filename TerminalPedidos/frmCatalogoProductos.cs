@@ -165,12 +165,12 @@ namespace TerminalPedidos
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
             formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -189,12 +189,12 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
                 formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -222,12 +222,12 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
                 formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -255,12 +255,12 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
+                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
                 formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -275,6 +275,11 @@ namespace TerminalPedidos
                 exis.ShowDialog();
 
             }
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.SuppressKeyPress = true;
         }
     }
 }

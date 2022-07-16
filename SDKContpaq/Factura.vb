@@ -81,15 +81,15 @@ Namespace SDKContpaq
 
             muestra_error(AdminPAQSDK.fAltaDocumento(documentoId, tdoc))
 
-            'AdminPAQSDK.fBuscarIdDocumento(documentoId)
-            'AdminPAQSDK.fEditarDocumento()
+            AdminPAQSDK.fBuscarIdDocumento(documentoId)
+            AdminPAQSDK.fEditarDocumento()
 
             'AdminPAQSDK.fSetDatoDocumento("CREFEREN01", referencia)
             'AdminPAQSDK.fSetDatoDocumento("CMETODOPAG", metodoPago)
             'AdminPAQSDK.fSetDatoDocumento("CNUMCTAPAG", numCuenta)
-            'AdminPAQSDK.fSetDatoDocumento("COBSERVACIONES", observaciones)
+            AdminPAQSDK.fSetDatoDocumento("COBSERVACIONES", observaciones)
 
-            'AdminPAQSDK.fGuardaDocumento()
+            AdminPAQSDK.fGuardaDocumento()
 
             Dim consecutivo As Integer = 100
 

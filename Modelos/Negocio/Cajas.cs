@@ -14,6 +14,7 @@ namespace Modelos.Negocio
         public string conceptoGlobal { get; set; }
         public string conceptoPedido { get; set; }
         public string conceptoRemision { get; set; }
+        public string conceptoPedido2 { get; set; }
 
         public override string ToString()
         {

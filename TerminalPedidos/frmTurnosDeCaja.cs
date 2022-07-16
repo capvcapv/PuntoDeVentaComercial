@@ -77,5 +77,10 @@ namespace TerminalPedidos
                 this.Close();
             }
         }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.SuppressKeyPress = true;
+        }
     }
 }

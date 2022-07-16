@@ -16,14 +16,14 @@ namespace TerminalPedidos {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rptTicket : ReportClass {
+    public class rptPedido : ReportClass {
         
-        public rptTicket() {
+        public rptPedido() {
         }
         
         public override string ResourceName {
             get {
-                return "rptTicket.rpt";
+                return "rptPedido.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace TerminalPedidos {
         
         public override string FullResourceName {
             get {
-                return "TerminalPedidos.rptTicket.rpt";
+                return "TerminalPedidos.rptPedido.rpt";
             }
             set {
                 // Do nothing
@@ -146,9 +146,9 @@ namespace TerminalPedidos {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedrptTicket : Component, ICachedReport {
+    public class CachedrptPedido : Component, ICachedReport {
         
-        public CachedrptTicket() {
+        public CachedrptPedido() {
         }
         
         [Browsable(false)]
@@ -185,7 +185,7 @@ namespace TerminalPedidos {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            rptTicket rpt = new rptTicket();
+            rptPedido rpt = new rptPedido();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -47,6 +47,8 @@
             this.cbPedidos = new System.Windows.Forms.ComboBox();
             this.cbRemisionAlterna = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cbPedidoAlterna = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,12 +218,32 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "Concepto remision alterna";
             // 
+            // cbPedidoAlterna
+            // 
+            this.cbPedidoAlterna.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPedidoAlterna.FormattingEnabled = true;
+            this.cbPedidoAlterna.Location = new System.Drawing.Point(267, 340);
+            this.cbPedidoAlterna.Name = "cbPedidoAlterna";
+            this.cbPedidoAlterna.Size = new System.Drawing.Size(300, 21);
+            this.cbPedidoAlterna.TabIndex = 18;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(264, 324);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(123, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Concepto pedido alterna";
+            // 
             // frmCajas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(583, 373);
+            this.ClientSize = new System.Drawing.Size(583, 371);
+            this.Controls.Add(this.cbPedidoAlterna);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.cbRemisionAlterna);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cbPedidos);
@@ -268,5 +290,7 @@
         private System.Windows.Forms.ComboBox cbPedidos;
         private System.Windows.Forms.ComboBox cbRemisionAlterna;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbPedidoAlterna;
+        private System.Windows.Forms.Label label7;
     }
 }
