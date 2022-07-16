@@ -279,7 +279,10 @@ namespace TerminalPedidos
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            e.SuppressKeyPress = true;
+            if (e.KeyValue == (int)Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

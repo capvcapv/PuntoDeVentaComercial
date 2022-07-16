@@ -46,6 +46,16 @@ namespace TerminalPedidos
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(tReferencia.Text))
+            {
+                tReferencia.Text = "-";
+            }
+
+            if (String.IsNullOrEmpty(tObservacion.Text))
+            {
+                tObservacion.Text = "-";
+            }
+            
             this.Close();
         }
     }
