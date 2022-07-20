@@ -165,7 +165,7 @@ namespace TerminalPedidos
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+            formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
             //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
             //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
             //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
@@ -189,7 +189,7 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
@@ -222,7 +222,7 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
@@ -255,7 +255,7 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
+                formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
                 //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));

@@ -278,6 +278,7 @@ namespace TerminalPedidos
             if(MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Partida partidaSeleccionada = dataGridView1.CurrentRow.DataBoundItem as Partida;
+                partidas.Remove(partidaSeleccionada);
                 binding.Remove(partidaSeleccionada);
 
                 dataGridView1.DataSource = null;
@@ -437,14 +438,57 @@ namespace TerminalPedidos
 
                 actualizaTabla();
 
-                frmVisorFormato formatoVisor = new frmVisorFormato();
-                formatoVisor.formato = formato;
-                formatoVisor.folio = folio;
-                formatoVisor.concepto = fac.concepto;
-                formatoVisor.nombre = clienteActivo.nombre;
-                formatoVisor.titulo = titulo;
-                formatoVisor.agente = cbAgente.Text.Split('-')[0];
-                formatoVisor.ShowDialog();
+                //frmVisorFormato formatoVisor = new frmVisorFormato();
+                //formatoVisor.formato = formato;
+                //formatoVisor.folio = folio;
+                //formatoVisor.concepto = fac.concepto;
+                //formatoVisor.nombre = clienteActivo.nombre;
+                //formatoVisor.titulo = titulo;
+                //formatoVisor.agente = cbAgente.Text.Split('-')[0];
+                //formatoVisor.ShowDialog();
+
+              
+                var reporte = new ReportDocument();
+                string execPath = AppDomain.CurrentDomain.BaseDirectory;
+                reporte.Load(execPath + formato);
+
+                var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+                var config = Modelos.Utilerias.ObtenerConfig.obtenerDatosSQL(ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last()));
+                reporte.DataSourceConnections[0].SetConnection(config.servidor, config.empresa, config.usuario, config.clave);
+
+                reporte.SetParameterValue("cfolio", folio);
+                reporte.SetParameterValue("cconcepto", fac.concepto);
+                reporte.SetParameterValue("cliente", clienteActivo.nombre);
+                reporte.SetParameterValue("domicilio", configuracion.direccion);
+                reporte.SetParameterValue("empresa", configuracion.nombre);
+                reporte.SetParameterValue("agente", cbAgente.Text.Split('-')[0]);
+                if (!String.IsNullOrEmpty(titulo))
+                {
+                    reporte.SetParameterValue("titulo", titulo);
+                }
+
+                PrintDialog dialog1 = new PrintDialog();
+                dialog1.AllowSomePages = true;
+                dialog1.AllowPrintToFile = false;
+
+                if (dialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    int copies = 1;// dialog1.PrinterSettings.Copies;
+                    int fromPage = dialog1.PrinterSettings.FromPage;
+                    int toPage = dialog1.PrinterSettings.ToPage;
+                    bool collate = dialog1.PrinterSettings.Collate;
+
+                    reporte.PrintOptions.PrinterName = dialog1.PrinterSettings.PrinterName;
+
+                    reporte.SetParameterValue("copia", "ORIGINAL");
+                    reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+
+                    reporte.SetParameterValue("copia", "COPIA");
+                    reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                }
+
+                dialog1.Dispose();
+                reporte.Dispose();
 
             }
             else
