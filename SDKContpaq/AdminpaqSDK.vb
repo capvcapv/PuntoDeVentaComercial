@@ -112,6 +112,13 @@ Public NotInheritable Class AdminPAQSDK
     Public Shared Function fAbreEmpresa(ByVal Directorio As String) As Integer
     End Function
 
+    <DllImport("MGWServicios.dll")>
+    Public Shared Function fDocumentoBloqueado(ByRef aBloqueado As Integer) As Integer
+    End Function
+    <DllImport("MGWServicios.dll")>
+    Public Shared Function fDesbloqueaDocumento() As Integer
+    End Function
+
     <DllImport("MGWSERVICIOS.DLL")>
     Public Shared Sub fCierraEmpresa()
     End Sub
@@ -402,6 +409,8 @@ Public NotInheritable Class AdminPAQSDK
     <DllImport("MGWSERVICIOS.DLL")>
     Public Shared Function fPosPrimerAlmacen() As Integer
     End Function
+
+
 
     <DllImport("MGWSERVICIOS.DLL")>
     Public Shared Function fPosSiguienteAlmacen() As Integer

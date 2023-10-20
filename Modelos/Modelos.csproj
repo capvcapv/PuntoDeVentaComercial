@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PetaPoco, Version=6.0.617.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PetaPoco.Compiled.6.0.617\lib\net40\PetaPoco.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -46,19 +52,20 @@
     <Compile Include="GUI\Existencia.cs" />
     <Compile Include="GUI\Partida.cs" />
     <Compile Include="GUI\Producto.cs" />
-    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Negocio\Cajas.cs" />
     <Compile Include="Negocio\Configuracion.cs" />
     <Compile Include="Negocio\ListaPrecios.cs" />
+    <Compile Include="Negocio\ModelosComercial.cs" />
+    <Compile Include="Negocio\Promociones.cs" />
     <Compile Include="Negocio\Turnos.cs" />
     <Compile Include="Negocio\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilerias\ConfiguracionConexion.cs" />
+    <Compile Include="Utilerias\DBContext.cs" />
     <Compile Include="Utilerias\ObtenerConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,7 +23,7 @@ namespace TerminalPedidos
 
         private void CalculaCambio_Load(object sender, EventArgs e)
         {
-
+            cbReferencia.SelectedIndex = 0;
         }
 
         private void tPago_KeyUp(object sender, KeyEventArgs e)
@@ -46,10 +46,12 @@ namespace TerminalPedidos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tReferencia.Text))
-            {
-                tReferencia.Text = "-";
-            }
+            //if (String.IsNullOrEmpty(tReferencia.Text))
+            //{
+            //    tReferencia.Text = "-";
+            //}
+
+            tReferencia.Text = cbReferencia.Text.Split('-')[0];
 
             if (String.IsNullOrEmpty(tObservacion.Text))
             {

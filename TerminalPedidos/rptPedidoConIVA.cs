@@ -16,14 +16,14 @@ namespace TerminalPedidos {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rptTicket : ReportClass {
+    public class rptPedidoConIVA : ReportClass {
         
-        public rptTicket() {
+        public rptPedidoConIVA() {
         }
         
         public override string ResourceName {
             get {
-                return "rptTicket.rpt";
+                return "rptPedidoConIVA.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace TerminalPedidos {
         
         public override string FullResourceName {
             get {
-                return "TerminalPedidos.rptTicket.rpt";
+                return "TerminalPedidos.rptPedidoConIVA.rpt";
             }
             set {
                 // Do nothing
@@ -151,20 +151,12 @@ namespace TerminalPedidos {
                 return this.DataDefinition.ParameterFields[7];
             }
         }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_puntos {
-            get {
-                return this.DataDefinition.ParameterFields[8];
-            }
-        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedrptTicket : Component, ICachedReport {
+    public class CachedrptPedidoConIVA : Component, ICachedReport {
         
-        public CachedrptTicket() {
+        public CachedrptPedidoConIVA() {
         }
         
         [Browsable(false)]
@@ -201,7 +193,7 @@ namespace TerminalPedidos {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            rptTicket rpt = new rptTicket();
+            rptPedidoConIVA rpt = new rptPedidoConIVA();
             rpt.Site = this.Site;
             return rpt;
         }

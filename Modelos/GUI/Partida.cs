@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -14,5 +15,8 @@ namespace Modelos.GUI
         public string precio { get; set; }
         public string importe { get; set; }
         public string almacen { get; set; }
+        [PetaPoco.Ignore]
+        [Browsable(false)]
+        public string puntos { get; set; }
     }
 }

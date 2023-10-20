@@ -74,6 +74,22 @@ namespace TerminalPedidos
                 cli.nombre = lector.GetValue(2).ToString();
                 cli.descuento = lector.GetValue(10).ToString();
 
+                SqlConnection con2 = new SqlConnection();
+                con2.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+                con2.Open();
+
+                SqlCommand comando2 = new SqlCommand("select * from admDomicilios where CIDCATALOGO=" + lector.GetValue(0).ToString() + " and CTIPOCATALOGO=1 and CTIPODIRECCION=0", con2);
+
+                SqlDataReader lector2 = comando2.ExecuteReader();
+
+                if (lector2.Read())
+                {
+                    cli.domicilio = lector2.GetValue(4).ToString() + " " + lector2.GetValue(5).ToString() + " " + lector2.GetValue(6).ToString() + " " + lector2.GetValue(7).ToString() + " " + lector2.GetValue(8).ToString() + " " + lector2.GetValue(17).ToString() + " " + lector2.GetValue(16).ToString() + " " + lector2.GetValue(15).ToString();
+                }
+
+                lector2.Close();
+                con2.Close();
+
                 listaClientes.Add(cli);
             }
 
@@ -86,7 +102,8 @@ namespace TerminalPedidos
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

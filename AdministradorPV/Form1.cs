@@ -28,6 +28,10 @@ namespace AdministradorPV
             acceso.ShowDialog();
 
             inicializaSDKComercial();
+
+            Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            toolStripStatusLabel2.Text = "Conectado con empresa " + config.empresa;
         }
 
         private void inicializaSDKComercial()
@@ -36,7 +40,7 @@ namespace AdministradorPV
 
             Environment.CurrentDirectory = config.rutaBinarios;
 
-            AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "12345");
+            AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "Pdv12345.");
             AdminPAQSDK.muestra_error(AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL"));
             AdminPAQSDK.muestra_error(AdminPAQSDK.fAbreEmpresa(config.empresa));
         }
@@ -82,6 +86,17 @@ namespace AdministradorPV
             frmCorteDeCaja corte = new frmCorteDeCaja();
             corte.ShowDialog();
 
+        }
+
+        private void promocionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPromociones promo = new frmPromociones();
+            promo.ShowDialog();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

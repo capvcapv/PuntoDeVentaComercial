@@ -28,6 +28,8 @@ Namespace SDKContpaq
         Public iva As Double
         Public agente As String
 
+        Public textoextra1 As String
+
         Public serie As String
         Public sigFolio As Double
         Public part As List(Of Partidas)
@@ -84,7 +86,7 @@ Namespace SDKContpaq
             AdminPAQSDK.fBuscarIdDocumento(documentoId)
             AdminPAQSDK.fEditarDocumento()
 
-            'AdminPAQSDK.fSetDatoDocumento("CREFEREN01", referencia)
+            AdminPAQSDK.fSetDatoDocumento("CTEXTOEXTRA1", textoextra1)
             'AdminPAQSDK.fSetDatoDocumento("CMETODOPAG", metodoPago)
             'AdminPAQSDK.fSetDatoDocumento("CNUMCTAPAG", numCuenta)
             AdminPAQSDK.fSetDatoDocumento("COBSERVACIONES", observaciones)
@@ -160,6 +162,7 @@ Namespace SDKContpaq
                 consecutivo += 1
             Next
 
+            AdminPAQSDK.fDesbloqueaDocumento()
 
             'If AdminPAQSDK.fEmitirDocumento(concepto.Trim, serie.Trim, sigFolio, clave, "") = 0 Then
 

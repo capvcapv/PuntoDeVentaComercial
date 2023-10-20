@@ -38,6 +38,9 @@ namespace AdministradorPV
             seleccionaCombo(cajaActiva.conceptoPedido, cbPedidos);
             seleccionaCombo(cajaActiva.conceptoRemision, cbRemisionAlterna);
             seleccionaCombo(cajaActiva.conceptoPedido2, cbPedidoAlterna);
+            seleccionaCombo(cajaActiva.conceptoCotizacion, cbConceptoCotizacion);
+            seleccionaCombo(cajaActiva.conceptoCotizacion2, cbConceptoCotizacion2);
+
         }
 
         private void seleccionaCombo(string pKey, ComboBox pCombo)
@@ -80,6 +83,8 @@ namespace AdministradorPV
                 cbPedidos.Items.Add(item);
                 cbRemisionAlterna.Items.Add(item);
                 cbPedidoAlterna.Items.Add(item);
+                cbConceptoCotizacion.Items.Add(item);
+                cbConceptoCotizacion2.Items.Add(item);
 
                 AdminPAQSDK.fPosSiguienteConceptoDocto();
             }
@@ -110,6 +115,8 @@ namespace AdministradorPV
             cbPedidos.SelectedIndex = 0;
             cbRemisionAlterna.SelectedIndex = 0;
             cbPedidoAlterna.SelectedIndex = 0;
+            cbConceptoCotizacion.SelectedIndex = 0;
+            cbConceptoCotizacion2.SelectedIndex = 0;
 
             var listadoCajas = CajasDBContext.obtenerListado();
 
@@ -127,6 +134,8 @@ namespace AdministradorPV
             cbPedidos.SelectedIndex = 0;
             cbRemisionAlterna.SelectedIndex = 0;
             cbPedidoAlterna.SelectedIndex = 0;
+            cbConceptoCotizacion.SelectedIndex = 0;
+            cbConceptoCotizacion2.SelectedIndex = 0;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -140,6 +149,8 @@ namespace AdministradorPV
                 cajaActiva.conceptoPedido = (cbPedidos.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoRemision = (cbRemisionAlterna.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoPedido2= (cbPedidoAlterna.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoCotizacion = (cbConceptoCotizacion.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoCotizacion2 = (cbConceptoCotizacion2.SelectedItem as ComboboxItem).Value.ToString();
 
                 CajasDBContext.actualizar(cajaActiva);
             }
@@ -153,6 +164,8 @@ namespace AdministradorPV
                 cajaActiva.conceptoPedido = (cbPedidos.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoRemision = (cbRemisionAlterna.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoPedido2 = (cbPedidoAlterna.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoCotizacion = (cbConceptoCotizacion.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.conceptoCotizacion2 = (cbConceptoCotizacion2.SelectedItem as ComboboxItem).Value.ToString();
 
                 CajasDBContext.guardar(cajaActiva);
             }
@@ -164,6 +177,8 @@ namespace AdministradorPV
             cbFacturaGlobal.SelectedIndex = 0;
             cbRemisionAlterna.SelectedIndex = 0;
             cbPedidoAlterna.SelectedIndex = 0;
+            cbConceptoCotizacion.SelectedIndex = 0;
+            cbConceptoCotizacion2.SelectedIndex = 0;
 
             listBox1.Items.Clear();
             var listadoCajas = CajasDBContext.obtenerListado();
@@ -187,6 +202,8 @@ namespace AdministradorPV
                     cbPedidos.SelectedIndex = 0;
                     cbRemisionAlterna.SelectedIndex = 0;
                     cbPedidoAlterna.SelectedIndex = 0;
+                    cbConceptoCotizacion.SelectedIndex = 0;
+                    cbConceptoCotizacion2.SelectedIndex = 0;
                 }
 
                 listBox1.Items.Clear();

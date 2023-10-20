@@ -35,14 +35,14 @@ namespace AdministradorPV
             con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial",configuracion.empresa.Split('\\').Last());
             con.Open();
 
-            SqlCommand comando = new SqlCommand("select count(*),sum(CTOTAL) from admDocumentos where CREFERENCIA=" + turno.id, con);
+            SqlCommand comando = new SqlCommand("select count(*),sum(CTOTAL) from admDocumentos where CTEXTOEXTRA1='" + turno.id + "'", con);
 
             SqlDataReader lector = comando.ExecuteReader();
 
             if (lector.Read())
             {
                 lRemisiones.Text = lector.GetValue(0).ToString();
-                lVentas.Text = Convert.ToDouble( lector.GetValue(1).ToString()).ToString("C");
+                lVentas.Text = lector.GetValue(1).ToString();//Convert.ToDouble( lector.GetValue(1).ToString()).ToString("C");
             }
 
             lector.Close();

@@ -82,7 +82,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(17, 36);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(647, 402);
+            this.dataGridView1.Size = new System.Drawing.Size(976, 402);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
@@ -93,7 +93,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(678, 450);
+            this.ClientSize = new System.Drawing.Size(1005, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tNombre);
             this.Controls.Add(this.label2);

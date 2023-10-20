@@ -10,5 +10,7 @@ namespace Modelos.GUI
         public string codigo { get; set; }
         public string nombre { get; set; }
         public string descuento { get; set; }
+
+        public string domicilio { get; set; }
     }
 }

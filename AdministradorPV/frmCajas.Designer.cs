@@ -39,7 +39,6 @@
             this.tNombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.cbFactura = new System.Windows.Forms.ComboBox();
             this.cbFacturaGlobal = new System.Windows.Forms.ComboBox();
             this.cbAlmacen = new System.Windows.Forms.ComboBox();
@@ -49,6 +48,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cbPedidoAlterna = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.cbConceptoCotizacion = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbConceptoCotizacion2 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,7 +109,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 32);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(232, 329);
+            this.listBox1.Size = new System.Drawing.Size(232, 420);
             this.listBox1.TabIndex = 1;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -140,19 +143,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(264, 136);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(153, 13);
+            this.label3.Size = new System.Drawing.Size(59, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Concepto Contpaq i Comercial:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(264, 185);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Concepto factura global";
-            this.label4.Visible = false;
+            this.label3.Text = "Remisión 1";
             // 
             // cbFactura
             // 
@@ -167,9 +160,9 @@
             // 
             this.cbFacturaGlobal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFacturaGlobal.FormattingEnabled = true;
-            this.cbFacturaGlobal.Location = new System.Drawing.Point(267, 203);
+            this.cbFacturaGlobal.Location = new System.Drawing.Point(521, 74);
             this.cbFacturaGlobal.Name = "cbFacturaGlobal";
-            this.cbFacturaGlobal.Size = new System.Drawing.Size(300, 21);
+            this.cbFacturaGlobal.Size = new System.Drawing.Size(18, 21);
             this.cbFacturaGlobal.TabIndex = 11;
             this.cbFacturaGlobal.Visible = false;
             // 
@@ -185,17 +178,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(264, 237);
+            this.label5.Location = new System.Drawing.Point(264, 229);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(93, 13);
+            this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Concepto pedidos";
+            this.label5.Text = "Pedido 1";
             // 
             // cbPedidos
             // 
             this.cbPedidos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPedidos.FormattingEnabled = true;
-            this.cbPedidos.Location = new System.Drawing.Point(267, 253);
+            this.cbPedidos.Location = new System.Drawing.Point(267, 245);
             this.cbPedidos.Name = "cbPedidos";
             this.cbPedidos.Size = new System.Drawing.Size(300, 21);
             this.cbPedidos.TabIndex = 14;
@@ -204,7 +197,7 @@
             // 
             this.cbRemisionAlterna.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRemisionAlterna.FormattingEnabled = true;
-            this.cbRemisionAlterna.Location = new System.Drawing.Point(267, 299);
+            this.cbRemisionAlterna.Location = new System.Drawing.Point(267, 197);
             this.cbRemisionAlterna.Name = "cbRemisionAlterna";
             this.cbRemisionAlterna.Size = new System.Drawing.Size(300, 21);
             this.cbRemisionAlterna.TabIndex = 16;
@@ -212,17 +205,17 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(264, 283);
+            this.label6.Location = new System.Drawing.Point(264, 181);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(129, 13);
+            this.label6.Size = new System.Drawing.Size(59, 13);
             this.label6.TabIndex = 15;
-            this.label6.Text = "Concepto remision alterna";
+            this.label6.Text = "Remisión 2";
             // 
             // cbPedidoAlterna
             // 
             this.cbPedidoAlterna.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPedidoAlterna.FormattingEnabled = true;
-            this.cbPedidoAlterna.Location = new System.Drawing.Point(267, 340);
+            this.cbPedidoAlterna.Location = new System.Drawing.Point(267, 292);
             this.cbPedidoAlterna.Name = "cbPedidoAlterna";
             this.cbPedidoAlterna.Size = new System.Drawing.Size(300, 21);
             this.cbPedidoAlterna.TabIndex = 18;
@@ -230,18 +223,58 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(264, 324);
+            this.label7.Location = new System.Drawing.Point(264, 276);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(123, 13);
+            this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 17;
-            this.label7.Text = "Concepto pedido alterna";
+            this.label7.Text = "Pedido 2";
+            // 
+            // cbConceptoCotizacion
+            // 
+            this.cbConceptoCotizacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConceptoCotizacion.FormattingEnabled = true;
+            this.cbConceptoCotizacion.Location = new System.Drawing.Point(267, 338);
+            this.cbConceptoCotizacion.Name = "cbConceptoCotizacion";
+            this.cbConceptoCotizacion.Size = new System.Drawing.Size(300, 21);
+            this.cbConceptoCotizacion.TabIndex = 20;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(264, 322);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Cotización 1";
+            // 
+            // cbConceptoCotizacion2
+            // 
+            this.cbConceptoCotizacion2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConceptoCotizacion2.FormattingEnabled = true;
+            this.cbConceptoCotizacion2.Location = new System.Drawing.Point(267, 377);
+            this.cbConceptoCotizacion2.Name = "cbConceptoCotizacion2";
+            this.cbConceptoCotizacion2.Size = new System.Drawing.Size(300, 21);
+            this.cbConceptoCotizacion2.TabIndex = 22;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(264, 361);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 13);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "Cotización 2";
             // 
             // frmCajas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(583, 371);
+            this.ClientSize = new System.Drawing.Size(583, 463);
+            this.Controls.Add(this.cbConceptoCotizacion2);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.cbConceptoCotizacion);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.cbPedidoAlterna);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbRemisionAlterna);
@@ -251,7 +284,6 @@
             this.Controls.Add(this.cbAlmacen);
             this.Controls.Add(this.cbFacturaGlobal);
             this.Controls.Add(this.cbFactura);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tNombre);
@@ -282,7 +314,6 @@
         private System.Windows.Forms.TextBox tNombre;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbFactura;
         private System.Windows.Forms.ComboBox cbFacturaGlobal;
         private System.Windows.Forms.ComboBox cbAlmacen;
@@ -292,5 +323,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbPedidoAlterna;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbConceptoCotizacion;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbConceptoCotizacion2;
+        private System.Windows.Forms.Label label9;
     }
 }

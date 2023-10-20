@@ -13,6 +13,7 @@ namespace Modelos.Negocio
         public string claveSello { get; set; }
         public string nombre { get; set; }
         public string direccion { get; set; }
+        public byte[] logo { get; set; }
     }
 
     public class ConfigurationDBContext

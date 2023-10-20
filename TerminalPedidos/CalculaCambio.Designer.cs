@@ -40,6 +40,7 @@ namespace TerminalPedidos
             this.tReferencia = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tObservacion = new System.Windows.Forms.TextBox();
+            this.cbReferencia = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +52,6 @@ namespace TerminalPedidos
             this.label1.Size = new System.Drawing.Size(80, 29);
             this.label1.TabIndex = 2;
             this.label1.Text = "Total:";
-            this.label1.Visible = false;
             // 
             // label2
             // 
@@ -62,7 +62,6 @@ namespace TerminalPedidos
             this.label2.Size = new System.Drawing.Size(117, 29);
             this.label2.TabIndex = 3;
             this.label2.Text = "Su pago:";
-            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -73,13 +72,12 @@ namespace TerminalPedidos
             this.label3.Size = new System.Drawing.Size(110, 29);
             this.label3.TabIndex = 4;
             this.label3.Text = "Cambio:";
-            this.label3.Visible = false;
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(297, 458);
+            this.button1.Location = new System.Drawing.Point(297, 465);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(151, 72);
             this.button1.TabIndex = 5;
@@ -95,7 +93,6 @@ namespace TerminalPedidos
             this.tTotal.Name = "tTotal";
             this.tTotal.Size = new System.Drawing.Size(254, 31);
             this.tTotal.TabIndex = 6;
-            this.tTotal.Visible = false;
             // 
             // tPago
             // 
@@ -104,7 +101,6 @@ namespace TerminalPedidos
             this.tPago.Name = "tPago";
             this.tPago.Size = new System.Drawing.Size(254, 31);
             this.tPago.TabIndex = 7;
-            this.tPago.Visible = false;
             this.tPago.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tPago_KeyUp);
             // 
             // tCambio
@@ -115,7 +111,6 @@ namespace TerminalPedidos
             this.tCambio.Name = "tCambio";
             this.tCambio.Size = new System.Drawing.Size(254, 31);
             this.tCambio.TabIndex = 8;
-            this.tCambio.Visible = false;
             // 
             // label4
             // 
@@ -130,16 +125,17 @@ namespace TerminalPedidos
             // tReferencia
             // 
             this.tReferencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tReferencia.Location = new System.Drawing.Point(40, 319);
+            this.tReferencia.Location = new System.Drawing.Point(159, 295);
             this.tReferencia.Name = "tReferencia";
-            this.tReferencia.Size = new System.Drawing.Size(408, 22);
+            this.tReferencia.Size = new System.Drawing.Size(97, 22);
             this.tReferencia.TabIndex = 10;
+            this.tReferencia.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(36, 367);
+            this.label5.Location = new System.Drawing.Point(36, 375);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(101, 20);
             this.label5.TabIndex = 11;
@@ -148,17 +144,50 @@ namespace TerminalPedidos
             // tObservacion
             // 
             this.tObservacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tObservacion.Location = new System.Drawing.Point(40, 390);
+            this.tObservacion.Location = new System.Drawing.Point(40, 398);
             this.tObservacion.Name = "tObservacion";
             this.tObservacion.Size = new System.Drawing.Size(408, 22);
             this.tObservacion.TabIndex = 12;
+            // 
+            // cbReferencia
+            // 
+            this.cbReferencia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbReferencia.FormattingEnabled = true;
+            this.cbReferencia.Items.AddRange(new object[] {
+            "1-Efectivo",
+            "2-Cheque nominativo",
+            "3-Transferencia electrónica de fondos",
+            "4-Tarjeta de crédito",
+            "5-Monedero electrónico",
+            "6-Dinero electrónico",
+            "8-Vales de despensa",
+            "12-Dación en pago",
+            "13-Pago por subrogación",
+            "14-Pago por consignación",
+            "15-Condonación",
+            "17-Compensación",
+            "23-Novación",
+            "24-Confusión",
+            "25-Remisión de deuda",
+            "26-Prescripción o caducidad",
+            "27-A satisfacción del acreedor",
+            "28-Tarjeta de débito",
+            "29-Tarjeta de servicios",
+            "30-Aplicación de anticipos",
+            "31-Intermediario pagos",
+            "99-Por definir"});
+            this.cbReferencia.Location = new System.Drawing.Point(40, 327);
+            this.cbReferencia.Name = "cbReferencia";
+            this.cbReferencia.Size = new System.Drawing.Size(408, 21);
+            this.cbReferencia.TabIndex = 13;
             // 
             // CalculaCambio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(480, 558);
+            this.ClientSize = new System.Drawing.Size(480, 560);
+            this.Controls.Add(this.cbReferencia);
             this.Controls.Add(this.tObservacion);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tReferencia);
@@ -193,5 +222,6 @@ namespace TerminalPedidos
         public System.Windows.Forms.TextBox tReferencia;
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.TextBox tObservacion;
+        private System.Windows.Forms.ComboBox cbReferencia;
     }
 }
