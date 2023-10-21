@@ -38,6 +38,7 @@ namespace AdministradorPV
                 promocionActiva.id_clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CIDVALORCLASIFICACION;
                 promocionActiva.clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CVALORCLASIFICACION;
                 promocionActiva.descuento = Convert.ToDouble( nDescuento.Value);
+                promocionActiva.cantidad = Convert.ToDouble(nCantidad.Value);
 
                 promocionActiva.actualizar();
             }
@@ -50,6 +51,7 @@ namespace AdministradorPV
                 promocionActiva.id_clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CIDCLASIFICACION;
                 promocionActiva.clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CVALORCLASIFICACION;
                 promocionActiva.descuento = Convert.ToDouble(nDescuento.Value);
+                promocionActiva.cantidad = Convert.ToDouble(nCantidad.Value);
 
                 promocionActiva.guardar();
             }
@@ -98,6 +100,7 @@ namespace AdministradorPV
             dtFinal.Value = DateTime.Now;
             cbClasificacion1.SelectedIndex = 0;
             nDescuento.Value = 0;
+            nCantidad.Value = 0;
 
             promocionActiva = null;
 
@@ -138,6 +141,7 @@ namespace AdministradorPV
                 }
 
                 nDescuento.Value = Convert.ToDecimal(promocionActiva.descuento);
+                nCantidad.Value = Convert.ToDecimal(promocionActiva.cantidad);
             }
 
             

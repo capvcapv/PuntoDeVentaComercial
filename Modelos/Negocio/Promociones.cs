@@ -15,6 +15,7 @@ namespace Modelos.Negocio
         public int id_clasificacion1 { get; set; }
         public string clasificacion1 { get; set; }
         public double descuento { get; set; }
+        public double cantidad { get; set; }
 
     }
 }

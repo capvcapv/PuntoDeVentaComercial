@@ -48,9 +48,12 @@ namespace AdministradorPV
             this.nDescuento = new System.Windows.Forms.NumericUpDown();
             this.olvNombre = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label6 = new System.Windows.Forms.Label();
+            this.nCantidad = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nDescuento)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nCantidad)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -220,11 +223,30 @@ namespace AdministradorPV
             this.label6.TabIndex = 12;
             this.label6.Text = "%";
             // 
+            // nCantidad
+            // 
+            this.nCantidad.DecimalPlaces = 2;
+            this.nCantidad.Location = new System.Drawing.Point(369, 213);
+            this.nCantidad.Name = "nCantidad";
+            this.nCantidad.Size = new System.Drawing.Size(56, 20);
+            this.nCantidad.TabIndex = 14;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(366, 197);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Cantidad";
+            // 
             // frmPromociones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 359);
+            this.Controls.Add(this.nCantidad);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.nDescuento);
             this.Controls.Add(this.label5);
@@ -247,6 +269,7 @@ namespace AdministradorPV
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nDescuento)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nCantidad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -272,5 +295,7 @@ namespace AdministradorPV
         private System.Windows.Forms.NumericUpDown nDescuento;
         private BrightIdeasSoftware.OLVColumn olvNombre;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nCantidad;
+        private System.Windows.Forms.Label label7;
     }
 }
