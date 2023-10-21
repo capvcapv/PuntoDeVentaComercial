@@ -13,7 +13,9 @@ namespace Modelos.GUI
         public string cantidad { get; set; }
         //public string descuento { get; set; }
         public string precio { get; set; }
+        public string descuento { get; set; }
         public string importe { get; set; }
+        [Browsable(false)]
         public string almacen { get; set; }
         [PetaPoco.Ignore]
         [Browsable(false)]

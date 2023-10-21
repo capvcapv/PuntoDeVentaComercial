@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
+using Modelos.Negocio;
 
 namespace TerminalPedidos
 {
@@ -86,6 +87,54 @@ namespace TerminalPedidos
                 return image;
             }
         }
+
+        private void verificarDescuentos()
+        {
+            Dictionary<string, double> miDiccionario = new Dictionary<string, double>();
+
+            foreach(var a in partidas)
+            {
+                double valor = 0;
+                
+                if(miDiccionario.TryGetValue(a.codigo,out valor))
+                {
+                    miDiccionario[a.codigo] = Convert.ToDouble(a.cantidad) + valor;
+                }
+                else
+                {
+                    miDiccionario[a.codigo] = Convert.ToDouble(a.cantidad);
+                }
+            }
+
+            Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            foreach (var kvp in miDiccionario)
+            {
+                var producto_comercial = (new Admproductos()).obtenerSQL("select * from admProductos where CCODIGOPRODUCTO='" + kvp.Key + "'", ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", config.empresa.Split('\\')[3]));
+
+                var promocion = (new Promociones()).obtenerSQL("select * from promociones where id_clasificacion1=" + producto_comercial[0].CIDVALORCLASIFICACION1 + " and cantidad<=" + kvp.Value + " and (fecha_inicio <= GETDATE() AND fecha_final >= GETDATE())");
+
+                if (promocion.Count>0)
+                {
+                    //MessageBox.Show("Producto " + kvp.Key + " con descuento del " + promocion[0].descuento + " %");
+
+                    foreach(var a in partidas)
+                    {
+                        if (a.codigo == kvp.Key)
+                        {
+                            a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(promocion[0].descuento) / 100))).ToString("C");
+                            a.importe= ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", "")))*Convert.ToDouble(a.cantidad)).ToString("C");
+                        }
+                    }
+
+                }
+            }
+
+
+
+
+        }
+
         private void cargaAlmacenes()
         {
             AdminPAQSDK.fPosPrimerAlmacen();
@@ -218,7 +267,7 @@ namespace TerminalPedidos
                             
                             part.cantidad = tCantidad.Value.ToString();
                             part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
-
+                            part.descuento = "$ 0.00";
                             part.puntos = puntos.ToString();
 
                             binding.Add(part);
@@ -297,6 +346,8 @@ namespace TerminalPedidos
             lSubtotal.Text = subtotal.ToString("C");
             lIVA.Text = iva.ToString("C");
             lTotal.Text = total.ToString("C");
+
+            verificarDescuentos();
 
         }
 
@@ -484,7 +535,7 @@ namespace TerminalPedidos
                     part.Cantidad = a.cantidad;
                     part.Codigo = a.codigo;
                     part.Nombre = a.producto;
-                    part.Precio = a.precio;
+                    part.Precio = (Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))).ToString("C");
                     part.Almancen = a.almacen;
 
                     fac.part.Add(part);

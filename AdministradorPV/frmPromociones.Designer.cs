@@ -36,6 +36,7 @@ namespace AdministradorPV
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+            this.olvNombre = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label1 = new System.Windows.Forms.Label();
             this.tNombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@ namespace AdministradorPV
             this.cbClasificacion1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.nDescuento = new System.Windows.Forms.NumericUpDown();
-            this.olvNombre = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label6 = new System.Windows.Forms.Label();
             this.nCantidad = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -120,6 +120,14 @@ namespace AdministradorPV
             this.objectListView1.UseCompatibleStateImageBehavior = false;
             this.objectListView1.View = System.Windows.Forms.View.Details;
             this.objectListView1.SelectedIndexChanged += new System.EventHandler(this.objectListView1_SelectedIndexChanged);
+            // 
+            // olvNombre
+            // 
+            this.olvNombre.AspectName = "nombre";
+            this.olvNombre.FillsFreeSpace = true;
+            this.olvNombre.Groupable = false;
+            this.olvNombre.IsEditable = false;
+            this.olvNombre.Text = "Nombre";
             // 
             // label1
             // 
@@ -206,14 +214,6 @@ namespace AdministradorPV
             this.nDescuento.Size = new System.Drawing.Size(56, 20);
             this.nDescuento.TabIndex = 11;
             // 
-            // olvNombre
-            // 
-            this.olvNombre.AspectName = "nombre";
-            this.olvNombre.FillsFreeSpace = true;
-            this.olvNombre.Groupable = false;
-            this.olvNombre.IsEditable = false;
-            this.olvNombre.Text = "Nombre";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -244,6 +244,7 @@ namespace AdministradorPV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(630, 359);
             this.Controls.Add(this.nCantidad);
             this.Controls.Add(this.label7);
