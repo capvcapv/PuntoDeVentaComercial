@@ -28,6 +28,7 @@ namespace AdministradorPV
             config.nombre = tNombreEmpresa.Text;
             config.direccion = tDireccion.Text;
             config.logo= ImageToByteArray(pictureBox1.Image);
+            config.imprime_ticket = Convert.ToInt32(ckImprimeTicket.Checked);
 
             ConfigurationDBContext.actualizar(config);
 
@@ -67,7 +68,8 @@ namespace AdministradorPV
                 Image image = ByteArrayToImage(config.logo);
                 pictureBox1.Image = image;
             }
-                     
+
+            ckImprimeTicket.Checked = Convert.ToBoolean(config.imprime_ticket);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

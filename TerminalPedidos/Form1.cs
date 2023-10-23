@@ -37,7 +37,7 @@ namespace TerminalPedidos
 
             pictureBox1.Image = ByteArrayToImage(config.logo);
 
-            cbConcepto.SelectedIndex = 0;
+            
 
             acceso.ShowDialog();
 
@@ -71,12 +71,23 @@ namespace TerminalPedidos
                     binding.DataSource = partidas;
                     dataGridView1.DataSource = binding;
 
-                    
+                    cargarConceptosCaja(caja);
 
+                    cbConcepto.SelectedIndex = 0;
                 }
 
             }
 
+        }
+
+        private void cargarConceptosCaja(Modelos.Negocio.Cajas pCaja)
+        {
+            cbConcepto.Items.Add(pCaja.nombre1);
+            cbConcepto.Items.Add(pCaja.nombre2);
+            cbConcepto.Items.Add(pCaja.nombre3);
+            cbConcepto.Items.Add(pCaja.nombre4);
+            cbConcepto.Items.Add(pCaja.nombre5);
+            cbConcepto.Items.Add(pCaja.nombre6);
         }
 
         private Image ByteArrayToImage(byte[] byteArray)
@@ -472,60 +483,70 @@ namespace TerminalPedidos
 
             if (clienteActivo != null)
             {
+                var configGen = Modelos.Negocio.ConfigurationDBContext.obtener();
+                string referencia = "";
+                string observacion = "";
 
-                CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$", "").Replace(",", "")));
-                cal.ShowDialog();
+                if (Convert.ToBoolean(configGen.imprime_ticket))
+                {
+                    CalculaCambio cal = new CalculaCambio(Convert.ToDouble(lTotal.Text.Replace("$", "").Replace(",", "")));
+                    cal.ShowDialog();
+
+                    referencia = cal.tReferencia.Text;
+                    observacion = cal.tObservacion.Text;
+                }
 
                 var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
 
                 SDKContpaq.SDKContpaq.Factura fac = new SDKContpaq.SDKContpaq.Factura();
                 fac.cliente = textBox1.Text;
 
+
                 string formato = "";
                 string titulo = "";
 
-                switch (cbConcepto.Text)
+                switch (cbConcepto.SelectedIndex)
                 {
-                    case "Pedido 1":
-                        fac.concepto = caja.conceptoPedido;
-                        formato = "\\rptPedidoConIVA.rpt";
-                        titulo = "Pedido 1";
-                        break;
-                    case "Pedido 2":
-                        fac.concepto = caja.conceptoPedido2;
-                        formato = "\\rptPedido.rpt";
-                        titulo = "Pedido 2";
-                        break;
-                    case "Remisión 1":
+                    case 0:
                         fac.concepto = caja.conceptoFactura;
-                        formato = "\\rptTicket.rpt";
-                        titulo = ".";
+                        formato = caja.formato1;
+                        titulo = cbConcepto.Text;
                         break;
-                    case "Remisión 2":
+                    case 1:
                         fac.concepto = caja.conceptoRemision;
-                        formato = "\\rptTicket.rpt";
-                        titulo = ".";
+                        formato = caja.formato2;
+                        titulo = cbConcepto.Text;
                         break;
-                    case "Cotización 1":
+                    case 2:
+                        fac.concepto = caja.conceptoPedido;
+                        formato = caja.formato3;
+                        titulo = cbConcepto.Text;
+                        break;
+                    case 3:
+                        fac.concepto = caja.conceptoPedido2;
+                        formato = caja.formato4;
+                        titulo = cbConcepto.Text;
+                        break;
+                    case 4:
                         fac.concepto = caja.conceptoCotizacion;
-                        formato = "\\rptPedido.rpt";
-                        titulo = "Cotización 1";
+                        formato = caja.formato5;
+                        titulo = cbConcepto.Text;
                         break;
-                    case "Cotización 2":
+                    case 5:
                         fac.concepto = caja.conceptoCotizacion2;
-                        formato = "\\rptPedido.rpt";
-                        titulo = "Cotización 2";
+                        formato = caja.formato6;
+                        titulo = cbConcepto.Text;
                         break;
                     default:
                         break;
                 }
 
                 fac.agente = cbAgente.Text.Split('-')[0];
-                fac.referencia = cal.tReferencia.Text;
+                fac.referencia = referencia;
                 fac.textoextra1 = turno.turnoActivo.id.ToString();
-                fac.observaciones = cal.tObservacion.Text;
+                fac.observaciones = observacion;
                 fac.part = new List<SDKContpaq.SDKContpaq.Partidas>();
-                
+
                 int puntos_totales = 0;
 
                 foreach(var a in partidas)
@@ -571,75 +592,82 @@ namespace TerminalPedidos
                 //formatoVisor.agente = cbAgente.Text.Split('-')[0];
                 //formatoVisor.ShowDialog();
 
-              
-                var reporte = new ReportDocument();
-                string execPath = AppDomain.CurrentDomain.BaseDirectory;
-                reporte.Load(execPath + formato);
 
-                var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
-                var config = Modelos.Utilerias.ObtenerConfig.obtenerDatosSQL(ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last()));
-                reporte.DataSourceConnections[0].SetConnection(config.servidor, config.empresa, config.usuario, config.clave);
-
-                reporte.SetParameterValue("cfolio", folio);
-                reporte.SetParameterValue("cconcepto", fac.concepto);
-                reporte.SetParameterValue("cliente", clienteActivo.nombre);
-                reporte.SetParameterValue("domicilio", configuracion.direccion);
-                reporte.SetParameterValue("empresa", configuracion.nombre);
-                reporte.SetParameterValue("agente", cbAgente.Text.Split('-')[0]);
-                reporte.SetParameterValue("puntos", puntos_totales.ToString());
-
-                if (!String.IsNullOrEmpty(titulo))
+                if (Convert.ToBoolean(configGen.imprime_ticket))
                 {
-                    reporte.SetParameterValue("titulo", titulo);
-                }
+                    var reporte = new ReportDocument();
+                    string execPath = AppDomain.CurrentDomain.BaseDirectory;
+                    reporte.Load(execPath + formato);
 
-                //PrintDialog dialog1 = new PrintDialog();
-                //dialog1.AllowSomePages = true;
-                //dialog1.AllowPrintToFile = false;
+                    var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+                    var config = Modelos.Utilerias.ObtenerConfig.obtenerDatosSQL(ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last()));
+                    reporte.DataSourceConnections[0].SetConnection(config.servidor, config.empresa, config.usuario, config.clave);
 
-                //if (dialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                //{
-                //    int copies = 1;// dialog1.PrinterSettings.Copies;
-                //    int fromPage = dialog1.PrinterSettings.FromPage;
-                //    int toPage = dialog1.PrinterSettings.ToPage;
-                //    bool collate = dialog1.PrinterSettings.Collate;
+                    reporte.SetParameterValue("cfolio", folio);
+                    reporte.SetParameterValue("cconcepto", fac.concepto);
+                    reporte.SetParameterValue("cliente", clienteActivo.nombre);
+                    reporte.SetParameterValue("domicilio", configuracion.direccion);
+                    reporte.SetParameterValue("empresa", configuracion.nombre);
+                    reporte.SetParameterValue("agente", cbAgente.Text.Split('-')[0]);
+                    reporte.SetParameterValue("puntos", puntos_totales.ToString());
 
-                //    reporte.PrintOptions.PrinterName = dialog1.PrinterSettings.PrinterName;
+                    if (!String.IsNullOrEmpty(titulo))
+                    {
+                        reporte.SetParameterValue("titulo", titulo);
+                    }
 
-                //    if (formato.Contains("rptTicket"))
-                //    {
-                //        reporte.SetParameterValue("copia", "ORIGINAL");
-                //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
-                //    }
-                //    else
-                //    {
-                //        reporte.SetParameterValue("copia", "ORIGINAL");
-                //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                    //PrintDialog dialog1 = new PrintDialog();
+                    //dialog1.AllowSomePages = true;
+                    //dialog1.AllowPrintToFile = false;
 
-                //        reporte.SetParameterValue("copia", "COPIA");
-                //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
-                //    }
+                    //if (dialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    //{
+                    //    int copies = 1;// dialog1.PrinterSettings.Copies;
+                    //    int fromPage = dialog1.PrinterSettings.FromPage;
+                    //    int toPage = dialog1.PrinterSettings.ToPage;
+                    //    bool collate = dialog1.PrinterSettings.Collate;
 
-                    
-                //}
+                    //    reporte.PrintOptions.PrinterName = dialog1.PrinterSettings.PrinterName;
 
-                //dialog1.Dispose();
+                    //    if (formato.Contains("rptTicket"))
+                    //    {
+                    //        reporte.SetParameterValue("copia", "ORIGINAL");
+                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                    //    }
+                    //    else
+                    //    {
+                    //        reporte.SetParameterValue("copia", "ORIGINAL");
+                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
 
-                if (formato.Contains("rptTicket"))
+                    //        reporte.SetParameterValue("copia", "COPIA");
+                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                    //    }
+
+
+                    //}
+
+                    //dialog1.Dispose();
+
+                    if (formato.Contains("rptTicket"))
                     {
                         reporte.SetParameterValue("copia", "ORIGINAL");
                         reporte.PrintToPrinter(1, false, 0, 0);
-                }
+                    }
                     else
                     {
                         reporte.SetParameterValue("copia", "ORIGINAL");
                         reporte.PrintToPrinter(1, false, 0, 0);
 
-                    reporte.SetParameterValue("copia", "COPIA");
+                        reporte.SetParameterValue("copia", "COPIA");
                         reporte.PrintToPrinter(1, false, 0, 0);
-                }
+                    }
 
-                reporte.Dispose();
+                    reporte.Dispose();
+                }
+                else
+                {
+                    MessageBox.Show("Creado con folio: " + folio);
+                }
 
             }
             else
@@ -723,6 +751,11 @@ namespace TerminalPedidos
         }
 
         private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

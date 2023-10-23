@@ -14,6 +14,7 @@ namespace Modelos.Negocio
         public string nombre { get; set; }
         public string direccion { get; set; }
         public byte[] logo { get; set; }
+        public int imprime_ticket { get; set; }
     }
 
     public class ConfigurationDBContext

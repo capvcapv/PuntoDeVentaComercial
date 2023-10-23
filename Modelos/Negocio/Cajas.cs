@@ -17,6 +17,18 @@ namespace Modelos.Negocio
         public string conceptoPedido2 { get; set; }
         public string conceptoCotizacion { get; set; }
         public string conceptoCotizacion2 { get; set; }
+        public string nombre1 { get; set; }
+        public string formato1 { get; set; }
+        public string nombre2 { get; set; }
+        public string formato2 { get; set; }
+        public string nombre3 { get; set; }
+        public string formato3 { get; set; }
+        public string nombre4 { get; set; }
+        public string formato4 { get; set; }
+        public string nombre5 { get; set; }
+        public string formato5 { get; set; }
+        public string nombre6 { get; set; }
+        public string formato6 { get; set; }
 
         public override string ToString()
         {

@@ -40,6 +40,18 @@ namespace AdministradorPV
             seleccionaCombo(cajaActiva.conceptoPedido2, cbPedidoAlterna);
             seleccionaCombo(cajaActiva.conceptoCotizacion, cbConceptoCotizacion);
             seleccionaCombo(cajaActiva.conceptoCotizacion2, cbConceptoCotizacion2);
+            tNombre1.Text = cajaActiva.nombre1;
+            tNombre2.Text = cajaActiva.nombre2;
+            tNombre3.Text = cajaActiva.nombre3;
+            tNombre4.Text = cajaActiva.nombre4;
+            tNombre5.Text = cajaActiva.nombre5;
+            tNombre6.Text = cajaActiva.nombre6;
+            tFormato1.Text = cajaActiva.formato1;
+            tFormato2.Text = cajaActiva.formato2;
+            tFormato3.Text = cajaActiva.formato3;
+            tFormato4.Text = cajaActiva.formato4;
+            tFormato5.Text = cajaActiva.formato5;
+            tFormato6.Text = cajaActiva.formato6;
 
         }
 
@@ -136,6 +148,18 @@ namespace AdministradorPV
             cbPedidoAlterna.SelectedIndex = 0;
             cbConceptoCotizacion.SelectedIndex = 0;
             cbConceptoCotizacion2.SelectedIndex = 0;
+            tNombre1.Text = "";
+            tNombre2.Text = "";
+            tNombre3.Text = "";
+            tNombre4.Text = "";
+            tNombre5.Text = "";
+            tNombre6.Text = "";
+            tFormato1.Text = "";
+            tFormato2.Text = "";
+            tFormato3.Text = "";
+            tFormato4.Text = "";
+            tFormato5.Text = "";
+            tFormato6.Text = "";
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -151,6 +175,18 @@ namespace AdministradorPV
                 cajaActiva.conceptoPedido2= (cbPedidoAlterna.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoCotizacion = (cbConceptoCotizacion.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoCotizacion2 = (cbConceptoCotizacion2.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.nombre1 = tNombre1.Text;
+                cajaActiva.nombre2 = tNombre2.Text;
+                cajaActiva.nombre3 = tNombre3.Text;
+                cajaActiva.nombre4 = tNombre4.Text;
+                cajaActiva.nombre5 = tNombre5.Text;
+                cajaActiva.nombre6 = tNombre6.Text;
+                cajaActiva.formato1 = tFormato1.Text;
+                cajaActiva.formato2 = tFormato2.Text;
+                cajaActiva.formato3 = tFormato3.Text;
+                cajaActiva.formato4 = tFormato4.Text;
+                cajaActiva.formato5 = tFormato5.Text;
+                cajaActiva.formato6 = tFormato6.Text;
 
                 CajasDBContext.actualizar(cajaActiva);
             }
@@ -166,6 +202,18 @@ namespace AdministradorPV
                 cajaActiva.conceptoPedido2 = (cbPedidoAlterna.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoCotizacion = (cbConceptoCotizacion.SelectedItem as ComboboxItem).Value.ToString();
                 cajaActiva.conceptoCotizacion2 = (cbConceptoCotizacion2.SelectedItem as ComboboxItem).Value.ToString();
+                cajaActiva.nombre1 = tNombre1.Text;
+                cajaActiva.nombre2 = tNombre2.Text;
+                cajaActiva.nombre3 = tNombre3.Text;
+                cajaActiva.nombre4 = tNombre4.Text;
+                cajaActiva.nombre5 = tNombre5.Text;
+                cajaActiva.nombre6 = tNombre6.Text;
+                cajaActiva.formato1 = tFormato1.Text;
+                cajaActiva.formato2 = tFormato2.Text;
+                cajaActiva.formato3 = tFormato3.Text;
+                cajaActiva.formato4 = tFormato4.Text;
+                cajaActiva.formato5 = tFormato5.Text;
+                cajaActiva.formato6 = tFormato6.Text;
 
                 CajasDBContext.guardar(cajaActiva);
             }
@@ -179,6 +227,18 @@ namespace AdministradorPV
             cbPedidoAlterna.SelectedIndex = 0;
             cbConceptoCotizacion.SelectedIndex = 0;
             cbConceptoCotizacion2.SelectedIndex = 0;
+            tNombre1.Text = "";
+            tNombre2.Text = "";
+            tNombre3.Text = "";
+            tNombre4.Text = "";
+            tNombre5.Text = "";
+            tNombre6.Text = "";
+            tFormato1.Text = "";
+            tFormato2.Text = "";
+            tFormato3.Text = "";
+            tFormato4.Text = "";
+            tFormato5.Text = "";
+            tFormato6.Text = "";
 
             listBox1.Items.Clear();
             var listadoCajas = CajasDBContext.obtenerListado();
@@ -204,6 +264,18 @@ namespace AdministradorPV
                     cbPedidoAlterna.SelectedIndex = 0;
                     cbConceptoCotizacion.SelectedIndex = 0;
                     cbConceptoCotizacion2.SelectedIndex = 0;
+                    tNombre1.Text = "";
+                    tNombre2.Text = "";
+                    tNombre3.Text = "";
+                    tNombre4.Text = "";
+                    tNombre5.Text = "";
+                    tNombre6.Text = "";
+                    tFormato1.Text = "";
+                    tFormato2.Text = "";
+                    tFormato3.Text = "";
+                    tFormato4.Text = "";
+                    tFormato5.Text = "";
+                    tFormato6.Text = "";
                 }
 
                 listBox1.Items.Clear();

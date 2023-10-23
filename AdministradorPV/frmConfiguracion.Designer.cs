@@ -43,6 +43,7 @@
             this.tDireccion = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.ckImprimeTicket = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -100,7 +101,7 @@
             // 
             // tClaveSello
             // 
-            this.tClaveSello.Location = new System.Drawing.Point(15, 313);
+            this.tClaveSello.Location = new System.Drawing.Point(15, 381);
             this.tClaveSello.Name = "tClaveSello";
             this.tClaveSello.Size = new System.Drawing.Size(331, 20);
             this.tClaveSello.TabIndex = 6;
@@ -109,7 +110,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 297);
+            this.label3.Location = new System.Drawing.Point(12, 365);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(103, 13);
             this.label3.TabIndex = 5;
@@ -167,12 +168,23 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Logo";
             // 
+            // ckImprimeTicket
+            // 
+            this.ckImprimeTicket.AutoSize = true;
+            this.ckImprimeTicket.Location = new System.Drawing.Point(18, 288);
+            this.ckImprimeTicket.Name = "ckImprimeTicket";
+            this.ckImprimeTicket.Size = new System.Drawing.Size(91, 17);
+            this.ckImprimeTicket.TabIndex = 14;
+            this.ckImprimeTicket.Text = "Imprime ticket";
+            this.ckImprimeTicket.UseVisualStyleBackColor = true;
+            // 
             // frmConfiguracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(544, 289);
+            this.ClientSize = new System.Drawing.Size(544, 317);
+            this.Controls.Add(this.ckImprimeTicket);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tDireccion);
@@ -215,5 +227,6 @@
         private System.Windows.Forms.TextBox tDireccion;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox ckImprimeTicket;
     }
 }
