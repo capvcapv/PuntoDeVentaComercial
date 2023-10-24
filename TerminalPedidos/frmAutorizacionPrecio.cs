@@ -13,6 +13,8 @@ namespace TerminalPedidos
     {
 
         public string precioNuevo { get; set; }
+        public string codigo { get; set; }
+        public string porcentaje { get; set; }
 
         public frmAutorizacionPrecio()
         {
@@ -37,6 +39,21 @@ namespace TerminalPedidos
             else
             {
                 MessageBox.Show("Clave incorrecta, intente nuevamente");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tProducto.Text))
+            {
+                codigo = tProducto.Text;
+                porcentaje = nPorcentaje.Value.ToString();
+
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Falta capturar el producto.");
             }
         }
     }

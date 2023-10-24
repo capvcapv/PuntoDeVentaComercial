@@ -70,6 +70,7 @@ namespace TerminalPedidos
                     binding = new BindingSource();
                     binding.DataSource = partidas;
                     dataGridView1.DataSource = binding;
+                    dataGridView1.Refresh();
 
                     cargarConceptosCaja(caja);
 
@@ -105,6 +106,8 @@ namespace TerminalPedidos
 
             foreach(var a in partidas)
             {
+                a.descuento = "0.00";
+
                 double valor = 0;
                 
                 if(miDiccionario.TryGetValue(a.codigo,out valor))
@@ -359,6 +362,38 @@ namespace TerminalPedidos
             lTotal.Text = total.ToString("C");
 
             verificarDescuentos();
+
+            dataGridView1.Refresh();
+
+        }
+
+        private void actualizaTablaSinCalculo()
+        {
+
+            double subtotal = 0;
+            double iva = 0;
+            double total = 0;
+
+            foreach (var a in partidas)
+            {
+                AdminPAQSDK.fBuscaProducto(a.codigo);
+
+                StringBuilder impuesto1 = new StringBuilder().Append('\0', 30);
+                AdminPAQSDK.fLeeDatoProducto("CIMPUESTO1", impuesto1, 30);
+
+                subtotal += Convert.ToDouble(a.importe.Replace("$", "")) - ((Convert.ToDouble(impuesto1.ToString()) / 100) * Convert.ToDouble(a.importe.Replace("$", "")));
+                total += Convert.ToDouble(a.importe.Replace("$", ""));
+            }
+
+            iva = total - subtotal;
+
+            lSubtotal.Text = subtotal.ToString("C");
+            lIVA.Text = iva.ToString("C");
+            lTotal.Text = total.ToString("C");
+
+            //verificarDescuentos();
+
+            dataGridView1.Refresh();
 
         }
 
@@ -740,9 +775,26 @@ namespace TerminalPedidos
             frmAutorizacionPrecio precio = new frmAutorizacionPrecio();
             precio.ShowDialog();
 
-            cbPrecio.Items.Add(precio.precioNuevo);
+            if (!String.IsNullOrEmpty(precio.precioNuevo))
+            {
+                cbPrecio.Items.Add(precio.precioNuevo);
+                cbPrecio.SelectedIndex = cbPrecio.Items.Count - 1;
+            }
 
-            cbPrecio.SelectedIndex = cbPrecio.Items.Count - 1;
+            if (!String.IsNullOrEmpty(precio.codigo))
+            {
+                foreach (var a in partidas)
+                {
+                    if (a.codigo ==precio.codigo)
+                    {
+                        a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(precio.porcentaje) / 100))).ToString("C");
+                        a.importe = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(a.cantidad)).ToString("C");
+
+                        actualizaTablaSinCalculo();
+                    
+                    }
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
