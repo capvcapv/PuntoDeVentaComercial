@@ -144,6 +144,12 @@ Namespace SDKContpaq
 
                 End If
 
+                If Not String.IsNullOrEmpty(part(i).Descuento) Then
+
+                    err = AdminPAQSDK.fSetDatoMovimiento("CDESCUENTO1", part(i).Descuento.Replace("$", ""))
+
+                End If
+
                 If Not String.IsNullOrEmpty(part(i).Iva) Then
 
                     err = AdminPAQSDK.fSetDatoMovimiento("CIMPUESTO1", part(i).Iva)

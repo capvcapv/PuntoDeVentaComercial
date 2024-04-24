@@ -52,6 +52,12 @@ namespace AdministradorPV
             tFormato4.Text = cajaActiva.formato4;
             tFormato5.Text = cajaActiva.formato5;
             tFormato6.Text = cajaActiva.formato6;
+            ckImprime1.Checked = cajaActiva.imprime1;
+            ckImprime2.Checked = cajaActiva.imprime2;
+            ckImprime3.Checked = cajaActiva.imprime3;
+            ckImprime4.Checked = cajaActiva.imprime4;
+            ckImprime5.Checked = cajaActiva.imprime5;
+            ckImprime6.Checked = cajaActiva.imprime6;
 
         }
 
@@ -160,6 +166,12 @@ namespace AdministradorPV
             tFormato4.Text = "";
             tFormato5.Text = "";
             tFormato6.Text = "";
+            ckImprime1.Checked = false;
+            ckImprime2.Checked = false;
+            ckImprime3.Checked = false;
+            ckImprime4.Checked = false;
+            ckImprime5.Checked = false;
+            ckImprime6.Checked = false;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -187,6 +199,12 @@ namespace AdministradorPV
                 cajaActiva.formato4 = tFormato4.Text;
                 cajaActiva.formato5 = tFormato5.Text;
                 cajaActiva.formato6 = tFormato6.Text;
+                cajaActiva.imprime1 = ckImprime1.Checked;
+                cajaActiva.imprime2 = ckImprime2.Checked;
+                cajaActiva.imprime3 = ckImprime3.Checked;
+                cajaActiva.imprime4 = ckImprime4.Checked;
+                cajaActiva.imprime5 = ckImprime5.Checked;
+                cajaActiva.imprime6 = ckImprime6.Checked;
 
                 CajasDBContext.actualizar(cajaActiva);
             }
@@ -214,6 +232,12 @@ namespace AdministradorPV
                 cajaActiva.formato4 = tFormato4.Text;
                 cajaActiva.formato5 = tFormato5.Text;
                 cajaActiva.formato6 = tFormato6.Text;
+                cajaActiva.imprime1 = ckImprime1.Checked;
+                cajaActiva.imprime2 = ckImprime2.Checked;
+                cajaActiva.imprime3 = ckImprime3.Checked;
+                cajaActiva.imprime4 = ckImprime4.Checked;
+                cajaActiva.imprime5 = ckImprime5.Checked;
+                cajaActiva.imprime6 = ckImprime6.Checked;
 
                 CajasDBContext.guardar(cajaActiva);
             }
@@ -239,6 +263,12 @@ namespace AdministradorPV
             tFormato4.Text = "";
             tFormato5.Text = "";
             tFormato6.Text = "";
+            ckImprime1.Checked = false;
+            ckImprime2.Checked = false;
+            ckImprime3.Checked = false;
+            ckImprime4.Checked = false;
+            ckImprime5.Checked = false;
+            ckImprime6.Checked = false;
 
             listBox1.Items.Clear();
             var listadoCajas = CajasDBContext.obtenerListado();
@@ -276,6 +306,12 @@ namespace AdministradorPV
                     tFormato4.Text = "";
                     tFormato5.Text = "";
                     tFormato6.Text = "";
+                    ckImprime1.Checked = false;
+                    ckImprime2.Checked = false;
+                    ckImprime3.Checked = false;
+                    ckImprime4.Checked = false;
+                    ckImprime5.Checked = false;
+                    ckImprime6.Checked = false;
                 }
 
                 listBox1.Items.Clear();

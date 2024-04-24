@@ -61,29 +61,37 @@ namespace TerminalPedidos
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+
+            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+
+         
+
+            con.ConnectionString = cadena;
             con.Open();
 
             SqlCommand comando = new SqlCommand("select * from admProductos where CTIPOPRODUCTO=1 and CSTATUSPRODUCTO= 1", con);
 
             SqlDataReader lector = comando.ExecuteReader();
 
+
+          
+
             while (lector.Read())
             {
                 Producto pro = new Producto();
                 pro.codigo = lector.GetValue(1).ToString();
                 pro.nombre = lector.GetValue(2).ToString();
-                pro.existencia = obtenerExistencia(pro.codigo);
-                pro.precio1 = lector.GetValue(43).ToString();
-                pro.precio2 = lector.GetValue(44).ToString();
-                pro.precio3 = lector.GetValue(45).ToString();
-                pro.precio4 = lector.GetValue(46).ToString();
-                pro.precio5 = lector.GetValue(47).ToString();
-                pro.precio6 = lector.GetValue(48).ToString();
-                pro.precio7 = lector.GetValue(49).ToString();
-                pro.precio8 = lector.GetValue(50).ToString();
-                pro.precio9 = lector.GetValue(51).ToString();
-                pro.precio10 = lector.GetValue(52).ToString();
+                pro.existencia = 0.0;
+                pro.precio1 = obtienePrecioIvaSiAplica(lector.GetValue(43).ToString());
+                pro.precio2 = obtienePrecioIvaSiAplica(lector.GetValue(44).ToString());
+                pro.precio3 = obtienePrecioIvaSiAplica(lector.GetValue(45).ToString());
+                pro.precio4 = obtienePrecioIvaSiAplica(lector.GetValue(46).ToString());
+                pro.precio5 = obtienePrecioIvaSiAplica(lector.GetValue(47).ToString());
+                pro.precio6 = obtienePrecioIvaSiAplica(lector.GetValue(48).ToString());
+                pro.precio7 = obtienePrecioIvaSiAplica(lector.GetValue(49).ToString());
+                pro.precio8 = obtienePrecioIvaSiAplica(lector.GetValue(50).ToString());
+                pro.precio9 = obtienePrecioIvaSiAplica(lector.GetValue(51).ToString());
+                pro.precio10 = obtienePrecioIvaSiAplica(lector.GetValue(52).ToString());
 
                 listaProductos.Add(pro);
             }
@@ -95,6 +103,24 @@ namespace TerminalPedidos
 
            
 
+        }
+
+        private string obtienePrecioIvaSiAplica(string importe)
+        {
+            string respuesta = "";
+
+            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+            {
+                
+                respuesta = Math.Round((Convert.ToDouble(importe) / 1.16), 2).ToString();
+                
+            }
+            else
+            {
+                respuesta = importe;
+            }
+
+            return respuesta;
         }
 
         private double obtenerExistencia(string codigo)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -27,7 +28,12 @@ namespace AdministradorPV
         private void frmUsuarios_Load(object sender, EventArgs e)
         {
             var listadoUsuarios = Modelos.Negocio.UsuariosDBContext.obtenerListado();
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
 
+            var agentes = (new Modelos.Negocio.Admagentes()).obtenerTodos(cadena);
+
+            cbAgente.DataSource = agentes;
             listBox1.Items.AddRange(listadoUsuarios.ToArray());
         }
 
@@ -36,6 +42,7 @@ namespace AdministradorPV
             usuarioActivo = null;
             tNombre.Text = "";
             tClave.Text = "";
+            cbAgente.SelectedIndex = 0;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,6 +51,12 @@ namespace AdministradorPV
 
             tNombre.Text = usuarioActivo.nombre;
             tClave.Text = usuarioActivo.clave;
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+
+            var agente = (new Modelos.Negocio.Admagentes()).obtenerId(usuarioActivo.agente,cadena);
+
+            cbAgente.SelectedItem = agente;
 
         }
 
@@ -53,7 +66,7 @@ namespace AdministradorPV
             {
                 usuarioActivo.nombre = tNombre.Text;
                 usuarioActivo.clave = tClave.Text;
-
+                usuarioActivo.agente = ((Modelos.Negocio.Admagentes)cbAgente.SelectedItem).CIDAGENTE;
                 Modelos.Negocio.UsuariosDBContext.actualizar(usuarioActivo);
             }
             else
@@ -61,6 +74,7 @@ namespace AdministradorPV
                 usuarioActivo = new Modelos.Negocio.Usuarios();
                 usuarioActivo.nombre = tNombre.Text;
                 usuarioActivo.clave = tClave.Text;
+                usuarioActivo.agente = ((Modelos.Negocio.Admagentes)cbAgente.SelectedItem).CIDAGENTE;
 
                 Modelos.Negocio.UsuariosDBContext.guardar(usuarioActivo);
             }
@@ -68,6 +82,7 @@ namespace AdministradorPV
             usuarioActivo = null;
             tNombre.Text = "";
             tClave.Text = "";
+            cbAgente.SelectedIndex = 0;
 
             listBox1.Items.Clear();
 
@@ -86,7 +101,7 @@ namespace AdministradorPV
                     usuarioActivo = null;
                     tNombre.Text = "";
                     tClave.Text = "";
-
+                    cbAgente.SelectedIndex = 0;
                     listBox1.Items.Clear();
 
                     var listadoUsuarios = Modelos.Negocio.UsuariosDBContext.obtenerListado();

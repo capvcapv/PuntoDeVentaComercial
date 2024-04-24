@@ -1,7 +1,7 @@
 ﻿
 namespace AdministradorPV
 {
-    partial class frmUsuarios
+    partial class frmDescuentos
     {
         /// <summary>
         /// Required designer variable.
@@ -29,20 +29,21 @@ namespace AdministradorPV
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuarios));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDescuentos));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tNombre = new System.Windows.Forms.TextBox();
-            this.tClave = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbAgente = new System.Windows.Forms.ComboBox();
+            this.tPrefijo = new System.Windows.Forms.TextBox();
+            this.tDescuento = new System.Windows.Forms.NumericUpDown();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tDescuento)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -54,8 +55,8 @@ namespace AdministradorPV
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(458, 25);
-            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Size = new System.Drawing.Size(570, 25);
+            this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripButton1
@@ -90,91 +91,84 @@ namespace AdministradorPV
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton4.Text = "Salir";
+            this.toolStripButton4.Size = new System.Drawing.Size(59, 22);
+            this.toolStripButton4.Text = "Cerrar";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
-            // listBox1
+            // objectListView1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 28);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(191, 329);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.objectListView1.AllColumns.Add(this.olvColumn1);
+            this.objectListView1.CellEditUseWholeCell = false;
+            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1});
+            this.objectListView1.HideSelection = false;
+            this.objectListView1.Location = new System.Drawing.Point(14, 38);
+            this.objectListView1.Name = "objectListView1";
+            this.objectListView1.Size = new System.Drawing.Size(188, 225);
+            this.objectListView1.TabIndex = 2;
+            this.objectListView1.UseCompatibleStateImageBehavior = false;
+            this.objectListView1.View = System.Windows.Forms.View.Details;
+            this.objectListView1.SelectedIndexChanged += new System.EventHandler(this.objectListView1_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(210, 51);
+            this.label1.Location = new System.Drawing.Point(226, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Nombre:";
+            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Prefijo";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(210, 120);
+            this.label2.Location = new System.Drawing.Point(226, 112);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Clave:";
+            this.label2.Size = new System.Drawing.Size(70, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "% Descuento";
             // 
-            // tNombre
+            // tPrefijo
             // 
-            this.tNombre.Location = new System.Drawing.Point(216, 77);
-            this.tNombre.Name = "tNombre";
-            this.tNombre.Size = new System.Drawing.Size(230, 20);
-            this.tNombre.TabIndex = 4;
+            this.tPrefijo.Location = new System.Drawing.Point(229, 79);
+            this.tPrefijo.Name = "tPrefijo";
+            this.tPrefijo.Size = new System.Drawing.Size(165, 20);
+            this.tPrefijo.TabIndex = 5;
             // 
-            // tClave
+            // tDescuento
             // 
-            this.tClave.Location = new System.Drawing.Point(213, 149);
-            this.tClave.Name = "tClave";
-            this.tClave.PasswordChar = '*';
-            this.tClave.Size = new System.Drawing.Size(233, 20);
-            this.tClave.TabIndex = 5;
+            this.tDescuento.Location = new System.Drawing.Point(229, 141);
+            this.tDescuento.Name = "tDescuento";
+            this.tDescuento.Size = new System.Drawing.Size(96, 20);
+            this.tDescuento.TabIndex = 6;
             // 
-            // label3
+            // olvColumn1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(210, 204);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Agente por defecto:";
+            this.olvColumn1.AspectName = "prefijo";
+            this.olvColumn1.FillsFreeSpace = true;
+            this.olvColumn1.Groupable = false;
+            this.olvColumn1.Text = "Prefijo";
             // 
-            // cbAgente
-            // 
-            this.cbAgente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAgente.FormattingEnabled = true;
-            this.cbAgente.Location = new System.Drawing.Point(213, 220);
-            this.cbAgente.Name = "cbAgente";
-            this.cbAgente.Size = new System.Drawing.Size(233, 21);
-            this.cbAgente.TabIndex = 7;
-            // 
-            // frmUsuarios
+            // frmDescuentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(458, 362);
-            this.Controls.Add(this.cbAgente);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.tClave);
-            this.Controls.Add(this.tNombre);
+            this.ClientSize = new System.Drawing.Size(570, 277);
+            this.Controls.Add(this.tDescuento);
+            this.Controls.Add(this.tPrefijo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.objectListView1);
             this.Controls.Add(this.toolStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmUsuarios";
+            this.Name = "frmDescuentos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Usuarios";
-            this.Load += new System.EventHandler(this.frmUsuarios_Load);
+            this.Text = "Descuentos";
+            this.Load += new System.EventHandler(this.frmDescuentos_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tDescuento)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,12 +181,11 @@ namespace AdministradorPV
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ListBox listBox1;
+        private BrightIdeasSoftware.ObjectListView objectListView1;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tNombre;
-        private System.Windows.Forms.TextBox tClave;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cbAgente;
+        private System.Windows.Forms.TextBox tPrefijo;
+        private System.Windows.Forms.NumericUpDown tDescuento;
     }
 }

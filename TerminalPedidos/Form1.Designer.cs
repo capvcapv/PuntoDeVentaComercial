@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -40,6 +40,7 @@
             this.lCliente = new System.Windows.Forms.Label();
             this.bLimpiar = new System.Windows.Forms.Button();
             this.bReimprimir = new System.Windows.Forms.Button();
+            this.cbConcepto = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -50,7 +51,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lTotal = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.cbConcepto = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tCodigo = new System.Windows.Forms.TextBox();
@@ -83,7 +83,6 @@
             this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.cbConcepto, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -99,23 +98,23 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 47);
             this.dataGridView1.MultiSelect = false;
@@ -137,6 +136,7 @@
             this.flowLayoutPanel2.Controls.Add(this.lCliente);
             this.flowLayoutPanel2.Controls.Add(this.bLimpiar);
             this.flowLayoutPanel2.Controls.Add(this.bReimprimir);
+            this.flowLayoutPanel2.Controls.Add(this.cbConcepto);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -189,30 +189,42 @@
             // 
             // bLimpiar
             // 
+            this.bLimpiar.BackColor = System.Drawing.Color.White;
             this.bLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.bLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bLimpiar.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bLimpiar.ForeColor = System.Drawing.Color.Black;
+            this.bLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("bLimpiar.Image")));
             this.bLimpiar.Location = new System.Drawing.Point(376, 3);
             this.bLimpiar.Name = "bLimpiar";
-            this.bLimpiar.Size = new System.Drawing.Size(141, 34);
+            this.bLimpiar.Size = new System.Drawing.Size(62, 35);
             this.bLimpiar.TabIndex = 5;
-            this.bLimpiar.Text = "Limpiar Venta";
-            this.bLimpiar.UseVisualStyleBackColor = true;
+            this.bLimpiar.UseVisualStyleBackColor = false;
             this.bLimpiar.Click += new System.EventHandler(this.bLimpiar_Click);
             // 
             // bReimprimir
             // 
-            this.bReimprimir.BackColor = System.Drawing.SystemColors.Window;
+            this.bReimprimir.BackColor = System.Drawing.Color.White;
             this.bReimprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bReimprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bReimprimir.Location = new System.Drawing.Point(523, 3);
+            this.bReimprimir.Image = ((System.Drawing.Image)(resources.GetObject("bReimprimir.Image")));
+            this.bReimprimir.Location = new System.Drawing.Point(444, 3);
             this.bReimprimir.Name = "bReimprimir";
-            this.bReimprimir.Size = new System.Drawing.Size(113, 34);
+            this.bReimprimir.Size = new System.Drawing.Size(57, 34);
             this.bReimprimir.TabIndex = 6;
-            this.bReimprimir.Text = "Reimprimir";
             this.bReimprimir.UseVisualStyleBackColor = false;
             this.bReimprimir.Click += new System.EventHandler(this.bReimprimir_Click);
+            // 
+            // cbConcepto
+            // 
+            this.cbConcepto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConcepto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbConcepto.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbConcepto.FormattingEnabled = true;
+            this.cbConcepto.Location = new System.Drawing.Point(507, 3);
+            this.cbConcepto.Name = "cbConcepto";
+            this.cbConcepto.Size = new System.Drawing.Size(237, 31);
+            this.cbConcepto.TabIndex = 7;
             // 
             // tableLayoutPanel2
             // 
@@ -333,18 +345,6 @@
             this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // cbConcepto
-            // 
-            this.cbConcepto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbConcepto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbConcepto.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConcepto.FormattingEnabled = true;
-            this.cbConcepto.Location = new System.Drawing.Point(1030, 3);
-            this.cbConcepto.Name = "cbConcepto";
-            this.cbConcepto.Size = new System.Drawing.Size(174, 30);
-            this.cbConcepto.TabIndex = 3;
-            this.cbConcepto.TextChanged += new System.EventHandler(this.cbConcepto_TextChanged);
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
@@ -405,10 +405,13 @@
             0,
             0,
             0});
+            this.tCantidad.Enter += new System.EventHandler(this.tCantidad_Enter);
+            this.tCantidad.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tCantidad_KeyUp);
             // 
             // cbPrecio
             // 
             this.cbPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPrecio.Enabled = false;
             this.cbPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPrecio.FormattingEnabled = true;
             this.cbPrecio.Location = new System.Drawing.Point(320, 3);
@@ -567,12 +570,12 @@
         private System.Windows.Forms.Button bLimpiar;
         private System.Windows.Forms.Button bReimprimir;
         public System.Windows.Forms.TextBox tPrecio;
-        private System.Windows.Forms.ComboBox cbConcepto;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox cbAlmacen;
         public System.Windows.Forms.ComboBox cbPrecio;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ComboBox cbConcepto;
     }
 }
 

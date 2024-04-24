@@ -98,5 +98,11 @@ namespace AdministradorPV
         {
             this.Close();
         }
+
+        private void descuentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDescuentos a = new frmDescuentos();
+            a.ShowDialog();
+        }
     }
 }

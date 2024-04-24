@@ -29,6 +29,12 @@ namespace Modelos.Negocio
         public string formato5 { get; set; }
         public string nombre6 { get; set; }
         public string formato6 { get; set; }
+        public bool imprime1 { get; set; }
+        public bool imprime2 { get; set; }
+        public bool imprime3 { get; set; }
+        public bool imprime4 { get; set; }
+        public bool imprime5 { get; set; }
+        public bool imprime6 { get; set; }
 
         public override string ToString()
         {

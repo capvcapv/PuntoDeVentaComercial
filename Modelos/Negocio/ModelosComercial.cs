@@ -1091,6 +1091,26 @@ namespace Modelos.Negocio
 
 		public string CSCAGENTE3 { get; set; }
 
+        public override string ToString()
+        {
+			return CNOMBREAGENTE;
+        }
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+				return false;
+
+			Admagentes otroAgente = (Admagentes)obj;
+			return (CIDAGENTE == otroAgente.CIDAGENTE);
+		}
+
+		// Opcionalmente, también puedes sobrescribir el método GetHashCode para mejorar el rendimiento en colecciones hash.
+		public override int GetHashCode()
+		{
+			return CIDAGENTE.GetHashCode();
+		}
+
 	}
 
 	[PrimaryKey("CIDTIPOACUMULADO")]

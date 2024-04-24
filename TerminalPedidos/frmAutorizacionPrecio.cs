@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Modelos.Negocio;
 
 namespace TerminalPedidos
 {
@@ -46,10 +47,23 @@ namespace TerminalPedidos
         {
             if (!String.IsNullOrEmpty(tProducto.Text))
             {
-                codigo = tProducto.Text;
-                porcentaje = nPorcentaje.Value.ToString();
+                var descuentos = (new Descuentos()).obtenerTodos();
+                
+                foreach(var a in descuentos)
+                {
+                    if (tProducto.Text.StartsWith(a.prefijo))
+                    {
 
-                this.Close();
+                        if (Convert.ToDouble( nPorcentaje.Value) <= a.descuento)
+                        {
+                            codigo = tProducto.Text;
+                            porcentaje = nPorcentaje.Value.ToString();
+
+                            this.Close();
+                        }
+                    }
+                }
+
             }
             else
             {

@@ -177,6 +177,7 @@
             this.ckImprimeTicket.TabIndex = 14;
             this.ckImprimeTicket.Text = "Imprime ticket";
             this.ckImprimeTicket.UseVisualStyleBackColor = true;
+            this.ckImprimeTicket.Visible = false;
             // 
             // frmConfiguracion
             // 

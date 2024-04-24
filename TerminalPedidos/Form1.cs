@@ -31,12 +31,35 @@ namespace TerminalPedidos
 
         }
 
+        private void CambiarColorPaneles(Control control, string colorHexadecimal)
+        {
+            // Convertir el color hexadecimal a Color
+            Color color = ColorTranslator.FromHtml(colorHexadecimal);
+
+            // Iterar sobre todos los controles del formulario
+            foreach (Control ctrl in control.Controls)
+            {
+                // Verificar si el control actual es un Panel
+                if (ctrl is Panel)
+                {
+                    // Cambiar el color de fondo del Panel al color especificado
+                    ctrl.BackColor = color;
+                }
+
+                // Llamar recursivamente a la función para los controles secundarios
+                if (ctrl.HasChildren)
+                {
+                    CambiarColorPaneles(ctrl, colorHexadecimal);
+                }
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             var config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             pictureBox1.Image = ByteArrayToImage(config.logo);
-
+            CambiarColorPaneles(this, ConfigurationManager.AppSettings["color"]);
             
 
             acceso.ShowDialog();
@@ -175,21 +198,17 @@ namespace TerminalPedidos
 
         private void cargaAgentes()
         {
-            AdminPAQSDK.fPosPrimerAgente();
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
 
-            while (AdminPAQSDK.fPosEOFAgente() != 1)
-            {
+            var agentes = (new Modelos.Negocio.Admagentes()).obtenerTodos(cadena);
 
-                StringBuilder codigo = new StringBuilder().Append('\0', 30);
-                StringBuilder nombre = new StringBuilder().Append('\0', 60);
-                AdminPAQSDK.fLeeDatoAgente("CCODIGOAGENTE", codigo,30);
-                AdminPAQSDK.fLeeDatoAgente("CNOMBREAGENTE", nombre, 60);
-                cbAgente.Items.Add(codigo.ToString()+" - " + nombre.ToString());
+            cbAgente.DataSource = agentes;
 
-                AdminPAQSDK.fPosSiguienteAgente();
-            }
+            var agente_venta_actual = (new Admagentes()).obtenerId(acceso.usuarioActivo.agente,cadena);
 
-            cbAgente.SelectedIndex = 0;
+            cbAgente.SelectedItem = agente_venta_actual;
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -242,77 +261,103 @@ namespace TerminalPedidos
             tCodigo.Focus();
         }
 
-        private void tCodigo_KeyUp(object sender, KeyEventArgs e)
+        private void agregarPartida()
         {
-            
-            if (e.KeyCode.ToString() == "Return")
+            if (clienteActivo != null)
             {
-                if (clienteActivo != null)
+                if (!String.IsNullOrEmpty(tCodigo.Text))
                 {
-                    if (!String.IsNullOrEmpty(tCodigo.Text))
+                    if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) == 0)
                     {
-                        if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) == 0)
+                        StringBuilder codigo = new StringBuilder().Append('\0', 30);
+                        StringBuilder producto = new StringBuilder().Append('\0', 60);
+                        StringBuilder precio = new StringBuilder().Append('\0', 30);
+                        StringBuilder puntos = new StringBuilder().Append('\0', 30);
+
+                        AdminPAQSDK.fLeeDatoProducto("CCODIGOPRODUCTO", codigo, 30);
+                        AdminPAQSDK.fLeeDatoProducto("CNOMBREPRODUCTO", producto, 60);
+                        AdminPAQSDK.fLeeDatoProducto("CPRECIO1", precio, 30);
+                        AdminPAQSDK.fLeeDatoProducto("CTEXTOEXTRA1", puntos, 30);
+
+                        Partida part = new Partida();
+                        part.codigo = codigo.ToString();
+                        part.producto = producto.ToString();
+                        //part.descuento = clienteActivo.descuento;
+                        part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
+
+                        if (String.IsNullOrEmpty(cbPrecio.Text))
                         {
-                            StringBuilder codigo = new StringBuilder().Append('\0', 30);
-                            StringBuilder producto = new StringBuilder().Append('\0', 60);
-                            StringBuilder precio = new StringBuilder().Append('\0', 30);
-                            StringBuilder puntos = new StringBuilder().Append('\0', 30);
 
-                            AdminPAQSDK.fLeeDatoProducto("CCODIGOPRODUCTO", codigo, 30);
-                            AdminPAQSDK.fLeeDatoProducto("CNOMBREPRODUCTO", producto, 60);
-                            AdminPAQSDK.fLeeDatoProducto("CPRECIO1", precio, 30);
-                            AdminPAQSDK.fLeeDatoProducto("CTEXTOEXTRA1", puntos, 30);
+                            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                            {
 
-                            Partida part = new Partida();
-                            part.codigo = codigo.ToString();
-                            part.producto = producto.ToString();
-                            //part.descuento = clienteActivo.descuento;
-                            part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
+                                part.precio = Math.Round((Convert.ToDouble(precio) / 1.16), 2).ToString();
 
-                            if (String.IsNullOrEmpty(cbPrecio.Text))
+                            }
+                            else
                             {
                                 part.precio = precio.ToString();//tPrecio.Text;
+                            }
+
+                           
+                        }
+                        else
+                        {
+                            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("Flase"))
+                            {
+
+                                part.precio = Math.Round((Convert.ToDouble(cbPrecio.Text.Replace("$","").Replace(",","")) / 1.16), 2).ToString();
+
                             }
                             else
                             {
                                 part.precio = cbPrecio.Text;//tPrecio.Text;
                             }
-                            
-                            
-                            part.cantidad = tCantidad.Value.ToString();
-                            part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
-                            part.descuento = "$ 0.00";
-                            part.puntos = puntos.ToString();
-
-                            binding.Add(part);
-
-                            actualizaTabla();
-
-                            cbPrecio.Items.Clear();
-                            cbPrecio.Refresh();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Producto no existe en catálogo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
-                        
-                        tCantidad.Value = 1;
-                        limpiaProductosARX();
 
+                        part.cantidad = tCantidad.Value.ToString();
+                        part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
+                        part.descuento = "$ 0.00";
+                        part.puntos = puntos.ToString();
+
+                        binding.Add(part);
+
+                        actualizaTabla();
+
+                        cbPrecio.Items.Clear();
+                        cbPrecio.Refresh();
                     }
                     else
                     {
-                        MessageBox.Show("Debe capturar un código válido.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        MessageBox.Show("Producto no existe en catálogo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
+
+                    tCantidad.Value = 1;
+                    limpiaProductosARX();
+
                 }
                 else
                 {
-                    MessageBox.Show("Debe seleccionar un cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Debe capturar un código válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                                
-                tCodigo.Text = "";
-                tPrecio.Text = (0.0).ToString("C");
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            tCodigo.Text = "";
+            tPrecio.Text = (0.0).ToString("C");
+        }
+
+        private void tCodigo_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+            if (e.KeyCode.ToString() == "Return")
+            {
+                tCantidad.Focus();
             }
             else if (e.KeyValue == (int)Keys.F3)
             {
@@ -539,6 +584,7 @@ namespace TerminalPedidos
 
                 string formato = "";
                 string titulo = "";
+                bool seImprime = false;
 
                 switch (cbConcepto.SelectedIndex)
                 {
@@ -546,37 +592,43 @@ namespace TerminalPedidos
                         fac.concepto = caja.conceptoFactura;
                         formato = caja.formato1;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime1;
                         break;
                     case 1:
                         fac.concepto = caja.conceptoRemision;
                         formato = caja.formato2;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime2;
                         break;
                     case 2:
                         fac.concepto = caja.conceptoPedido;
                         formato = caja.formato3;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime3;
                         break;
                     case 3:
                         fac.concepto = caja.conceptoPedido2;
                         formato = caja.formato4;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime4;
                         break;
                     case 4:
                         fac.concepto = caja.conceptoCotizacion;
                         formato = caja.formato5;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime5;
                         break;
                     case 5:
                         fac.concepto = caja.conceptoCotizacion2;
                         formato = caja.formato6;
                         titulo = cbConcepto.Text;
+                        seImprime = caja.imprime6;
                         break;
                     default:
                         break;
                 }
 
-                fac.agente = cbAgente.Text.Split('-')[0];
+                fac.agente = ((Admagentes)cbAgente.SelectedItem).CCODIGOAGENTE;
                 fac.referencia = referencia;
                 fac.textoextra1 = turno.turnoActivo.id.ToString();
                 fac.observaciones = observacion;
@@ -591,7 +643,14 @@ namespace TerminalPedidos
                     part.Cantidad = a.cantidad;
                     part.Codigo = a.codigo;
                     part.Nombre = a.producto;
-                    part.Precio = (Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))).ToString("C");
+                    part.Precio = (Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))).ToString("C");
+                    part.Descuento = Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", "")).ToString("C");
+
+                    if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                    {
+                        part.Precio = Math.Round(Convert.ToDouble(part.Precio) / 1.16, 2).ToString();
+                    }
+
                     part.Almancen = a.almacen;
 
                     fac.part.Add(part);
@@ -628,7 +687,7 @@ namespace TerminalPedidos
                 //formatoVisor.ShowDialog();
 
 
-                if (Convert.ToBoolean(configGen.imprime_ticket))
+                if (seImprime)
                 {
                     var reporte = new ReportDocument();
                     string execPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -651,51 +710,51 @@ namespace TerminalPedidos
                         reporte.SetParameterValue("titulo", titulo);
                     }
 
-                    //PrintDialog dialog1 = new PrintDialog();
-                    //dialog1.AllowSomePages = true;
-                    //dialog1.AllowPrintToFile = false;
+                    PrintDialog dialog1 = new PrintDialog();
+                    dialog1.AllowSomePages = true;
+                    dialog1.AllowPrintToFile = false;
 
-                    //if (dialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (dialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        int copies = 1;// dialog1.PrinterSettings.Copies;
+                        int fromPage = dialog1.PrinterSettings.FromPage;
+                        int toPage = dialog1.PrinterSettings.ToPage;
+                        bool collate = dialog1.PrinterSettings.Collate;
+
+                        reporte.PrintOptions.PrinterName = dialog1.PrinterSettings.PrinterName;
+
+                        if (formato.Contains("rptTicket"))
+                        {
+                            reporte.SetParameterValue("copia", "ORIGINAL");
+                            reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                        }
+                        else
+                        {
+                            reporte.SetParameterValue("copia", "ORIGINAL");
+                            reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+
+                            reporte.SetParameterValue("copia", "COPIA");
+                            reporte.PrintToPrinter(copies, collate, fromPage, toPage);
+                        }
+
+
+                    }
+
+                    dialog1.Dispose();
+
+                    //if (formato.Contains("rptTicket"))
                     //{
-                    //    int copies = 1;// dialog1.PrinterSettings.Copies;
-                    //    int fromPage = dialog1.PrinterSettings.FromPage;
-                    //    int toPage = dialog1.PrinterSettings.ToPage;
-                    //    bool collate = dialog1.PrinterSettings.Collate;
-
-                    //    reporte.PrintOptions.PrinterName = dialog1.PrinterSettings.PrinterName;
-
-                    //    if (formato.Contains("rptTicket"))
-                    //    {
-                    //        reporte.SetParameterValue("copia", "ORIGINAL");
-                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
-                    //    }
-                    //    else
-                    //    {
-                    //        reporte.SetParameterValue("copia", "ORIGINAL");
-                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
-
-                    //        reporte.SetParameterValue("copia", "COPIA");
-                    //        reporte.PrintToPrinter(copies, collate, fromPage, toPage);
-                    //    }
-
-
+                    //    reporte.SetParameterValue("copia", "ORIGINAL");
+                    //    reporte.PrintToPrinter(1, false, 0, 0);
                     //}
+                    //else
+                    //{
+                    //    reporte.SetParameterValue("copia", "ORIGINAL");
+                    //    reporte.PrintToPrinter(1, false, 0, 0);
 
-                    //dialog1.Dispose();
-
-                    if (formato.Contains("rptTicket"))
-                    {
-                        reporte.SetParameterValue("copia", "ORIGINAL");
-                        reporte.PrintToPrinter(1, false, 0, 0);
-                    }
-                    else
-                    {
-                        reporte.SetParameterValue("copia", "ORIGINAL");
-                        reporte.PrintToPrinter(1, false, 0, 0);
-
-                        reporte.SetParameterValue("copia", "COPIA");
-                        reporte.PrintToPrinter(1, false, 0, 0);
-                    }
+                    //    reporte.SetParameterValue("copia", "COPIA");
+                    //    reporte.PrintToPrinter(1, false, 0, 0);
+                    //}
 
                     reporte.Dispose();
                 }
@@ -810,6 +869,20 @@ namespace TerminalPedidos
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void tCantidad_Enter(object sender, EventArgs e)
+        {
+            tCantidad.Select(0, tCantidad.Text.Length);
+        }
+
+        private void tCantidad_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "Return")
+            {
+                agregarPartida();
+                tCodigo.Focus();
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Modelos.Negocio
         public int id { get; set; }
         public string nombre { get; set; }
         public string clave { get; set; }
+        public int agente { get; set; }
 
         public override string ToString()
         {
