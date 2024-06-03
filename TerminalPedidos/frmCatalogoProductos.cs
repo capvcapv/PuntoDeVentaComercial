@@ -26,37 +26,6 @@ namespace TerminalPedidos
 
         private void frmCatalogoProductos_Load(object sender, EventArgs e)
         {
-            //AdminPAQSDK.fPosPrimerProducto();
-
-            //while (AdminPAQSDK.fPosEOFProducto() != 1)
-            //{
-            //    StringBuilder codigo = new StringBuilder().Append('\0', 30);
-            //    StringBuilder nombre = new StringBuilder().Append('\0', 60);
-            //    StringBuilder precio1 = new StringBuilder().Append('\0', 30);
-            //    StringBuilder precio2 = new StringBuilder().Append('\0', 30);
-            //    StringBuilder tipoProducto = new StringBuilder().Append('\0', 30);
-
-            //    AdminPAQSDK.fLeeDatoProducto("CTIPOPRODUCTO", tipoProducto, 30);
-
-            //    if(tipoProducto.ToString().Replace(" ", "") == "1")
-            //    {
-            //        AdminPAQSDK.fLeeDatoProducto("CCODIGOPRODUCTO", codigo, 30);
-            //        AdminPAQSDK.fLeeDatoProducto("CNOMBREPRODUCTO", nombre, 60);
-            //        AdminPAQSDK.fLeeDatoProducto("CPRECIO1", precio1, 30);
-            //        AdminPAQSDK.fLeeDatoProducto("CPRECIO2", precio2, 30);
-
-            //        Producto pro = new Producto();
-            //        pro.codigo = codigo.ToString();
-            //        pro.nombre = nombre.ToString();
-            //        pro.precio1 = precio1.ToString();
-            //        pro.precio2 = precio2.ToString();
-
-            //        listaProductos.Add(pro);
-
-            //    }
-
-            //    AdminPAQSDK.fPosSiguienteProducto();
-            //}
 
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
@@ -73,7 +42,7 @@ namespace TerminalPedidos
 
             SqlDataReader lector = comando.ExecuteReader();
 
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                         
           
 
             while (lector.Read())
@@ -81,7 +50,7 @@ namespace TerminalPedidos
                 Producto pro = new Producto();
                 pro.codigo = lector.GetValue(1).ToString();
                 pro.nombre = lector.GetValue(2).ToString();
-                pro.existencia = 0.0;
+                pro.existencia = obtenerExistencia(pro.codigo);
                 pro.precio1 = obtienePrecioIvaSiAplica(lector.GetValue(43).ToString());
                 pro.precio2 = obtienePrecioIvaSiAplica(lector.GetValue(44).ToString());
                 pro.precio3 = obtienePrecioIvaSiAplica(lector.GetValue(45).ToString());

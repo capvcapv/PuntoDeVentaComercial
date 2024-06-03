@@ -99,6 +99,7 @@ Namespace SDKContpaq
 
         Public Property Almancen As String
         Public Property Descuento As String
+        Public Property PorcentajeDescuento As String
 
     End Class
 End Namespace

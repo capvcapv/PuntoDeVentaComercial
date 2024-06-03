@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using Modelos.Negocio;
+using System.Data.SqlClient;
 
 namespace TerminalPedidos
 {
@@ -261,78 +262,119 @@ namespace TerminalPedidos
             tCodigo.Focus();
         }
 
+        private double obtenerExistencia(string codigo)
+        {
+            double existencia = 0.0;
+
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+            con.Open();
+
+            string sql = "WITH movimientos AS ((SELECT entradas.cidalmacen, entradas.cidproducto, entradas.cunidades as cunidades FROM  dbo.admMovimientos entradas WHERE entradas.cafectadoinventario = 1 AND entradas.cafectaexistencia = 1) UNION ALL(SELECT salidas.cidalmacen, salidas.cidproducto, -1 * salidas.cunidades AS CUNIDADES FROM dbo.admMovimientos salidas WHERE salidas.cafectadoinventario = 1 AND salidas.cafectaexistencia = 2)) SELECT prod.ccodigoproducto as CODIGO_PRODUCTO, prod.cnombreproducto as NOMBRE_PRODUCTO, alm.ccodigoalmacen as ALMACEN, ROUND(SUM(cunidades), 2, 1) as EXISTENCIA FROM movimientos mov INNER JOIN dbo.admProductos prod ON prod.cidproducto = mov.cidproducto INNER JOIN dbo.admAlmacenes alm ON alm.cidalmacen = mov.cidalmacen WHERE alm.CCODIGOALMACEN = '1' and prod.ccodigoproducto='" + codigo + "' GROUP BY prod.ccodigoproducto, prod.cnombreproducto, alm.ccodigoalmacen;";
+
+            SqlCommand comando = new SqlCommand(sql, con);
+
+            SqlDataReader lector = comando.ExecuteReader();
+
+            while (lector.Read())
+            {
+                if (lector["EXISTENCIA"] == DBNull.Value)
+                {
+                    return 0.0;
+                }
+                else
+                {
+                    return lector.GetDouble(3);
+                }
+            }
+
+            lector.Close();
+            con.Close();
+
+            return existencia;
+        }
+
         private void agregarPartida()
         {
             if (clienteActivo != null)
             {
                 if (!String.IsNullOrEmpty(tCodigo.Text))
                 {
-                    if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) == 0)
+                    if (obtenerExistencia(tCodigo.Text) >= Convert.ToDouble(tCantidad.Value))
                     {
-                        StringBuilder codigo = new StringBuilder().Append('\0', 30);
-                        StringBuilder producto = new StringBuilder().Append('\0', 60);
-                        StringBuilder precio = new StringBuilder().Append('\0', 30);
-                        StringBuilder puntos = new StringBuilder().Append('\0', 30);
-
-                        AdminPAQSDK.fLeeDatoProducto("CCODIGOPRODUCTO", codigo, 30);
-                        AdminPAQSDK.fLeeDatoProducto("CNOMBREPRODUCTO", producto, 60);
-                        AdminPAQSDK.fLeeDatoProducto("CPRECIO1", precio, 30);
-                        AdminPAQSDK.fLeeDatoProducto("CTEXTOEXTRA1", puntos, 30);
-
-                        Partida part = new Partida();
-                        part.codigo = codigo.ToString();
-                        part.producto = producto.ToString();
-                        //part.descuento = clienteActivo.descuento;
-                        part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
-
-                        if (String.IsNullOrEmpty(cbPrecio.Text))
+                        if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) == 0)
                         {
+                            StringBuilder codigo = new StringBuilder().Append('\0', 30);
+                            StringBuilder producto = new StringBuilder().Append('\0', 60);
+                            StringBuilder precio = new StringBuilder().Append('\0', 30);
+                            StringBuilder puntos = new StringBuilder().Append('\0', 30);
 
-                            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                            AdminPAQSDK.fLeeDatoProducto("CCODIGOPRODUCTO", codigo, 30);
+                            AdminPAQSDK.fLeeDatoProducto("CNOMBREPRODUCTO", producto, 60);
+                            AdminPAQSDK.fLeeDatoProducto("CPRECIO1", precio, 30);
+                            AdminPAQSDK.fLeeDatoProducto("CTEXTOEXTRA1", puntos, 30);
+
+                            Partida part = new Partida();
+                            part.codigo = codigo.ToString();
+                            part.producto = producto.ToString();
+                            //part.descuento = clienteActivo.descuento;
+                            part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
+
+                            if (String.IsNullOrEmpty(cbPrecio.Text))
                             {
 
-                                part.precio = Math.Round((Convert.ToDouble(precio) / 1.16), 2).ToString();
+                                if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                                {
+
+                                    part.precio = Math.Round((Convert.ToDouble(precio) / 1.16), 2).ToString();
+
+                                }
+                                else
+                                {
+                                    part.precio = precio.ToString();//tPrecio.Text;
+                                }
+
 
                             }
                             else
                             {
-                                part.precio = precio.ToString();//tPrecio.Text;
+                                if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("Flase"))
+                                {
+
+                                    part.precio = Math.Round((Convert.ToDouble(cbPrecio.Text.Replace("$", "").Replace(",", "")) / 1.16), 2).ToString();
+
+                                }
+                                else
+                                {
+                                    part.precio = cbPrecio.Text;//tPrecio.Text;
+                                }
                             }
 
-                           
+
+                            part.cantidad = tCantidad.Value.ToString();
+                            part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
+                            part.descuento = "$ 0.00";
+                            part.porcentajeDescuento = "0";
+                            part.puntos = puntos.ToString();
+
+                            binding.Add(part);
+
+                            actualizaTabla();
+
+                            cbPrecio.Items.Clear();
+                            cbPrecio.Refresh();
                         }
                         else
                         {
-                            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("Flase"))
-                            {
-
-                                part.precio = Math.Round((Convert.ToDouble(cbPrecio.Text.Replace("$","").Replace(",","")) / 1.16), 2).ToString();
-
-                            }
-                            else
-                            {
-                                part.precio = cbPrecio.Text;//tPrecio.Text;
-                            }
+                            MessageBox.Show("Producto no existe en catálogo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-
-
-                        part.cantidad = tCantidad.Value.ToString();
-                        part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
-                        part.descuento = "$ 0.00";
-                        part.puntos = puntos.ToString();
-
-                        binding.Add(part);
-
-                        actualizaTabla();
-
-                        cbPrecio.Items.Clear();
-                        cbPrecio.Refresh();
                     }
                     else
                     {
-                        MessageBox.Show("Producto no existe en catálogo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Producto no tiene existencias suficientes.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
 
                     tCantidad.Value = 1;
                     limpiaProductosARX();
@@ -411,6 +453,8 @@ namespace TerminalPedidos
             dataGridView1.Refresh();
 
         }
+
+
 
         private void actualizaTablaSinCalculo()
         {
@@ -560,7 +604,6 @@ namespace TerminalPedidos
         private void bTerminar_Click(object sender, EventArgs e)
         {
 
-
             if (clienteActivo != null)
             {
                 var configGen = Modelos.Negocio.ConfigurationDBContext.obtener();
@@ -645,6 +688,7 @@ namespace TerminalPedidos
                     part.Nombre = a.producto;
                     part.Precio = (Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))).ToString("C");
                     part.Descuento = Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", "")).ToString("C");
+                    part.PorcentajeDescuento = a.porcentajeDescuento;
 
                     if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
                     {
@@ -846,6 +890,7 @@ namespace TerminalPedidos
                 {
                     if (a.codigo ==precio.codigo)
                     {
+                        a.porcentajeDescuento = precio.porcentaje;
                         a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(precio.porcentaje) / 100))).ToString("C");
                         a.importe = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(a.cantidad)).ToString("C");
 

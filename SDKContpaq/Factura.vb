@@ -144,9 +144,9 @@ Namespace SDKContpaq
 
                 End If
 
-                If Not String.IsNullOrEmpty(part(i).Descuento) Then
+                If Not String.IsNullOrEmpty(part(i).PorcentajeDescuento) Then
 
-                    err = AdminPAQSDK.fSetDatoMovimiento("CDESCUENTO1", part(i).Descuento.Replace("$", ""))
+                    err = AdminPAQSDK.fSetDatoMovimiento("CPORCENTAJEDESCUENTO1", part(i).PorcentajeDescuento.Replace("$", ""))
 
                 End If
 
