@@ -20,6 +20,7 @@ namespace Modelos.GUI
         [PetaPoco.Ignore]
         [Browsable(false)]
         public string puntos { get; set; }
+        [Browsable(false)]
         public string porcentajeDescuento { get; set; }
     }
 }
