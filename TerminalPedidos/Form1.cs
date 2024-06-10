@@ -333,7 +333,7 @@ namespace TerminalPedidos
                                 }
                                 else
                                 {
-                                    part.precio = precio.ToString();//tPrecio.Text;
+                                    part.precio = Math.Round(Convert.ToDouble(precio.ToString()), 2).ToString();//tPrecio.Text;
                                 }
 
 
@@ -348,7 +348,7 @@ namespace TerminalPedidos
                                 }
                                 else
                                 {
-                                    part.precio = cbPrecio.Text;//tPrecio.Text;
+                                    part.precio = Math.Round(Convert.ToDouble(precio.ToString()), 2).ToString();//cbPrecio.Text;//tPrecio.Text;
                                 }
                             }
 
@@ -374,6 +374,10 @@ namespace TerminalPedidos
                     else
                     {
                         MessageBox.Show("Producto no tiene existencias suficientes.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cbPrecio.Items.Clear();
+                        cbPrecio.Refresh();
+                        tCodigo.Text = "";
+                        tCantidad.Value = 1;
                     }
 
                     tCantidad.Value = 1;
@@ -448,7 +452,7 @@ namespace TerminalPedidos
             lIVA.Text = iva.ToString("C");
             lTotal.Text = total.ToString("C");
 
-            verificarDescuentos();
+            //verificarDescuentos();
 
             dataGridView1.Refresh();
 
@@ -928,6 +932,11 @@ namespace TerminalPedidos
                 agregarPartida();
                 tCodigo.Focus();
             }
+        }
+
+        private void tCodigo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
