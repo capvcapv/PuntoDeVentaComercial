@@ -407,9 +407,16 @@ namespace TerminalPedidos
             }
             else if (e.KeyValue == (int)Keys.F3)
             {
-                frmCatalogoProductos ventanaCatalogo = new frmCatalogoProductos(this);
-                ventanaCatalogo.ShowDialog();
-                tCodigo.Focus();
+                try
+                {
+                    frmCatalogoProductos ventanaCatalogo = new frmCatalogoProductos(this);
+                    ventanaCatalogo.ShowDialog();
+
+                    tCodigo.Focus();
+                }
+                catch (Exception ex) { }
+                
+                
             }
         }
 
