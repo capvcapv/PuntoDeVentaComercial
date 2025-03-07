@@ -154,36 +154,38 @@ namespace TerminalPedidos
 
                 if (promocion.Count>0)
                 {
-                    //MessageBox.Show("Producto " + kvp.Key + " con descuento del " + promocion[0].descuento + " %");
-
-                    foreach(var a in partidas)
+                    if (promocion[0].tipo == 0)
                     {
-                        if (a.codigo == kvp.Key)
+                        foreach (var a in partidas)
                         {
-                            a.porcentajeDescuento = promocion[0].descuento.ToString();
-                            a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(promocion[0].descuento) / 100))).ToString("C");
-                            a.importe= ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", "")))*Convert.ToDouble(a.cantidad)).ToString("C");
+                            if (a.codigo == kvp.Key)
+                            {
+                                a.porcentajeDescuento = promocion[0].descuento.ToString();
+                                a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(promocion[0].descuento) / 100))).ToString("C");
+                                a.importe = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(a.cantidad)).ToString("C");
+                            }
                         }
                     }
-
+                    
                 }
 
                 promocion = new Promociones().obtenerSQL("select * from promociones where producto=" + producto_comercial[0].CIDPRODUCTO + " and cantidad<=" + kvp.Value + " and (fecha_inicio <= GETDATE() AND fecha_final >= GETDATE())");
 
                 if (promocion.Count > 0)
                 {
-                    //MessageBox.Show("Producto " + kvp.Key + " con descuento del " + promocion[0].descuento + " %");
-
-                    foreach (var a in partidas)
+                    if (promocion[0].tipo == 1)
                     {
-                        if (a.codigo == kvp.Key)
+                        foreach (var a in partidas)
                         {
-                            a.porcentajeDescuento = promocion[0].descuento.ToString();
-                            a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(promocion[0].descuento) / 100))).ToString("C");
-                            a.importe = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(a.cantidad)).ToString("C");
+                            if (a.codigo == kvp.Key)
+                            {
+                                a.porcentajeDescuento = promocion[0].descuento.ToString();
+                                a.descuento = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(promocion[0].descuento) / 100))).ToString("C");
+                                a.importe = ((Convert.ToDouble(a.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(a.cantidad)).ToString("C");
+                            }
                         }
                     }
-
+                                        
                 }
 
             }
@@ -260,7 +262,7 @@ namespace TerminalPedidos
 
             Environment.CurrentDirectory = rutaComercial;
 
-            AdminPAQSDK.muestra_error(AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "Pdv12345."));
+            AdminPAQSDK.fInicioSesionSDK("PUNTOVENTA", "Pdv12345.");
             AdminPAQSDK.muestra_error(AdminPAQSDK.fSetNombrePAQ("CONTPAQ I COMERCIAL"));
             AdminPAQSDK.muestra_error(AdminPAQSDK.fAbreEmpresa(config.empresa));
         }

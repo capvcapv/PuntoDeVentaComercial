@@ -16,6 +16,8 @@ namespace AdministradorPV
 
     public partial class Form1 : Form
     {
+        private bool sesionIniciada;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,15 +25,23 @@ namespace AdministradorPV
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            sesionIniciada = false;
+            
             frmLogin acceso = new frmLogin();
             acceso.ShowDialog();
 
-            inicializaSDKComercial();
+            sesionIniciada = acceso.aceptado;
 
-            Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+            if (sesionIniciada)
+            {
+                inicializaSDKComercial();
 
-            toolStripStatusLabel2.Text = "Conectado con empresa " + config.empresa;
+                Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+                toolStripStatusLabel2.Text = "Conectado con empresa " + config.empresa;
+            }
+
+            
         }
 
         private void inicializaSDKComercial()
@@ -47,8 +57,12 @@ namespace AdministradorPV
 
         private void terminaSDKComercial()
         {
-            AdminPAQSDK.fCierraEmpresa();
-            AdminPAQSDK.fTerminaSDK();
+            if (sesionIniciada)
+            {
+                AdminPAQSDK.fCierraEmpresa();
+                AdminPAQSDK.fTerminaSDK();
+            }
+            
         }
 
         private void parámetrosToolStripMenuItem_Click(object sender, EventArgs e)
