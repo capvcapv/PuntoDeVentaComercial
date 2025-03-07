@@ -4059,7 +4059,12 @@ namespace Modelos.Negocio
 		[JsonIgnore]
 		public double CCANTIDADFISCAL { get; set; }
 
-	}
+        public override string ToString()
+        {
+            return CNOMBREPRODUCTO;
+        }
+
+    }
 
 	[PrimaryKey("CIDPROMOCION")]
 	public class Admpromociones : DBContext<Admpromociones>

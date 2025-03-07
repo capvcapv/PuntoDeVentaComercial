@@ -50,6 +50,9 @@ namespace AdministradorPV
             this.label6 = new System.Windows.Forms.Label();
             this.nCantidad = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbProducto = new System.Windows.Forms.ComboBox();
+            this.ckTipo = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nDescuento)).BeginInit();
@@ -182,7 +185,7 @@ namespace AdministradorPV
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(250, 146);
+            this.label4.Location = new System.Drawing.Point(250, 206);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 8;
@@ -192,7 +195,7 @@ namespace AdministradorPV
             // 
             this.cbClasificacion1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbClasificacion1.FormattingEnabled = true;
-            this.cbClasificacion1.Location = new System.Drawing.Point(253, 162);
+            this.cbClasificacion1.Location = new System.Drawing.Point(253, 222);
             this.cbClasificacion1.Name = "cbClasificacion1";
             this.cbClasificacion1.Size = new System.Drawing.Size(365, 21);
             this.cbClasificacion1.TabIndex = 9;
@@ -200,7 +203,7 @@ namespace AdministradorPV
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(250, 197);
+            this.label5.Location = new System.Drawing.Point(250, 257);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 13);
             this.label5.TabIndex = 10;
@@ -209,7 +212,7 @@ namespace AdministradorPV
             // nDescuento
             // 
             this.nDescuento.DecimalPlaces = 2;
-            this.nDescuento.Location = new System.Drawing.Point(253, 213);
+            this.nDescuento.Location = new System.Drawing.Point(253, 273);
             this.nDescuento.Name = "nDescuento";
             this.nDescuento.Size = new System.Drawing.Size(56, 20);
             this.nDescuento.TabIndex = 11;
@@ -217,7 +220,7 @@ namespace AdministradorPV
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(315, 215);
+            this.label6.Location = new System.Drawing.Point(315, 275);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 13);
             this.label6.TabIndex = 12;
@@ -226,7 +229,7 @@ namespace AdministradorPV
             // nCantidad
             // 
             this.nCantidad.DecimalPlaces = 2;
-            this.nCantidad.Location = new System.Drawing.Point(369, 213);
+            this.nCantidad.Location = new System.Drawing.Point(369, 273);
             this.nCantidad.Name = "nCantidad";
             this.nCantidad.Size = new System.Drawing.Size(56, 20);
             this.nCantidad.TabIndex = 14;
@@ -234,11 +237,39 @@ namespace AdministradorPV
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(366, 197);
+            this.label7.Location = new System.Drawing.Point(366, 257);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 13;
             this.label7.Text = "Cantidad";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(250, 164);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Producto";
+            // 
+            // cbProducto
+            // 
+            this.cbProducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbProducto.FormattingEnabled = true;
+            this.cbProducto.Location = new System.Drawing.Point(253, 180);
+            this.cbProducto.Name = "cbProducto";
+            this.cbProducto.Size = new System.Drawing.Size(365, 21);
+            this.cbProducto.TabIndex = 16;
+            // 
+            // ckTipo
+            // 
+            this.ckTipo.AutoSize = true;
+            this.ckTipo.Location = new System.Drawing.Point(253, 140);
+            this.ckTipo.Name = "ckTipo";
+            this.ckTipo.Size = new System.Drawing.Size(141, 17);
+            this.ckTipo.TabIndex = 17;
+            this.ckTipo.Text = "Descuento por producto";
+            this.ckTipo.UseVisualStyleBackColor = true;
             // 
             // frmPromociones
             // 
@@ -246,6 +277,9 @@ namespace AdministradorPV
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(630, 359);
+            this.Controls.Add(this.ckTipo);
+            this.Controls.Add(this.cbProducto);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.nCantidad);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -298,5 +332,8 @@ namespace AdministradorPV
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown nCantidad;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbProducto;
+        private System.Windows.Forms.CheckBox ckTipo;
     }
 }

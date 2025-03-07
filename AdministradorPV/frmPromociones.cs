@@ -35,6 +35,8 @@ namespace AdministradorPV
                 promocionActiva.nombre = tNombre.Text;
                 promocionActiva.fecha_inicio = dtInicio.Value; 
                 promocionActiva.fecha_final = dtFinal.Value;
+                promocionActiva.tipo = Convert.ToInt32(ckTipo.Checked);
+                promocionActiva.producto = ((Admproductos)cbProducto.SelectedItem).CIDPRODUCTO;
                 promocionActiva.id_clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CIDVALORCLASIFICACION;
                 promocionActiva.clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CVALORCLASIFICACION;
                 promocionActiva.descuento = Convert.ToDouble( nDescuento.Value);
@@ -48,6 +50,8 @@ namespace AdministradorPV
                 promocionActiva.nombre = tNombre.Text;
                 promocionActiva.fecha_inicio = dtInicio.Value;
                 promocionActiva.fecha_final = dtFinal.Value;
+                promocionActiva.tipo = Convert.ToInt32(ckTipo.Checked);
+                promocionActiva.producto = ((Admproductos)cbProducto.SelectedItem).CIDPRODUCTO;
                 promocionActiva.id_clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CIDCLASIFICACION;
                 promocionActiva.clasificacion1 = ((Admclasificacionesvalores)cbClasificacion1.SelectedItem).CVALORCLASIFICACION;
                 promocionActiva.descuento = Convert.ToDouble(nDescuento.Value);
@@ -82,6 +86,7 @@ namespace AdministradorPV
         private void frmPromociones_Load(object sender, EventArgs e)
         {
             cargarClasificaciones1();
+            cargarProductos();
             cargarTabla();
             limpiarFormulario();
         }
@@ -99,6 +104,8 @@ namespace AdministradorPV
             dtInicio.Value = DateTime.Now;
             dtFinal.Value = DateTime.Now;
             cbClasificacion1.SelectedIndex = 0;
+            cbProducto.SelectedIndex = 0;
+            ckTipo.Checked = false;
             nDescuento.Value = 0;
             nCantidad.Value = 0;
 
@@ -119,6 +126,17 @@ namespace AdministradorPV
 
         }
 
+        private void cargarProductos()
+        {
+            Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+            var productos = new Admproductos().obtenerSQL("select * from admproductos order by CNOMBREPRODUCTO", ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", config.empresa.Split('\\')[3]));
+
+            foreach(var a in productos)
+            {
+                cbProducto.Items.Add(a);
+            }
+        }
+
         private void objectListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (objectListView1.SelectedItem != null)
@@ -127,6 +145,7 @@ namespace AdministradorPV
                 tNombre.Text = promocionActiva.nombre;
                 dtInicio.Value = promocionActiva.fecha_inicio;
                 dtFinal.Value = promocionActiva.fecha_final;
+                ckTipo.Checked = Convert.ToBoolean(promocionActiva.tipo);
 
                 int index = 0;
 
@@ -135,6 +154,18 @@ namespace AdministradorPV
                     if (((Admclasificacionesvalores)a).CIDVALORCLASIFICACION == promocionActiva.id_clasificacion1)
                     {
                         cbClasificacion1.SelectedIndex = index;
+                    }
+
+                    index++;
+                }
+
+                index = 0;
+
+                foreach (var a in cbProducto.Items)
+                {
+                    if (((Admproductos)a).CIDPRODUCTO == promocionActiva.producto)
+                    {
+                        cbProducto.SelectedIndex = index;
                     }
 
                     index++;

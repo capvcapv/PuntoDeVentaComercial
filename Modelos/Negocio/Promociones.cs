@@ -12,7 +12,9 @@ namespace Modelos.Negocio
         public string nombre { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_final { get; set; }
+        public int tipo { get; set; }
         public int id_clasificacion1 { get; set; }
+        public int producto { get; set; }
         public string clasificacion1 { get; set; }
         public double descuento { get; set; }
         public double cantidad { get; set; }
