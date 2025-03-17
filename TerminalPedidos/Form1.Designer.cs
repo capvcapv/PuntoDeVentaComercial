@@ -56,7 +56,7 @@
             this.tCodigo = new System.Windows.Forms.TextBox();
             this.tCantidad = new System.Windows.Forms.NumericUpDown();
             this.cbPrecio = new System.Windows.Forms.ComboBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.bDescuentos = new System.Windows.Forms.Button();
             this.tPrecio = new System.Windows.Forms.TextBox();
             this.cbAlmacen = new System.Windows.Forms.ComboBox();
             this.bF3 = new System.Windows.Forms.Button();
@@ -352,7 +352,7 @@
             this.flowLayoutPanel1.Controls.Add(this.tCodigo);
             this.flowLayoutPanel1.Controls.Add(this.tCantidad);
             this.flowLayoutPanel1.Controls.Add(this.cbPrecio);
-            this.flowLayoutPanel1.Controls.Add(this.button4);
+            this.flowLayoutPanel1.Controls.Add(this.bDescuentos);
             this.flowLayoutPanel1.Controls.Add(this.tPrecio);
             this.flowLayoutPanel1.Controls.Add(this.cbAlmacen);
             this.flowLayoutPanel1.Controls.Add(this.bF3);
@@ -412,7 +412,6 @@
             // cbPrecio
             // 
             this.cbPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPrecio.Enabled = false;
             this.cbPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPrecio.FormattingEnabled = true;
             this.cbPrecio.Location = new System.Drawing.Point(320, 3);
@@ -421,15 +420,15 @@
             this.cbPrecio.TabIndex = 11;
             this.cbPrecio.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbPrecio_KeyUp);
             // 
-            // button4
+            // bDescuentos
             // 
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.Location = new System.Drawing.Point(447, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(35, 29);
-            this.button4.TabIndex = 12;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.bDescuentos.Image = ((System.Drawing.Image)(resources.GetObject("bDescuentos.Image")));
+            this.bDescuentos.Location = new System.Drawing.Point(447, 3);
+            this.bDescuentos.Name = "bDescuentos";
+            this.bDescuentos.Size = new System.Drawing.Size(35, 29);
+            this.bDescuentos.TabIndex = 12;
+            this.bDescuentos.UseVisualStyleBackColor = true;
+            this.bDescuentos.Click += new System.EventHandler(this.button4_Click);
             // 
             // tPrecio
             // 
@@ -575,7 +574,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox cbAlmacen;
         public System.Windows.Forms.ComboBox cbPrecio;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button bDescuentos;
         private System.Windows.Forms.ComboBox cbConcepto;
     }
 }

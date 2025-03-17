@@ -53,6 +53,7 @@ namespace AdministradorPV
             this.label8 = new System.Windows.Forms.Label();
             this.cbProducto = new System.Windows.Forms.ComboBox();
             this.ckTipo = new System.Windows.Forms.CheckBox();
+            this.bCalcular = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nDescuento)).BeginInit();
@@ -212,6 +213,11 @@ namespace AdministradorPV
             // nDescuento
             // 
             this.nDescuento.DecimalPlaces = 2;
+            this.nDescuento.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.nDescuento.Location = new System.Drawing.Point(253, 273);
             this.nDescuento.Name = "nDescuento";
             this.nDescuento.Size = new System.Drawing.Size(56, 20);
@@ -229,7 +235,7 @@ namespace AdministradorPV
             // nCantidad
             // 
             this.nCantidad.DecimalPlaces = 2;
-            this.nCantidad.Location = new System.Drawing.Point(369, 273);
+            this.nCantidad.Location = new System.Drawing.Point(449, 275);
             this.nCantidad.Name = "nCantidad";
             this.nCantidad.Size = new System.Drawing.Size(56, 20);
             this.nCantidad.TabIndex = 14;
@@ -237,7 +243,7 @@ namespace AdministradorPV
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(366, 257);
+            this.label7.Location = new System.Drawing.Point(446, 259);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 13;
@@ -271,12 +277,23 @@ namespace AdministradorPV
             this.ckTipo.Text = "Descuento por producto";
             this.ckTipo.UseVisualStyleBackColor = true;
             // 
+            // bCalcular
+            // 
+            this.bCalcular.Location = new System.Drawing.Point(341, 270);
+            this.bCalcular.Name = "bCalcular";
+            this.bCalcular.Size = new System.Drawing.Size(61, 23);
+            this.bCalcular.TabIndex = 18;
+            this.bCalcular.Text = "Calcular";
+            this.bCalcular.UseVisualStyleBackColor = true;
+            this.bCalcular.Click += new System.EventHandler(this.bCalcular_Click);
+            // 
             // frmPromociones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(630, 359);
+            this.Controls.Add(this.bCalcular);
             this.Controls.Add(this.ckTipo);
             this.Controls.Add(this.cbProducto);
             this.Controls.Add(this.label8);
@@ -335,5 +352,6 @@ namespace AdministradorPV
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbProducto;
         private System.Windows.Forms.CheckBox ckTipo;
+        private System.Windows.Forms.Button bCalcular;
     }
 }

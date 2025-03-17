@@ -9,7 +9,7 @@ namespace Modelos.GUI
     {
         public string codigo { get; set; }
         public string nombre { get; set; }
-        public double existencia { get; set; }
+        public double mayoreo { get; set; }
         public string precio1 { get; set; }
         public string precio2 { get; set; }
         public string precio3 { get; set; }

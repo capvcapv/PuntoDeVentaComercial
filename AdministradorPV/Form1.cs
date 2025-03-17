@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Windows.Forms;
 
@@ -44,6 +46,7 @@ namespace AdministradorPV
             
         }
 
+        
         private void inicializaSDKComercial()
         {
             Modelos.Negocio.Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();

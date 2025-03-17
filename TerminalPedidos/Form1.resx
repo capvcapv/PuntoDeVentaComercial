@@ -166,7 +166,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAMwAAADMCAYAAAA/IkzyAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAA/7JJREFUeF6svQV4FFf7uD04IR7ibiQEghMkSBJCgmtwd3d3d5fiUFqgLVSQGvW3
+        DQAACw0B7QfALAAA/7JJREFUeF6svQV4FFf7uD04IR7ibiQEghMkSBJCgmtwd3d3d5fiUFqgLVSQGvW3
         7Vv34g5xTwiEBCm9v+uc2dmd3Wxo39/357qea2ZnZ2bD7rnn0fMcJS09BU3SM5L/jyKuTf1XkpJyj3v3
         7nAv9R6pmenk5ORQWFhAYWEeubnZZGemk5WRQmZ68r+SrMy7ZGWKbaoqhmu113I/I8X0vqVYeS87K80o
         WRaSnZ1OTlYaOdnpxnNysjLIycqUxzTR30Mv2vt5ORlScg1b/bXy+px0+XliX5yTq7vmRZKfm2kmBXlZ
@@ -1349,10 +1349,10 @@
         GY8jT83D/wcwBEMYluldHwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="bDescuentos.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAASlJREFUWEftl80NgzAMhT0CIzACIzCJZ2AERmCEjtCjjx2BERihG1CZ2pGbECVU
+        DgAACw4BQL7hQQAAASlJREFUWEftl80NgzAMhT0CIzACIzCJZ2AERmCEjtCjjx2BERihG1CZ2pGbECVU
         BITE4ZPyLBMecn4MzPMMWwGkBpBegDQLPG78vByCQA6ANAHSE5BqgceTn5dDEEgBSK18dWVilcRaPz9F
         EEghBsZI3JnKJQjEkLr3gPSQEvA4RvZ6CAIxZGJddCl6//kYQSDGbeA2YHZBDvvvglL8CqROzvWSdKsG
         AGlYqWUphjUDflJRLmFgNHVjzee/1W+jecwx1ZxrNc+12YC7WkW7va2TG72YMno5M4zWK/xaBk4vQVFy

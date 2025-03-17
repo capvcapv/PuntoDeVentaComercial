@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Modelos.GUI;
 using Modelos.Negocio;
 using SDKContpaq;
 
@@ -177,6 +178,24 @@ namespace AdministradorPV
 
             
 
+        }
+
+        private void bCalcular_Click(object sender, EventArgs e)
+        {
+            var producto = cbProducto.SelectedItem as Admproductos;
+            nDescuento.Value = Convert.ToDecimal(CalcularPorcentajeDescuento(producto.CPRECIO1, producto.CPRECIO4));
+        }
+
+        private double CalcularPorcentajeDescuento(double valor1, double valor2)
+        {
+            if (valor1 == 0)
+            {
+                throw new ArgumentException("El valor1 no puede ser cero.");
+            }
+
+            // Calcular el porcentaje de descuento
+            double descuento = ((valor1 - valor2) / valor1) * 100;
+            return descuento;
         }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using System.IO;
 using Modelos.Negocio;
 using System.Data.SqlClient;
+using System.Management;
 
 namespace TerminalPedidos
 {
@@ -57,6 +58,8 @@ namespace TerminalPedidos
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            VerificaLicencia();
+
             var config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             pictureBox1.Image = ByteArrayToImage(config.logo);
@@ -99,10 +102,84 @@ namespace TerminalPedidos
                     cargarConceptosCaja(caja);
 
                     cbConcepto.SelectedIndex = 0;
+
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["muestraVentanaDescuentos"]))
+                    {
+                        bDescuentos.Visible = false;
+                    }
+
                 }
 
             }
 
+        }
+
+        private void VerificaLicencia()
+        {
+            string rutaLicencia = Path.Combine(Application.StartupPath, "license.lic");
+
+            if (!File.Exists(rutaLicencia))
+            {
+                MessageBox.Show("Falta activar sistema, NS:" + GetHardwareId());
+                File.WriteAllText(GetHardwareId(), GetHardwareId());
+                Application.Exit();
+                return;
+            }
+
+            var publicKey = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABBxUHFk+JNcyiuxPWgUznfT6qilk6Djbc7sKH0prRRF4KjaALTmDnDeXeI7j8jTatuGOkKQ0rSvJfqSJS2SwgB8=\r\n";
+            var licenseContent = File.ReadAllText(rutaLicencia);
+            var softwareId = "punto_venta";
+            var isValid = ValidateLicense(licenseContent, publicKey, softwareId);
+
+            if (!isValid)
+            {
+                MessageBox.Show("Licencia inválida, NS:" + GetHardwareId());
+                File.WriteAllText(GetHardwareId(), GetHardwareId());
+                Application.Exit();
+                return;
+            }
+        }
+
+        private bool ValidateLicense(string licenseContent, string publicKey, string softwareId)
+        {
+            var license = Portable.Licensing.License.Load(licenseContent);
+
+            if (!license.VerifySignature(publicKey))
+            {
+                return false; // La firma no es válida
+            }
+
+            if (license.Expiration < DateTime.Now)
+            {
+                return false; // La licencia ha expirado
+            }
+
+            var systemUUID = GetHardwareId();
+            if (license.ProductFeatures.Get("SystemUUID") != systemUUID)
+            {
+                return false; // La licencia no es para este equipo
+            }
+
+            if (license.ProductFeatures.Get("SoftwareId") != softwareId)
+            {
+                return false; // La licencia no es para este software
+            }
+
+            return true;
+        }
+
+        private string GetHardwareId()
+        {
+            string id = "";
+            using (var searcher = new ManagementObjectSearcher("SELECT UUID FROM Win32_ComputerSystemProduct"))
+            {
+                foreach (var obj in searcher.Get())
+                {
+                    id = obj["UUID"].ToString();
+                    break;
+                }
+            }
+            return id;
         }
 
         private void cargarConceptosCaja(Modelos.Negocio.Cajas pCaja)

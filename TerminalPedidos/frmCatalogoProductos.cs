@@ -10,6 +10,7 @@ using SDKContpaq;
 using Modelos.GUI;
 using System.Data.SqlClient;
 using System.Configuration;
+using Modelos.Negocio;
 
 namespace TerminalPedidos
 {
@@ -32,7 +33,7 @@ namespace TerminalPedidos
         private void CargarListadoProductos()
         {
 
-            SqlCommand comando = new SqlCommand("select CCODIGOPRODUCTO,CNOMBREPRODUCTO,CPRECIO1,CPRECIO2,CPRECIO3,CPRECIO4,CPRECIO5,CPRECIO6,CPRECIO7,CPRECIO8,CPRECIO9,CPRECIO10 from admProductos where CTIPOPRODUCTO=1 and CSTATUSPRODUCTO= 1", conexionGlobal);
+            SqlCommand comando = new SqlCommand("select CIDPRODUCTO,CCODIGOPRODUCTO,CNOMBREPRODUCTO,CPRECIO1,CPRECIO2,CPRECIO3,CPRECIO4,CPRECIO5,CPRECIO6,CPRECIO7,CPRECIO8,CPRECIO9,CPRECIO10 from admProductos where CTIPOPRODUCTO=1 and CSTATUSPRODUCTO= 1", conexionGlobal);
 
             SqlDataReader lector = comando.ExecuteReader();
 
@@ -42,7 +43,18 @@ namespace TerminalPedidos
                 Producto pro = new Producto();
                 pro.codigo = lector["CCODIGOPRODUCTO"].ToString();
                 pro.nombre = lector["CNOMBREPRODUCTO"].ToString();
-                pro.existencia = 0;
+
+                var promos = new Promociones().obtenerSQL("select * from promociones where producto = " + lector["CIDPRODUCTO"].ToString());
+
+                if(promos.Count > 0)
+                {
+                    pro.mayoreo = promos[0].cantidad;
+                }else
+                {
+                    pro.mayoreo = 0;
+                }
+
+                 
                 pro.precio1 = obtienePrecioIvaSiAplica(lector["CPRECIO1"].ToString());
                 pro.precio2 = obtienePrecioIvaSiAplica(lector["CPRECIO2"].ToString());
                 pro.precio3 = obtienePrecioIvaSiAplica(lector["CPRECIO3"].ToString());
@@ -166,7 +178,7 @@ namespace TerminalPedidos
 
             foreach (var a in temp)
             {
-                a.existencia = obtenerExistencia(a.codigo);
+                a.mayoreo = obtenerExistencia(a.codigo);
             }
 
 
@@ -219,7 +231,7 @@ namespace TerminalPedidos
 
             foreach (var a in temp)
             {
-                a.existencia = obtenerExistencia(a.codigo);
+                a.mayoreo = obtenerExistencia(a.codigo);
             }
 
             dataGridView1.DataSource = temp;
