@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace TerminalPedidos
 {
-    public partial class frmLogin : Form
+    public partial class frmLogin : AntdUI.Window
     {
         public Boolean aceptado = false;
         public Modelos.Negocio.Usuarios usuarioActivo;
@@ -21,7 +21,7 @@ namespace TerminalPedidos
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
+            tNombre.Focus();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -99,6 +99,11 @@ namespace TerminalPedidos
                     MessageBox.Show("Usuario y/o contraseña inválido.");
                 }
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

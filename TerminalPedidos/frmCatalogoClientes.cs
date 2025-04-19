@@ -13,7 +13,7 @@ using System.Configuration;
 
 namespace TerminalPedidos
 {
-    public partial class frmCatalogoClientes : Form
+    public partial class frmCatalogoClientes : AntdUI.Window
     {
         private List<Cliente> listaClientes = new List<Cliente>();
         private Form1 formularioPadre;
@@ -22,6 +22,7 @@ namespace TerminalPedidos
         {
             InitializeComponent();
             formularioPadre = pPadre;
+            tCodigo.Focus();
         }
 
         private void frmCatalogoClientes_Load(object sender, EventArgs e)
@@ -104,6 +105,7 @@ namespace TerminalPedidos
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -171,6 +173,11 @@ namespace TerminalPedidos
             }
 
             
+        }
+
+        private void pageHeader1_BackClick(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -19,7 +19,7 @@ using System.Management;
 
 namespace TerminalPedidos
 {
-    public partial class Form1 : Form
+    public partial class Form1 : AntdUI.Window
     {
         private List<Partida> partidas = new List<Partida>();
         private Cliente clienteActivo;
@@ -63,7 +63,7 @@ namespace TerminalPedidos
             var config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             pictureBox1.Image = ByteArrayToImage(config.logo);
-            CambiarColorPaneles(this, ConfigurationManager.AppSettings["color"]);
+            //CambiarColorPaneles(this, ConfigurationManager.AppSettings["color"]);
             
 
             acceso.ShowDialog();
@@ -79,20 +79,14 @@ namespace TerminalPedidos
 
                     var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
 
-                    this.Text = "Turno: " + turno.turnoActivo.id + " Usuario: " + acceso.usuarioActivo.nombre +" Almacen: " + caja.almacen + " Caja: " + caja.nombre;
+                     pageHeader1.Text = "Turno: " + turno.turnoActivo.id + " Usuario: " + acceso.usuarioActivo.nombre +" Almacen: " + caja.almacen + " Caja: " + caja.nombre;
 
                     inicializaSDKComercial();
                     textBox1.Focus();
                     cargaAgentes();
                     cargaAlmacenes();
 
-                    foreach(var agente in cbAgente.Items)
-                    {
-                        if (agente.ToString().Contains(acceso.usuarioActivo.nombre))
-                        {
-                            cbAgente.SelectedItem = agente;
-                        }
-                    }
+                    
 
                     binding = new BindingSource();
                     binding.DataSource = partidas;
@@ -303,11 +297,29 @@ namespace TerminalPedidos
 
             var agentes = (new Modelos.Negocio.Admagentes()).obtenerTodos(cadena);
 
-            cbAgente.DataSource = agentes;
+            //cbAgente.DataSource = agentes;
+            List<ComboboxItem> agentesCombo = new List<ComboboxItem>();
+
+            foreach(var a in agentes)
+            {
+                ComboboxItem item = new ComboboxItem();
+                item.Text = a.CNOMBREAGENTE;
+                item.Value = a.CCODIGOAGENTE;
+                agentesCombo.Add(item);
+            }
+
+            cbAgente.Items.AddRange(agentesCombo.ToArray());
 
             var agente_venta_actual = (new Admagentes()).obtenerId(acceso.usuarioActivo.agente,cadena);
+            //cbAgente.SelectedItem = agente_venta_actual;
 
-            cbAgente.SelectedItem = agente_venta_actual;
+            foreach (var agente in cbAgente.Items)
+            {
+                if (agente.ToString().Contains(agente_venta_actual.CNOMBREAGENTE))
+                {
+                    cbAgente.SelectedValue = agente;
+                }
+            }
 
         }
 
@@ -522,7 +534,7 @@ namespace TerminalPedidos
         private void actualizaTabla()
         {
 
-           
+
             //dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -536,6 +548,24 @@ namespace TerminalPedidos
             //dataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //dataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            //foreach (var col in dataGridView1.Columns)
+            //{
+            //    if (col.Title == "almacen") 
+            //    {
+            //        col.Visible = false;
+            //    }
+
+            //    if(col.Title == "puntos") 
+            //    {
+            //        col.Visible = false;
+            //    }
+
+            //    if (col.Title == "porcentajeDescuento") 
+            //    {
+            //        col.Visible = false;
+            //    }
+            //}
 
             double subtotal = 0;
             double iva = 0;
@@ -599,22 +629,7 @@ namespace TerminalPedidos
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if(MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Partida partidaSeleccionada = dataGridView1.CurrentRow.DataBoundItem as Partida;
-                partidas.Remove(partidaSeleccionada);
-                binding.Remove(partidaSeleccionada);
-
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = binding;
-                System.Threading.Thread.Sleep(500);
-                dataGridView1.Refresh();
-
-                //dataGridView1.DataSource = null;
-                //dataGridView1.DataSource = partidas;
-
-                actualizaTabla();
-            }
+            
 
         }
 
@@ -623,44 +638,44 @@ namespace TerminalPedidos
         private void limpiaProductosARX()
         {
 
-            if(cbConcepto.Text!="Remisión ARX" && cbConcepto.Text != "Pedido ARX" && cbConcepto.Text != "Cotización" && cbConcepto.Text != "Cotización ARX")
-            {
-                foreach (DataGridViewRow a in dataGridView1.Rows)
-                {
-                    Partida partidaSeleccionada =a.DataBoundItem as Partida;
+            //if(cbConcepto.Text!="Remisión ARX" && cbConcepto.Text != "Pedido ARX" && cbConcepto.Text != "Cotización" && cbConcepto.Text != "Cotización ARX")
+            //{
+            //    foreach (DataGridViewRow a in dataGridView1.Rows)
+            //    {
+            //        Partida partidaSeleccionada =a.DataBoundItem as Partida;
 
-                    if (partidaSeleccionada.producto.ToUpper().Contains("ARX"))
-                    {
-                        binding.Remove(partidaSeleccionada);
-                    }
-                }
+            //        if (partidaSeleccionada.producto.ToUpper().Contains("ARX"))
+            //        {
+            //            binding.Remove(partidaSeleccionada);
+            //        }
+            //    }
 
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = binding;
-                System.Threading.Thread.Sleep(500);
-                dataGridView1.Refresh();
+            //    dataGridView1.DataSource = null;
+            //    dataGridView1.DataSource = binding;
+            //    System.Threading.Thread.Sleep(500);
+            //    dataGridView1.Refresh();
 
-                actualizaTabla();
-            }
-            else if(cbConcepto.Text == "Remisión ARX" || cbConcepto.Text == "Pedido ARX")
-            {
-                foreach (DataGridViewRow a in dataGridView1.Rows)
-                {
-                    Partida partidaSeleccionada = a.DataBoundItem as Partida;
+            //    actualizaTabla();
+            //}
+            //else if(cbConcepto.Text == "Remisión ARX" || cbConcepto.Text == "Pedido ARX")
+            //{
+            //    foreach (DataGridViewRow a in dataGridView1.Rows)
+            //    {
+            //        Partida partidaSeleccionada = a.DataBoundItem as Partida;
 
-                    if (!partidaSeleccionada.producto.ToUpper().Contains("ARX"))
-                    {
-                        binding.Remove(partidaSeleccionada);
-                    }
-                }
+            //        if (!partidaSeleccionada.producto.ToUpper().Contains("ARX"))
+            //        {
+            //            binding.Remove(partidaSeleccionada);
+            //        }
+            //    }
 
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = binding;
-                System.Threading.Thread.Sleep(500);
-                dataGridView1.Refresh();
+            //    dataGridView1.DataSource = null;
+            //    dataGridView1.DataSource = binding;
+            //    System.Threading.Thread.Sleep(500);
+            //    dataGridView1.Refresh();
 
-                actualizaTabla();
-            }
+            //    actualizaTabla();
+            //}
 
             
         }
@@ -781,7 +796,7 @@ namespace TerminalPedidos
                         break;
                 }
 
-                fac.agente = ((Admagentes)cbAgente.SelectedItem).CCODIGOAGENTE;
+                fac.agente = ((ComboboxItem)cbAgente.SelectedValue).Value.ToString();
                 fac.referencia = referencia;
                 fac.textoextra1 = turno.turnoActivo.id.ToString();
                 fac.observaciones = observacion;
@@ -1043,6 +1058,45 @@ namespace TerminalPedidos
         private void tCodigo_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pageHeader1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellButtonClick(object sender, AntdUI.TableButtonEventArgs e)
+        {
+            
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, AntdUI.TableClickEventArgs e)
+        {
+            if (MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (dataGridView1.SelectedIndex >= 1)
+                {
+                    //Partida partidaSeleccionada = ((List<Partida>)dataGridView1.DataSource)[dataGridView1.SelectedIndex];
+                    //partidas.Remove(partidaSeleccionada);
+                    binding.RemoveAt(dataGridView1.SelectedIndex - 1);
+
+                    dataGridView1.DataSource = null;
+                    dataGridView1.DataSource = binding;
+                    System.Threading.Thread.Sleep(500);
+                    dataGridView1.Refresh();
+
+                    //dataGridView1.DataSource = null;
+                    //dataGridView1.DataSource = partidas;
+
+                    actualizaTabla();
+                }
+                
+            }
         }
     }
 }
