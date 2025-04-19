@@ -548,24 +548,7 @@ namespace TerminalPedidos
             //dataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //dataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            //foreach (var col in dataGridView1.Columns)
-            //{
-            //    if (col.Title == "almacen") 
-            //    {
-            //        col.Visible = false;
-            //    }
-
-            //    if(col.Title == "puntos") 
-            //    {
-            //        col.Visible = false;
-            //    }
-
-            //    if (col.Title == "porcentajeDescuento") 
-            //    {
-            //        col.Visible = false;
-            //    }
-            //}
+            
 
             double subtotal = 0;
             double iva = 0;
