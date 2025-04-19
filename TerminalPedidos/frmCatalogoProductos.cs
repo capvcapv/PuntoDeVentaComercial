@@ -176,10 +176,10 @@ namespace TerminalPedidos
                 temp = temp.Skip(0).Take(20).ToList();
             }
 
-            foreach (var a in temp)
-            {
-                a.mayoreo = obtenerExistencia(a.codigo);
-            }
+            //foreach (var a in temp)
+            //{
+            //    a.mayoreo = obtenerExistencia(a.codigo);
+            //}
 
 
             dataGridView1.DataSource = temp;
@@ -229,10 +229,10 @@ namespace TerminalPedidos
                 temp=temp.Skip(0).Take(20).ToList();
             }
 
-            foreach (var a in temp)
-            {
-                a.mayoreo = obtenerExistencia(a.codigo);
-            }
+            //foreach (var a in temp)
+            //{
+            //    a.mayoreo = obtenerExistencia(a.codigo);
+            //}
 
             dataGridView1.DataSource = temp;
         }
