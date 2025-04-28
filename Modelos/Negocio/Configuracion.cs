@@ -15,6 +15,8 @@ namespace Modelos.Negocio
         public string direccion { get; set; }
         public byte[] logo { get; set; }
         public int imprime_ticket { get; set; }
+        public int ivaincluido { get; set; }
+        public int muestraVentanaDescuentos { get; set; }
     }
 
     public class ConfigurationDBContext

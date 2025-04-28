@@ -29,6 +29,8 @@ namespace AdministradorPV
             config.direccion = tDireccion.Text;
             config.logo= ImageToByteArray(pictureBox1.Image);
             config.imprime_ticket = Convert.ToInt32(ckImprimeTicket.Checked);
+            config.ivaincluido = Convert.ToInt32(ckIvaIncluido.Checked);
+            config.muestraVentanaDescuentos = Convert.ToInt32(ckMuestraVentanaDescuentos.Checked);
 
             ConfigurationDBContext.actualizar(config);
 
@@ -70,6 +72,8 @@ namespace AdministradorPV
             }
 
             ckImprimeTicket.Checked = Convert.ToBoolean(config.imprime_ticket);
+            ckIvaIncluido.Checked= Convert.ToBoolean(config.ivaincluido);
+            ckMuestraVentanaDescuentos.Checked = Convert.ToBoolean(config.muestraVentanaDescuentos);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

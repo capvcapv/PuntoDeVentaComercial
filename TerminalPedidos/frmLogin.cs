@@ -105,5 +105,10 @@ namespace TerminalPedidos
         {
             this.Close();
         }
+
+        private void frmLogin_Shown(object sender, EventArgs e)
+        {
+            tNombre.Focus();
+        }
     }
 }

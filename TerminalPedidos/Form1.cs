@@ -16,6 +16,10 @@ using System.IO;
 using Modelos.Negocio;
 using System.Data.SqlClient;
 using System.Management;
+using System.Threading.Tasks;
+using static AntdUI.FloatButton;
+using AntdUI;
+using Vanara.PInvoke;
 
 namespace TerminalPedidos
 {
@@ -27,6 +31,7 @@ namespace TerminalPedidos
         private frmTurnosDeCaja turno;
         private BindingSource binding;
 
+
         public Form1()
         {
             InitializeComponent();
@@ -35,28 +40,28 @@ namespace TerminalPedidos
 
         private void CambiarColorPaneles(Control control, string colorHexadecimal)
         {
-            // Convertir el color hexadecimal a Color
-            Color color = ColorTranslator.FromHtml(colorHexadecimal);
+            //// Convertir el color hexadecimal a Color
+            //Color color = ColorTranslator.FromHtml(colorHexadecimal);
 
-            // Iterar sobre todos los controles del formulario
-            foreach (Control ctrl in control.Controls)
-            {
-                // Verificar si el control actual es un Panel
-                if (ctrl is Panel)
-                {
-                    // Cambiar el color de fondo del Panel al color especificado
-                    ctrl.BackColor = color;
-                }
+            //// Iterar sobre todos los controles del formulario
+            //foreach (Control ctrl in control.Controls)
+            //{
+            //    // Verificar si el control actual es un Panel
+            //    if (ctrl is Panel)
+            //    {
+            //        // Cambiar el color de fondo del Panel al color especificado
+            //        ctrl.BackColor = color;
+            //    }
 
-                // Llamar recursivamente a la función para los controles secundarios
-                if (ctrl.HasChildren)
-                {
-                    CambiarColorPaneles(ctrl, colorHexadecimal);
-                }
-            }
+            //    // Llamar recursivamente a la función para los controles secundarios
+            //    if (ctrl.HasChildren)
+            //    {
+            //        CambiarColorPaneles(ctrl, colorHexadecimal);
+            //    }
+            //}
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             VerificaLicencia();
 
@@ -76,32 +81,42 @@ namespace TerminalPedidos
 
                 if (turno.turnoActivo != null)
                 {
-
-                    var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
-
-                     pageHeader1.Text = "Turno: " + turno.turnoActivo.id + " Usuario: " + acceso.usuarioActivo.nombre +" Almacen: " + caja.almacen + " Caja: " + caja.nombre;
-
-                    inicializaSDKComercial();
-                    textBox1.Focus();
-                    cargaAgentes();
-                    cargaAlmacenes();
-
-                    
-
-                    binding = new BindingSource();
-                    binding.DataSource = partidas;
-                    dataGridView1.DataSource = binding;
-                    dataGridView1.Refresh();
-
-                    cargarConceptosCaja(caja);
-
-                    cbConcepto.SelectedIndex = 0;
-
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["muestraVentanaDescuentos"]))
+                    using (var loading = new frmCargando())
                     {
-                        bDescuentos.Visible = false;
-                    }
+                        loading.Show();
+                        loading.TopMost = true;
+                        loading.BringToFront();
+                        Application.DoEvents();
+                        await Task.Delay(3000);
 
+                        var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
+
+                        pageHeader1.Text = "Turno: " + turno.turnoActivo.id + " Usuario: " + acceso.usuarioActivo.nombre + " Caja: " + caja.nombre;
+
+                        inicializaSDKComercial();
+                        textBox1.Focus();
+                        cargaAgentes();
+                        cargaAlmacenes();
+
+
+
+                        binding = new BindingSource();
+                        binding.DataSource = partidas;
+                        dataGridView1.DataSource = binding;
+                        dataGridView1.Refresh();
+
+                        cargarConceptosCaja(caja);
+
+                        cbConcepto.SelectedIndex = 0;
+
+                        if (!Convert.ToBoolean(config.muestraVentanaDescuentos))
+                        {
+                            bDescuentos.Visible = false;
+                        }
+
+                        loading.Close();
+                    }
+                    
                 }
 
             }
@@ -433,10 +448,12 @@ namespace TerminalPedidos
                             //part.descuento = clienteActivo.descuento;
                             part.almacen = cbAlmacen.Text.Split('-')[0].Trim();
 
+                            var configGen = Modelos.Negocio.ConfigurationDBContext.obtener();
+
                             if (String.IsNullOrEmpty(cbPrecio.Text))
                             {
 
-                                if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                                if (!Convert.ToBoolean(configGen.ivaincluido))//ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
                                 {
 
                                     part.precio = Math.Round((Convert.ToDouble(precio) / 1.16), 2).ToString();
@@ -451,7 +468,7 @@ namespace TerminalPedidos
                             }
                             else
                             {
-                                if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("Flase"))
+                                if (!Convert.ToBoolean(configGen.ivaincluido))//ConfigurationManager.AppSettings["ivaIncluido"].Contains("Flase"))
                                 {
 
                                     part.precio = Math.Round((Convert.ToDouble(cbPrecio.Text.Replace("$", "").Replace(",", "")) / 1.16), 2).ToString();
@@ -798,7 +815,7 @@ namespace TerminalPedidos
                     part.Descuento = Convert.ToDouble(a.descuento.Replace("$", "").Replace(",", "")).ToString("C");
                     part.PorcentajeDescuento = a.porcentajeDescuento;
 
-                    if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+                    if (!Convert.ToBoolean(configGen.ivaincluido)) //ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
                     {
                         part.Precio = Math.Round(Convert.ToDouble(part.Precio) / 1.16, 2).ToString();
                     }
@@ -1009,10 +1026,6 @@ namespace TerminalPedidos
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
@@ -1033,8 +1046,7 @@ namespace TerminalPedidos
         {
             if (e.KeyCode.ToString() == "Return")
             {
-                agregarPartida();
-                tCodigo.Focus();
+                tDescuento.Focus();
             }
         }
 
@@ -1060,25 +1072,65 @@ namespace TerminalPedidos
 
         private void dataGridView1_CellDoubleClick(object sender, AntdUI.TableClickEventArgs e)
         {
-            if (MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (e.RowIndex > 0) 
             {
-                if (dataGridView1.SelectedIndex >= 1)
-                {
-                    //Partida partidaSeleccionada = ((List<Partida>)dataGridView1.DataSource)[dataGridView1.SelectedIndex];
-                    //partidas.Remove(partidaSeleccionada);
-                    binding.RemoveAt(dataGridView1.SelectedIndex - 1);
+                var result = MessageBox.Show("¿Desea editar la cantidad de este producto?", "Editar producto", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                    dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = binding;
-                    System.Threading.Thread.Sleep(500);
-                    dataGridView1.Refresh();
+                if (result == DialogResult.Yes)
+                {
+                    frmModificaCantidad frmModificaCantidad = new frmModificaCantidad();
+                    frmModificaCantidad.Cantidad =Convert.ToDouble(((Partida)binding.Current).cantidad);
+                    frmModificaCantidad.ShowDialog();
+
+                    ((Partida)binding.Current).cantidad = frmModificaCantidad.Cantidad.ToString();
+                    ((Partida)binding.Current).importe = ((Convert.ToDouble(((Partida)binding.Current).precio.Replace("$", "").Replace(",", ""))- Convert.ToDouble(((Partida)binding.Current).descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(((Partida)binding.Current).cantidad)).ToString("C");
+
+                    actualizaTablaSinCalculo();
 
                     //dataGridView1.DataSource = null;
-                    //dataGridView1.DataSource = partidas;
+                    //dataGridView1.DataSource = binding;
 
-                    actualizaTabla();
+                    //actualizaTabla();
                 }
-                
+                else if (result == DialogResult.No)
+                {
+                    if (MessageBox.Show("¿Desea eliminar la partida?", "Cancelación de partida", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (dataGridView1.SelectedIndex >= 1)
+                        {
+                            //Partida partidaSeleccionada = ((List<Partida>)dataGridView1.DataSource)[dataGridView1.SelectedIndex];
+                            //partidas.Remove(partidaSeleccionada);
+                            binding.RemoveAt(dataGridView1.SelectedIndex - 1);
+
+                            dataGridView1.DataSource = null;
+                            dataGridView1.DataSource = binding;
+                            System.Threading.Thread.Sleep(500);
+                            dataGridView1.Refresh();
+
+                            //dataGridView1.DataSource = null;
+                            //dataGridView1.DataSource = partidas;
+
+                            actualizaTabla();
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tDescuento_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "Return")
+            {
+                agregarPartida();
+                tCodigo.Focus();
             }
         }
     }

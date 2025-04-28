@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>punto-de-venta.ico</ApplicationIcon>
+    <ApplicationIcon>LOGO-PRIZA.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -87,6 +87,12 @@
     <Compile Include="frmAutorizacionPrecio.Designer.cs">
       <DependentUpon>frmAutorizacionPrecio.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCargando.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCargando.Designer.cs">
+      <DependentUpon>frmCargando.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCatalogoClientes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,12 @@
     </Compile>
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmModificaCantidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModificaCantidad.Designer.cs">
+      <DependentUpon>frmModificaCantidad.cs</DependentUpon>
     </Compile>
     <Compile Include="frmReimpresion.cs">
       <SubType>Form</SubType>
@@ -175,6 +187,9 @@
     <EmbeddedResource Include="frmAutorizacionPrecio.resx">
       <DependentUpon>frmAutorizacionPrecio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCargando.resx">
+      <DependentUpon>frmCargando.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCatalogoClientes.resx">
       <DependentUpon>frmCatalogoClientes.cs</DependentUpon>
     </EmbeddedResource>
@@ -186,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModificaCantidad.resx">
+      <DependentUpon>frmModificaCantidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReimpresion.resx">
       <DependentUpon>frmReimpresion.cs</DependentUpon>
@@ -258,6 +276,7 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LOGO-PRIZA.ico" />
     <Content Include="punto-de-venta.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

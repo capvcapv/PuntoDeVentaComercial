@@ -14,7 +14,7 @@ using Modelos.Negocio;
 
 namespace TerminalPedidos
 {
-    public partial class frmCatalogoProductos : Form
+    public partial class frmCatalogoProductos : AntdUI.Window
     {
         private List<Producto> listaProductos = new List<Producto>();
         private int paginaActual = 0;
@@ -406,6 +406,16 @@ namespace TerminalPedidos
         private void frmCatalogoProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
             terminaConexion();
+        }
+
+        private void pageHeader1_BackClick(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void frmCatalogoProductos_Shown(object sender, EventArgs e)
+        {
+            tCodigo.Focus();
         }
     }
 }

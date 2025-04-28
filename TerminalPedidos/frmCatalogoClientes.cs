@@ -21,8 +21,7 @@ namespace TerminalPedidos
         public frmCatalogoClientes(Form1 pPadre)
         {
             InitializeComponent();
-            formularioPadre = pPadre;
-            tCodigo.Focus();
+            formularioPadre = pPadre;            
         }
 
         private void frmCatalogoClientes_Load(object sender, EventArgs e)
@@ -105,7 +104,14 @@ namespace TerminalPedidos
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-
+            //if (tCodigo.Focus())
+            //{
+            //    MessageBox.Show("No se pudo enfocar el control tCodigo");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Control tCodigo enfocado correctamente");
+            //}
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -178,6 +184,11 @@ namespace TerminalPedidos
         private void pageHeader1_BackClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmCatalogoClientes_Shown(object sender, EventArgs e)
+        {
+            tCodigo.Focus();
         }
     }
 }
