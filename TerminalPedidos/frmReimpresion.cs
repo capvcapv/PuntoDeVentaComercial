@@ -30,11 +30,13 @@ namespace TerminalPedidos
             con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
             con.Open();
 
-            SqlCommand comando = new SqlCommand("select CFECHA,CFOLIO,CTOTAL from admDocumentos where CREFERENCIA=" + referncia, con);
+            SqlCommand comando = new SqlCommand("select CFECHA,CFOLIO,CTOTAL from admDocumentos where CTEXTOEXTRA1='" + referncia + "'", con);
 
             SqlDataReader lector = comando.ExecuteReader();
 
             List<Modelos.GUI.Documentos> listaDoctos = new List<Modelos.GUI.Documentos>();
+            
+            //TODO : CORREGIR EL QUE SOLO LEE EL PRIMER REGISTRO
 
             if (lector.Read())
             {
