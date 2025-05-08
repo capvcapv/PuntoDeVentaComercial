@@ -480,16 +480,28 @@ namespace TerminalPedidos
                                 }
                             }
 
+                            
 
+                            part.porcentajeDescuento = tDescuento.Text;
                             part.cantidad = tCantidad.Value.ToString();
-                            part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) * Convert.ToDouble(part.cantidad)).ToString("C");
-                            part.descuento = "$ 0.00";
-                            part.porcentajeDescuento = "0";
+
+                            if (tDescuento.Value == 0)
+                            {
+                                part.descuento = "0";
+                            }
+                            else
+                            {
+                                part.descuento = ((Convert.ToDouble(part.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(tDescuento.Value) / 100))).ToString("C");
+                            }
+                                                            
+                            part.importe = ((Convert.ToDouble(part.precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(part.descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(part.cantidad)).ToString("C");
+
                             part.puntos = puntos.ToString();
 
                             binding.Add(part);
 
-                            actualizaTabla();
+                            //actualizaTabla();
+                            actualizaTablaSinCalculo();
 
                             cbPrecio.Items.Clear();
                             cbPrecio.Refresh();
@@ -526,12 +538,57 @@ namespace TerminalPedidos
             tPrecio.Text = (0.0).ToString("C");
         }
 
+        private string obtienePrecioIvaSiAplica(string importe)
+        {
+            string respuesta = "";
+
+            Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            if (config.ivaincluido==0)
+            {
+
+                respuesta = Math.Round((Convert.ToDouble(importe) / 1.16), 2).ToString();
+
+            }
+            else
+            {
+                respuesta = importe;
+            }
+
+            return respuesta;
+        }
+
         private void tCodigo_KeyUp(object sender, KeyEventArgs e)
         {
-            
+
             if (e.KeyCode.ToString() == "Return")
             {
-                tCantidad.Focus();
+                if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) != 0)
+                {
+                    AntdUI.Message.error(this, "El producto no existe en el catálogo.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+
+                    tCodigo.Text = "";
+                    tCodigo.Focus();
+                }
+                else
+                {
+
+                    cbPrecio.Items.Clear();
+
+                    for (int i = 1; i < 6; i++)
+                    {
+                        StringBuilder precio = new StringBuilder().Append('\0', 30);
+                        AdminPAQSDK.fLeeDatoProducto("CPRECIO" + i.ToString(), precio, 30);
+                        cbPrecio.Items.Add(Convert.ToDouble(precio.ToString()).ToString("C"));
+                    }
+
+                    cbPrecio.SelectedIndex = 0;
+                    cbPrecio.Text = cbPrecio.Items[0].ToString();
+
+                    tCantidad.Focus();
+                    tCantidad.SelectAll();
+                }
+
             }
             else if (e.KeyValue == (int)Keys.F3)
             {
@@ -709,7 +766,7 @@ namespace TerminalPedidos
                     clienteActivo.nombre = nombre.ToString();
                     clienteActivo.descuento = descuento.ToString();
 
-                    partidas.Clear();
+                    //partidas.Clear();
                     actualizaTabla();
 
                 }
@@ -994,7 +1051,7 @@ namespace TerminalPedidos
         {
             if (e.KeyValue == (int)Keys.F3)
             {
-                MessageBox.Show("prueba");
+               // MessageBox.Show("prueba");
             }
         }
 
@@ -1047,12 +1104,8 @@ namespace TerminalPedidos
             if (e.KeyCode.ToString() == "Return")
             {
                 tDescuento.Focus();
+                tDescuento.SelectAll();
             }
-        }
-
-        private void tCodigo_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -1129,9 +1182,41 @@ namespace TerminalPedidos
         {
             if (e.KeyCode.ToString() == "Return")
             {
+                var descuentos = new Descuentos().obtenerTodos();
+                double descuento = Convert.ToDouble(tDescuento.Value);
+                bool descuentoAplicado = false;
+
+                foreach (var a in descuentos)
+                {
+                    if (tCodigo.Text.StartsWith(a.prefijo))
+                    {
+                        if (descuento <= a.descuento)
+                        {
+                            tDescuento.Text = descuento.ToString();
+                            tDescuento.Value = Convert.ToDecimal(descuento);
+                            descuentoAplicado = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!descuentoAplicado)
+                {
+                    tDescuento.Text = "0";
+                    tDescuento.Value = 0;
+
+                    AntdUI.Message.error(this, "El descuento no es válido para este producto.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                }
+
                 agregarPartida();
+                tDescuento.Text = "0";
                 tCodigo.Focus();
             }
+        }
+
+        private void tcantidad_textchange(object sender, EventArgs e)
+        {
+
         }
     }
 }

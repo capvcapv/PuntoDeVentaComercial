@@ -54,6 +54,7 @@
             this.button2 = new AntdUI.Button();
             this.tCantidad = new AntdUI.InputNumber();
             this.cbPrecio = new AntdUI.Select();
+            this.tDescuento = new AntdUI.InputNumber();
             this.bDescuentos = new AntdUI.Button();
             this.tPrecio = new System.Windows.Forms.TextBox();
             this.cbAlmacen = new AntdUI.Select();
@@ -62,7 +63,6 @@
             this.pageHeader1 = new AntdUI.PageHeader();
             this.button5 = new AntdUI.Button();
             this.button4 = new AntdUI.Button();
-            this.tDescuento = new AntdUI.InputNumber();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -167,6 +167,7 @@
             this.button1.Radius = 15;
             this.button1.Size = new System.Drawing.Size(48, 29);
             this.button1.TabIndex = 23;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tableLayoutPanel2
@@ -373,7 +374,7 @@
             this.tCodigo.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.tCodigo.Size = new System.Drawing.Size(130, 29);
             this.tCodigo.TabIndex = 14;
-            this.tCodigo.TextChanged += new System.EventHandler(this.tCodigo_TextChanged);
+            this.tCodigo.TextChanged += new System.EventHandler(this.tcantidad_textchange);
             this.tCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tCodigo_KeyUp);
             // 
             // button2
@@ -436,6 +437,36 @@
             this.cbPrecio.Size = new System.Drawing.Size(78, 29);
             this.cbPrecio.TabIndex = 16;
             this.cbPrecio.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbPrecio_KeyUp);
+            // 
+            // tDescuento
+            // 
+            this.tDescuento.BorderActive = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.tDescuento.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
+            this.tDescuento.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.tDescuento.DecimalPlaces = 2;
+            this.tDescuento.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tDescuento.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.tDescuento.Location = new System.Drawing.Point(413, 3);
+            this.tDescuento.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tDescuento.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.tDescuento.Name = "tDescuento";
+            this.tDescuento.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
+            this.tDescuento.Size = new System.Drawing.Size(75, 29);
+            this.tDescuento.TabIndex = 22;
+            this.tDescuento.Text = "0.00";
+            this.tDescuento.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tDescuento_KeyUp);
             // 
             // bDescuentos
             // 
@@ -551,36 +582,6 @@
             this.button4.TabIndex = 0;
             this.button4.Text = "Reimprimir";
             this.button4.Click += new System.EventHandler(this.bReimprimir_Click);
-            // 
-            // tDescuento
-            // 
-            this.tDescuento.BorderActive = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.tDescuento.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
-            this.tDescuento.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.tDescuento.DecimalPlaces = 2;
-            this.tDescuento.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tDescuento.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.tDescuento.Location = new System.Drawing.Point(413, 3);
-            this.tDescuento.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.tDescuento.Name = "tDescuento";
-            this.tDescuento.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
-            this.tDescuento.Size = new System.Drawing.Size(75, 29);
-            this.tDescuento.TabIndex = 22;
-            this.tDescuento.Text = "1.00";
-            this.tDescuento.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tDescuento.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tDescuento_KeyUp);
             // 
             // Form1
             // 

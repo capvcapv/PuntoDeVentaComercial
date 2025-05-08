@@ -98,15 +98,35 @@ namespace TerminalPedidos
 
         }
 
+        //private string obtienePrecioIvaSiAplica(string importe)
+        //{
+        //    string respuesta = "";
+
+        //    if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+        //    {
+                
+        //        respuesta = Math.Round((Convert.ToDouble(importe) / 1.16), 2).ToString();
+                
+        //    }
+        //    else
+        //    {
+        //        respuesta = importe;
+        //    }
+
+        //    return respuesta;
+        //}
+
         private string obtienePrecioIvaSiAplica(string importe)
         {
             string respuesta = "";
 
-            if (ConfigurationManager.AppSettings["ivaIncluido"].Contains("False"))
+            Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            if (config.ivaincluido == 0)
             {
-                
+
                 respuesta = Math.Round((Convert.ToDouble(importe) / 1.16), 2).ToString();
-                
+
             }
             else
             {

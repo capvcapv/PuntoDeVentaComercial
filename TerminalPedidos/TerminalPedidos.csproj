@@ -141,6 +141,7 @@
     <Compile Include="frmVisorFormato.Designer.cs">
       <DependentUpon>frmVisorFormato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globales.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="rptPedidoConIVA.cs">
