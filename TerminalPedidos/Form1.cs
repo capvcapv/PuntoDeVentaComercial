@@ -31,6 +31,9 @@ namespace TerminalPedidos
         private frmTurnosDeCaja turno;
         private BindingSource binding;
 
+        private bool esEdicion = false;
+        private int idDoctoEdicion = 0;
+
 
         public Form1()
         {
@@ -1039,9 +1042,20 @@ namespace TerminalPedidos
                     break;
             }
 
-            frmReimpresion reim = new frmReimpresion(turno.turnoActivo.id.ToString());
+            frmReimpresion reim = new frmReimpresion(turno.turnoActivo.id.ToString(),this);
             reim.concepto = concepto;
             reim.ShowDialog();
+
+            esEdicion = reim.esEdicion;
+
+            if (esEdicion)
+            {
+                textBox1_KeyUp(sender, new KeyEventArgs(Keys.Enter));
+                idDoctoEdicion = reim.idDocumentoEdicion;
+                lCliente.Text = lCliente.Text + " - Documento: " + idDoctoEdicion;
+
+            }
+            
         }
 
         private void tPrecio_Enter(object sender, EventArgs e)

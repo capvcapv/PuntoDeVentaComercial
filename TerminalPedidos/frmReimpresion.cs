@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using Modelos.Negocio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,12 +20,16 @@ namespace TerminalPedidos
     public partial class frmReimpresion : AntdUI.Window
     {
         private string referncia;
+        private Form1 padre;        
         public string concepto {get; set; }
+        public bool esEdicion { get; set; } = false;
+        public int idDocumentoEdicion { get; set; }
 
-        public frmReimpresion(string pReferencia)
+        public frmReimpresion(string pReferencia, Form1 pPadre)
         {
             InitializeComponent();
             referncia = pReferencia;
+            padre = pPadre;
         }
 
         private void frmReimpresion_Load(object sender, EventArgs e)
@@ -124,12 +129,25 @@ namespace TerminalPedidos
             dialog1.Dispose();
             reporte.Dispose();
 
+            esEdicion = false;
+
             MessageBox.Show("Documento reimpreso.");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var documento = dataGridView1.CurrentRow.DataBoundItem as Modelos.GUI.Documentos;
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+            var cadena = ConfigHelper.ClonarConnectionStringConNuevoNombreBD(Path.GetFileName(configuracion.empresa));
 
+            var admdocumento = new Admdocumentos().obtenerId(documento.id,cadena );
+            var admcliente = new Admclientes().obtenerId(admdocumento.CIDCLIENTEPROVEEDOR, cadena);
+
+            padre.textBox1.Text = admcliente.CCODIGOCLIENTE;
+            esEdicion = true;
+            idDocumentoEdicion = documento.id;
+
+            this.Close();
         }
     }
 }

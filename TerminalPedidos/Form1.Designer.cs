@@ -149,7 +149,7 @@
             this.lCliente.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lCliente.Location = new System.Drawing.Point(306, 3);
             this.lCliente.Name = "lCliente";
-            this.lCliente.Size = new System.Drawing.Size(225, 37);
+            this.lCliente.Size = new System.Drawing.Size(388, 37);
             this.lCliente.TabIndex = 8;
             this.lCliente.Text = "-";
             // 
@@ -162,7 +162,7 @@
             this.button1.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button1.IconSvg = resources.GetString("button1.IconSvg");
-            this.button1.Location = new System.Drawing.Point(537, 3);
+            this.button1.Location = new System.Drawing.Point(700, 3);
             this.button1.Name = "button1";
             this.button1.Radius = 15;
             this.button1.Size = new System.Drawing.Size(48, 29);
@@ -389,7 +389,7 @@
             this.button2.Location = new System.Drawing.Point(197, 3);
             this.button2.Name = "button2";
             this.button2.Radius = 15;
-            this.button2.Size = new System.Drawing.Size(45, 29);
+            this.button2.Size = new System.Drawing.Size(59, 29);
             this.button2.TabIndex = 17;
             this.button2.Text = "F3";
             this.button2.Click += new System.EventHandler(this.bF3_Click);
@@ -406,7 +406,7 @@
             0,
             0,
             131072});
-            this.tCantidad.Location = new System.Drawing.Point(248, 3);
+            this.tCantidad.Location = new System.Drawing.Point(262, 3);
             this.tCantidad.Minimum = new decimal(new int[] {
             1,
             0,
@@ -432,7 +432,7 @@
             this.cbPrecio.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbPrecio.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPrecio.List = true;
-            this.cbPrecio.Location = new System.Drawing.Point(329, 3);
+            this.cbPrecio.Location = new System.Drawing.Point(343, 3);
             this.cbPrecio.Name = "cbPrecio";
             this.cbPrecio.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbPrecio.Size = new System.Drawing.Size(78, 29);
@@ -451,7 +451,7 @@
             0,
             0,
             131072});
-            this.tDescuento.Location = new System.Drawing.Point(413, 3);
+            this.tDescuento.Location = new System.Drawing.Point(427, 3);
             this.tDescuento.Maximum = new decimal(new int[] {
             100,
             0,
@@ -478,7 +478,7 @@
             this.bDescuentos.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bDescuentos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.bDescuentos.IconSvg = resources.GetString("bDescuentos.IconSvg");
-            this.bDescuentos.Location = new System.Drawing.Point(494, 3);
+            this.bDescuentos.Location = new System.Drawing.Point(508, 3);
             this.bDescuentos.Name = "bDescuentos";
             this.bDescuentos.Radius = 15;
             this.bDescuentos.Size = new System.Drawing.Size(36, 29);
@@ -488,7 +488,7 @@
             // tPrecio
             // 
             this.tPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tPrecio.Location = new System.Drawing.Point(536, 3);
+            this.tPrecio.Location = new System.Drawing.Point(550, 3);
             this.tPrecio.Name = "tPrecio";
             this.tPrecio.Size = new System.Drawing.Size(27, 29);
             this.tPrecio.TabIndex = 2;
@@ -505,7 +505,7 @@
             this.cbAlmacen.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAlmacen.List = true;
             this.cbAlmacen.ListAutoWidth = true;
-            this.cbAlmacen.Location = new System.Drawing.Point(569, 3);
+            this.cbAlmacen.Location = new System.Drawing.Point(583, 3);
             this.cbAlmacen.Name = "cbAlmacen";
             this.cbAlmacen.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbAlmacen.Size = new System.Drawing.Size(91, 29);
@@ -515,7 +515,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("Poppins SemiBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.label1.Location = new System.Drawing.Point(666, 3);
+            this.label1.Location = new System.Drawing.Point(680, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 29);
             this.label1.TabIndex = 20;
@@ -529,7 +529,7 @@
             this.cbAgente.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAgente.List = true;
             this.cbAgente.ListAutoWidth = true;
-            this.cbAgente.Location = new System.Drawing.Point(723, 3);
+            this.cbAgente.Location = new System.Drawing.Point(737, 3);
             this.cbAgente.Name = "cbAgente";
             this.cbAgente.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbAgente.Size = new System.Drawing.Size(106, 29);
@@ -561,10 +561,10 @@
             this.button5.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button5.IconSvg = resources.GetString("button5.IconSvg");
-            this.button5.Location = new System.Drawing.Point(470, 3);
+            this.button5.Location = new System.Drawing.Point(448, 3);
             this.button5.Name = "button5";
             this.button5.Radius = 15;
-            this.button5.Size = new System.Drawing.Size(112, 29);
+            this.button5.Size = new System.Drawing.Size(134, 29);
             this.button5.TabIndex = 1;
             this.button5.Text = "Limpiar venta";
             this.button5.Click += new System.EventHandler(this.bLimpiar_Click);
@@ -579,7 +579,7 @@
             this.button4.Location = new System.Drawing.Point(588, 3);
             this.button4.Name = "button4";
             this.button4.Radius = 15;
-            this.button4.Size = new System.Drawing.Size(101, 29);
+            this.button4.Size = new System.Drawing.Size(109, 29);
             this.button4.TabIndex = 0;
             this.button4.Text = "Historicos";
             this.button4.Click += new System.EventHandler(this.bReimprimir_Click);
