@@ -1011,7 +1011,36 @@ namespace TerminalPedidos
 
         private void bReimprimir_Click(object sender, EventArgs e)
         {
+
+            var caja = Modelos.Negocio.CajasDBContext.obtener(turno.turnoActivo.caja);
+            string concepto = "";
+            
+            switch (cbConcepto.SelectedIndex)
+            {
+                case 0:
+                    concepto = caja.conceptoFactura;
+                    break;
+                case 1:
+                    concepto = caja.conceptoRemision;
+                    break;
+                case 2:
+                    concepto = caja.conceptoPedido;
+                    break;
+                case 3:
+                    concepto = caja.conceptoPedido2;
+                    break;
+                case 4:
+                    concepto = caja.conceptoCotizacion;
+                    break;
+                case 5:
+                    concepto = caja.conceptoCotizacion2;
+                    break;
+                default:
+                    break;
+            }
+
             frmReimpresion reim = new frmReimpresion(turno.turnoActivo.id.ToString());
+            reim.concepto = concepto;
             reim.ShowDialog();
         }
 
@@ -1215,6 +1244,11 @@ namespace TerminalPedidos
         }
 
         private void tcantidad_textchange(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, TableClickEventArgs e)
         {
 
         }

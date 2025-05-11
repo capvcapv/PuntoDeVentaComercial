@@ -329,6 +329,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(906, 503);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.Text = "table1";
+            this.dataGridView1.CellClick += new AntdUI.Table.ClickEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellButtonClick += new AntdUI.Table.ClickButtonEventHandler(this.dataGridView1_CellButtonClick);
             this.dataGridView1.CellDoubleClick += new AntdUI.Table.ClickEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -580,7 +581,7 @@
             this.button4.Radius = 15;
             this.button4.Size = new System.Drawing.Size(101, 29);
             this.button4.TabIndex = 0;
-            this.button4.Text = "Reimprimir";
+            this.button4.Text = "Historicos";
             this.button4.Click += new System.EventHandler(this.bReimprimir_Click);
             // 
             // Form1
