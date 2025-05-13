@@ -149,7 +149,7 @@
             this.lCliente.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lCliente.Location = new System.Drawing.Point(306, 3);
             this.lCliente.Name = "lCliente";
-            this.lCliente.Size = new System.Drawing.Size(388, 37);
+            this.lCliente.Size = new System.Drawing.Size(534, 37);
             this.lCliente.TabIndex = 8;
             this.lCliente.Text = "-";
             // 
@@ -162,7 +162,7 @@
             this.button1.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button1.IconSvg = resources.GetString("button1.IconSvg");
-            this.button1.Location = new System.Drawing.Point(700, 3);
+            this.button1.Location = new System.Drawing.Point(846, 3);
             this.button1.Name = "button1";
             this.button1.Radius = 15;
             this.button1.Size = new System.Drawing.Size(48, 29);

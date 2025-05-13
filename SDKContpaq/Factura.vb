@@ -41,10 +41,13 @@ Namespace SDKContpaq
             Dim fecha As String = hoy.ToString("MM/dd/yyyy")
             Dim enconder As New UTF8Encoding()
 
-            serie = ""
+
             'referencia = "SDK"
 
-            muestra_error(AdminPAQSDK.fSiguienteFolio(concepto, serie, sigFolio))
+            If sigFolio = 0 Then
+                serie = ""
+                muestra_error(AdminPAQSDK.fSiguienteFolio(concepto, serie, sigFolio))
+            End If
 
             tdoc.aFolio = sigFolio
             tdoc.aNumMoneda = moneda

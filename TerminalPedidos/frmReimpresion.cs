@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using Modelos.GUI;
 using Modelos.Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,10 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Services.Description;
 using System.Windows.Forms;
+using Vanara.PInvoke;
+using static AntdUI.FloatButton;
 
 namespace TerminalPedidos
 {
@@ -24,6 +28,7 @@ namespace TerminalPedidos
         public string concepto {get; set; }
         public bool esEdicion { get; set; } = false;
         public int idDocumentoEdicion { get; set; }
+        public string SerieFolio { get; set; }
 
         public frmReimpresion(string pReferencia, Form1 pPadre)
         {
@@ -146,8 +151,57 @@ namespace TerminalPedidos
             padre.textBox1.Text = admcliente.CCODIGOCLIENTE;
             esEdicion = true;
             idDocumentoEdicion = documento.id;
+            SerieFolio = admdocumento.CSERIEDOCUMENTO + " - " + admdocumento.CFOLIO;
+
+            cargaPartidas(documento.id);
+
 
             this.Close();
         }
+
+        private void cargaPartidas(int idDocto)
+        {
+            var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
+            var cadena = ConfigHelper.ClonarConnectionStringConNuevoNombreBD(Path.GetFileName(configuracion.empresa));
+
+            var admmovimientos = new Admmovimientos().obtenerSQL("select * from admMovimientos where CIDDOCUMENTO = " + idDocto, cadena);
+
+            padre.binding.Clear();
+
+            foreach (var mov in admmovimientos)
+            {
+                var admprodcuto = new Admproductos().obtenerId(mov.CIDPRODUCTO, cadena);
+                var admalmacen = new Admalmacenes().obtenerId(mov.CIDALMACEN, cadena);
+
+                Partida part = new Partida();
+                part.codigo = admprodcuto.CCODIGOPRODUCTO;
+                part.producto = admprodcuto.CNOMBREPRODUCTO;
+                part.almacen = admalmacen.CCODIGOALMACEN;
+
+
+                part.precio = mov.CPRECIOCAPTURADO.ToString();
+                part.porcentajeDescuento = mov.CPORCENTAJEDESCUENTO1.ToString();
+                part.cantidad = mov.CUNIDADES.ToString();
+
+
+                if (mov.CPORCENTAJEDESCUENTO1 == 0)
+                {
+                    part.descuento = "0";
+                }
+                else
+                {
+                    part.descuento = ((Convert.ToDouble(part.precio.Replace("$", "").Replace(",", ""))) * ((Convert.ToDouble(mov.CPORCENTAJEDESCUENTO1) / 100))).ToString("C");
+                }
+
+                part.precio = (Convert.ToDouble(part.precio) - Convert.ToDouble(part.descuento.Replace("$", "").Replace(",", ""))).ToString("C");
+                part.importe = (Convert.ToDouble(part.precio.Replace("$", "").Replace(",", ""))  * Convert.ToDouble(part.cantidad)).ToString("C");
+                part.puntos = "0";
+
+                padre.binding.Add(part);
+                padre.actualizaTablaSinCalculo();
+            }
+                        
+        }
+
     }
 }

@@ -26,14 +26,14 @@ namespace TerminalPedidos
     public partial class Form1 : AntdUI.Window
     {
         private List<Partida> partidas = new List<Partida>();
-        private Cliente clienteActivo;
         private frmLogin acceso = new frmLogin();
         private frmTurnosDeCaja turno;
-        private BindingSource binding;
+        public BindingSource binding;
 
+        private Cliente clienteActivo;
         private bool esEdicion = false;
         private int idDoctoEdicion = 0;
-
+        private string serieFolio = "";
 
         public Form1()
         {
@@ -656,7 +656,7 @@ namespace TerminalPedidos
 
 
 
-        private void actualizaTablaSinCalculo()
+        public void actualizaTablaSinCalculo()
         {
 
             double subtotal = 0;
@@ -861,7 +861,7 @@ namespace TerminalPedidos
                 fac.textoextra1 = turno.turnoActivo.id.ToString();
                 fac.observaciones = observacion;
                 fac.part = new List<SDKContpaq.SDKContpaq.Partidas>();
-
+                
                 int puntos_totales = 0;
 
                 foreach(var a in partidas)
@@ -896,7 +896,21 @@ namespace TerminalPedidos
                     
                 }
 
-                var folio=fac.creaFactura();
+                if (esEdicion)
+                {
+                    AdminPAQSDK.fBuscarIdDocumento(idDoctoEdicion);
+                    AdminPAQSDK.fEditarDocumento();
+                    AdminPAQSDK.fBorraDocumento();
+
+                    fac.serie = serieFolio.Split('-')[0].Trim();
+                    fac.sigFolio = Convert.ToDouble(serieFolio.Split('-')[1].Trim());
+                }
+                else
+                {
+                    fac.sigFolio = 0;
+                }
+
+                var folio = fac.creaFactura();
 
                 binding.DataSource = null;
                 partidas = new List<Partida>();
@@ -914,6 +928,7 @@ namespace TerminalPedidos
                 //formatoVisor.titulo = titulo;
                 //formatoVisor.agente = cbAgente.Text.Split('-')[0];
                 //formatoVisor.ShowDialog();
+
 
 
                 if (seImprime)
@@ -992,6 +1007,8 @@ namespace TerminalPedidos
                     MessageBox.Show("Creado con folio: " + folio);
                 }
 
+                bLimpiar_Click(sender, e);
+
             }
             else
             {
@@ -1002,6 +1019,15 @@ namespace TerminalPedidos
 
         private void bLimpiar_Click(object sender, EventArgs e)
         {
+            cbConcepto.Enabled = true;
+            clienteActivo = null;
+            esEdicion = false;
+            idDoctoEdicion = 0;
+            serieFolio = "";
+            lCliente.Text = "-";
+            textBox1.Text = "";
+            textBox1.Focus();
+
             partidas = new List<Partida>();
 
             binding.DataSource = null;
@@ -1052,8 +1078,9 @@ namespace TerminalPedidos
             {
                 textBox1_KeyUp(sender, new KeyEventArgs(Keys.Enter));
                 idDoctoEdicion = reim.idDocumentoEdicion;
-                lCliente.Text = lCliente.Text + " - Documento: " + idDoctoEdicion;
-
+                lCliente.Text = lCliente.Text + " - Documento: " + idDoctoEdicion + " Folio: " + reim.SerieFolio;
+                cbConcepto.Enabled = false;
+                serieFolio = reim.SerieFolio;
             }
             
         }
@@ -1245,13 +1272,26 @@ namespace TerminalPedidos
 
                 if (!descuentoAplicado)
                 {
-                    tDescuento.Text = "0";
-                    tDescuento.Value = 0;
+                    if (tDescuento.Value != 0)
+                    {
+                        tDescuento.Text = "0";
+                        tDescuento.Value = 0;
 
-                    AntdUI.Message.error(this, "El descuento no es válido para este producto.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                        AntdUI.Message.error(this, "El descuento no es válido para este producto.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    }
+                    
                 }
 
-                agregarPartida();
+                if( Convert.ToDouble(cbPrecio.Text.Replace("$","").Replace(",","")) != 0)
+                {
+                    agregarPartida();
+                }
+                else
+                {
+                    AntdUI.Message.error(this, "El precio no puede ser cero pesos.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                }
+
+                    
                 tDescuento.Text = "0";
                 tCodigo.Focus();
             }

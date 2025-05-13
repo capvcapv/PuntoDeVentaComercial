@@ -29,11 +29,12 @@ namespace TerminalPedidos
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReimpresion));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pageHeader1 = new AntdUI.PageHeader();
-            this.button6 = new AntdUI.Button();
             this.button1 = new AntdUI.Button();
+            this.button6 = new AntdUI.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pageHeader1.SuspendLayout();
             this.SuspendLayout();
@@ -44,6 +45,14 @@ namespace TerminalPedidos
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(209)))), ((int)(((byte)(152)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 48);
             this.dataGridView1.MultiSelect = false;
@@ -69,20 +78,6 @@ namespace TerminalPedidos
             this.pageHeader1.Text = "Opciones";
             this.pageHeader1.BackClick += new System.EventHandler(this.pageHeader1_BackClick);
             // 
-            // button6
-            // 
-            this.button6.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button6.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button6.IconSvg = resources.GetString("button6.IconSvg");
-            this.button6.Location = new System.Drawing.Point(126, 3);
-            this.button6.Name = "button6";
-            this.button6.Radius = 15;
-            this.button6.Size = new System.Drawing.Size(139, 38);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "Reimprimir";
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // button1
             // 
             this.button1.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(209)))), ((int)(((byte)(152)))));
@@ -96,6 +91,20 @@ namespace TerminalPedidos
             this.button1.TabIndex = 9;
             this.button1.Text = "Modificar";
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button6
+            // 
+            this.button6.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button6.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button6.IconSvg = resources.GetString("button6.IconSvg");
+            this.button6.Location = new System.Drawing.Point(126, 3);
+            this.button6.Name = "button6";
+            this.button6.Radius = 15;
+            this.button6.Size = new System.Drawing.Size(139, 38);
+            this.button6.TabIndex = 8;
+            this.button6.Text = "Reimprimir";
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // frmReimpresion
             // 
