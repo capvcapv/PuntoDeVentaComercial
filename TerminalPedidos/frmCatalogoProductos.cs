@@ -20,7 +20,7 @@ namespace TerminalPedidos
         private int paginaActual = 0;
         private int registrosPorPagina = 50;
         private Form1 formularioPadre;
-
+        private Configuracion config;
         private SqlConnection conexionGlobal;
 
         public frmCatalogoProductos(Form1 pPadre)
@@ -44,17 +44,17 @@ namespace TerminalPedidos
                 pro.codigo = lector["CCODIGOPRODUCTO"].ToString();
                 pro.nombre = lector["CNOMBREPRODUCTO"].ToString();
 
-                var promos = new Promociones().obtenerSQL("select * from promociones where producto = " + lector["CIDPRODUCTO"].ToString());
+                //var promos = new Promociones().obtenerSQL("select * from promociones where producto = " + lector["CIDPRODUCTO"].ToString());
 
-                if(promos.Count > 0)
-                {
-                    pro.mayoreo = promos[0].cantidad;
-                }else
-                {
-                    pro.mayoreo = 0;
-                }
+                //if(promos.Count > 0)
+                //{
+                //    pro.mayoreo = promos[0].cantidad;
+                //}else
+                //{
+                //    pro.mayoreo = 0;
+                //}
 
-                 
+                pro.mayoreo = 0;
                 pro.precio1 = obtienePrecioIvaSiAplica(lector["CPRECIO1"].ToString());
                 pro.precio2 = obtienePrecioIvaSiAplica(lector["CPRECIO2"].ToString());
                 pro.precio3 = obtienePrecioIvaSiAplica(lector["CPRECIO3"].ToString());
@@ -120,7 +120,7 @@ namespace TerminalPedidos
         {
             string respuesta = "";
 
-            Configuracion config = Modelos.Negocio.ConfigurationDBContext.obtener();
+            
 
             if (config.ivaincluido == 0)
             {
@@ -140,8 +140,10 @@ namespace TerminalPedidos
         {
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
             conexionGlobal = new SqlConnection();
-            conexionGlobal.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+            conexionGlobal.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
             conexionGlobal.Open();
+
+            config = Modelos.Negocio.ConfigurationDBContext.obtener();
         }
 
         private void terminaConexion()

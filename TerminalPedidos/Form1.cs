@@ -311,7 +311,7 @@ namespace TerminalPedidos
         private void cargaAgentes()
         {
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
-            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+            string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
 
             var agentes = (new Modelos.Negocio.Admagentes()).obtenerTodos(cadena);
 
@@ -398,7 +398,7 @@ namespace TerminalPedidos
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
             con.Open();
 
             string sql = "WITH movimientos AS ((SELECT entradas.cidalmacen, entradas.cidproducto, entradas.cunidades as cunidades FROM  dbo.admMovimientos entradas WHERE entradas.cafectadoinventario = 1 AND entradas.cafectaexistencia = 1) UNION ALL(SELECT salidas.cidalmacen, salidas.cidproducto, -1 * salidas.cunidades AS CUNIDADES FROM dbo.admMovimientos salidas WHERE salidas.cafectadoinventario = 1 AND salidas.cafectaexistencia = 2)) SELECT prod.ccodigoproducto as CODIGO_PRODUCTO, prod.cnombreproducto as NOMBRE_PRODUCTO, alm.ccodigoalmacen as ALMACEN, ROUND(SUM(cunidades), 2, 1) as EXISTENCIA FROM movimientos mov INNER JOIN dbo.admProductos prod ON prod.cidproducto = mov.cidproducto INNER JOIN dbo.admAlmacenes alm ON alm.cidalmacen = mov.cidalmacen WHERE alm.CCODIGOALMACEN = '1' and prod.ccodigoproducto='" + codigo + "' GROUP BY prod.ccodigoproducto, prod.cnombreproducto, alm.ccodigoalmacen;";

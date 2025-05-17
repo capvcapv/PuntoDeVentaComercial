@@ -60,7 +60,7 @@ namespace TerminalPedidos
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
             con.Open();
 
             SqlCommand comando = new SqlCommand("select * from admClientes where CTIPOCLIENTE<>3 and CESTATUS<>0", con);
@@ -75,7 +75,7 @@ namespace TerminalPedidos
                 cli.descuento = lector.GetValue(10).ToString();
 
                 SqlConnection con2 = new SqlConnection();
-                con2.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
+                con2.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
                 con2.Open();
 
                 SqlCommand comando2 = new SqlCommand("select * from admDomicilios where CIDCATALOGO=" + lector.GetValue(0).ToString() + " and CTIPOCATALOGO=1 and CTIPODIRECCION=0", con2);
