@@ -42,7 +42,7 @@ namespace TerminalPedidos
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
             con.Open();
 
             SqlCommand comando = new SqlCommand("select admDocumentos.CIDDOCUMENTO,admDocumentos.CFECHA,admDocumentos.CFOLIO,admDocumentos.CRAZONSOCIAL,admDocumentos.CTOTAL from admDocumentos inner join admConceptos on admDocumentos.CIDCONCEPTODOCUMENTO = admConceptos.CIDCONCEPTODOCUMENTO  where admConceptos.CCODIGOCONCEPTO ='" + concepto + "' and admDocumentos.CTEXTOEXTRA1='" + referncia + "'", con);

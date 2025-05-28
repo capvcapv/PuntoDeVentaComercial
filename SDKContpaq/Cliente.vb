@@ -36,7 +36,7 @@ Namespace SDKContpaq
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CCODIGOC01", Me.rfc))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CRAZONSO01", Me.razonSocial))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CRFC", Me.rfc))
-                muestra_error(AdminPAQSDK.fSetDatoCteProv("CFECHAALTA", "12/12/2014"))
+                muestra_error(AdminPAQSDK.fSetDatoCteProv("CFECHAALTA", "12/12/" & DateTime.Now.Year))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CIDMONEDA", "1"))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CLISTAPR01", "1"))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CTIPOCLI01", "1"))

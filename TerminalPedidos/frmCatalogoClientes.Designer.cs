@@ -37,7 +37,9 @@
             this.label1 = new AntdUI.Label();
             this.tNombre = new AntdUI.Input();
             this.label2 = new AntdUI.Label();
+            this.button2 = new AntdUI.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.pageHeader1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -73,6 +75,7 @@
             // 
             // pageHeader1
             // 
+            this.pageHeader1.Controls.Add(this.button2);
             this.pageHeader1.DividerColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.pageHeader1.DividerShow = true;
             this.pageHeader1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -135,6 +138,22 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Nombre:";
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.IconSvg = resources.GetString("button2.IconSvg");
+            this.button2.Location = new System.Drawing.Point(562, 3);
+            this.button2.Name = "button2";
+            this.button2.Radius = 15;
+            this.button2.Size = new System.Drawing.Size(165, 43);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Nuevo";
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // frmCatalogoClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -155,6 +174,7 @@
             this.Load += new System.EventHandler(this.frmCatalogoClientes_Load);
             this.Shown += new System.EventHandler(this.frmCatalogoClientes_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.pageHeader1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -166,5 +186,6 @@
         private AntdUI.Label label1;
         public AntdUI.Input tNombre;
         private AntdUI.Label label2;
+        private AntdUI.Button button2;
     }
 }

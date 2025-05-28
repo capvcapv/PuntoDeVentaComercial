@@ -140,7 +140,7 @@ namespace TerminalPedidos
         {
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
             conexionGlobal = new SqlConnection();
-            conexionGlobal.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercialTest", configuracion.empresa.Split('\\').Last());
+            conexionGlobal.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
             conexionGlobal.Open();
 
             config = Modelos.Negocio.ConfigurationDBContext.obtener();
