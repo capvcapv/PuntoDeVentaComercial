@@ -274,6 +274,14 @@ namespace TerminalPedidos
                 exis.ShowDialog();
 
             }
+            else if (e.KeyValue == (int)Keys.F5)
+            {
+                Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
+
+                frmFotoProducto foto = new frmFotoProducto(pro.codigo);
+                foto.ShowDialog();
+            }
+
         }
 
         private void tCodigo_KeyUp(object sender, KeyEventArgs e)
