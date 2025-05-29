@@ -33,11 +33,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCatalogoClientes));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pageHeader1 = new AntdUI.PageHeader();
+            this.button2 = new AntdUI.Button();
             this.tCodigo = new AntdUI.Input();
             this.label1 = new AntdUI.Label();
             this.tNombre = new AntdUI.Input();
             this.label2 = new AntdUI.Label();
-            this.button2 = new AntdUI.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pageHeader1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 110);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(716, 314);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
@@ -91,6 +92,22 @@
             this.pageHeader1.Text = "Catálogo de clientes";
             this.pageHeader1.UseSystemStyleColor = true;
             this.pageHeader1.BackClick += new System.EventHandler(this.pageHeader1_BackClick);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button2.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.IconSvg = resources.GetString("button2.IconSvg");
+            this.button2.Location = new System.Drawing.Point(562, 3);
+            this.button2.Name = "button2";
+            this.button2.Radius = 15;
+            this.button2.Size = new System.Drawing.Size(165, 43);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Nuevo";
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tCodigo
             // 
@@ -137,22 +154,6 @@
             this.label2.Size = new System.Drawing.Size(71, 23);
             this.label2.TabIndex = 10;
             this.label2.Text = "Nombre:";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button2.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button2.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button2.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.IconSvg = resources.GetString("button2.IconSvg");
-            this.button2.Location = new System.Drawing.Point(562, 3);
-            this.button2.Name = "button2";
-            this.button2.Radius = 15;
-            this.button2.Size = new System.Drawing.Size(165, 43);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Nuevo";
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // frmCatalogoClientes
             // 

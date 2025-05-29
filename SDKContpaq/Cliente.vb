@@ -6,6 +6,7 @@ Imports System.Text
 Namespace SDKContpaq
     Public Class Cliente
 
+        Public codigo As String
         Public razonSocial As String
         Public rfc As String
         Public calle As String
@@ -18,6 +19,9 @@ Namespace SDKContpaq
         Public estado As String
         Public pais As String
 
+        Public formapago As String
+        Public regimen As String
+        Public usocfdi As String
 
         Public Function existeCliente(ByVal codigo As String) As Boolean
             If AdminPAQSDK.fBuscaCteProv(codigo) = 0 Then
@@ -33,7 +37,7 @@ Namespace SDKContpaq
                 Dim id As New StringBuilder()
                 id.Append(ControlChars.NullChar, 11)
 
-                muestra_error(AdminPAQSDK.fSetDatoCteProv("CCODIGOC01", Me.rfc))
+                muestra_error(AdminPAQSDK.fSetDatoCteProv("CCODIGOC01", Me.codigo))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CRAZONSO01", Me.razonSocial))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CRFC", Me.rfc))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CFECHAALTA", "12/12/" & DateTime.Now.Year))
@@ -42,9 +46,13 @@ Namespace SDKContpaq
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CTIPOCLI01", "1"))
                 muestra_error(AdminPAQSDK.fSetDatoCteProv("CESTATUS", "1"))
 
+                muestra_error(AdminPAQSDK.fSetDatoCteProv("CMETODOPAG", formapago))
+                muestra_error(AdminPAQSDK.fSetDatoCteProv("CUSOCFDI", usocfdi))
+                muestra_error(AdminPAQSDK.fSetDatoCteProv("CREGIMFISC", regimen))
+
                 muestra_error(AdminPAQSDK.fGuardaCteProv())
 
-                AdminPAQSDK.fBuscaCteProv(Me.rfc)
+                AdminPAQSDK.fBuscaCteProv(Me.codigo)
                 AdminPAQSDK.fLeeDatoCteProv("CIDCLIEN01", id, 11)
 
                 AdminPAQSDK.fInsertaDireccion()

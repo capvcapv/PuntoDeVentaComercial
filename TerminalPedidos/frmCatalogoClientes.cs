@@ -26,39 +26,15 @@ namespace TerminalPedidos
 
         private void frmCatalogoClientes_Load(object sender, EventArgs e)
         {
-            //AdminPAQSDK.fPosPrimerCteProv();
 
-            //while (AdminPAQSDK.fPosEOFCteProv() != 1)
-            //{
-            //    StringBuilder tipo = new StringBuilder().Append('\0', 3);
-            //    StringBuilder activo = new StringBuilder().Append('\0', 3);
+            obtenerClientes();
+        }
 
-            //    AdminPAQSDK.fLeeDatoCteProv("CTIPOCLIENTE", tipo, 3);
-            //    AdminPAQSDK.fLeeDatoCteProv("CESTATUS", activo, 3);
-
-            //    if (!tipo.ToString().Contains("3") && !activo.ToString().Contains("0"))
-            //    {
-            //        StringBuilder codigo = new StringBuilder().Append('\0',30);
-            //        StringBuilder nombre =new StringBuilder().Append('\0', 60);
-            //        StringBuilder descuento = new StringBuilder().Append('\0', 30);
-
-            //        AdminPAQSDK.fLeeDatoCteProv("CCODIGOCLIENTE",codigo,30);
-            //        AdminPAQSDK.fLeeDatoCteProv("CRAZONSOCIAL",nombre,60);
-            //        AdminPAQSDK.fLeeDatoCteProv("CDESCUENTOMOVTO", descuento,30);
-
-            //        Cliente cli = new Cliente();
-            //        cli.codigo = codigo.ToString();
-            //        cli.nombre = nombre.ToString();
-            //        cli.descuento = descuento.ToString();
-
-            //        listaClientes.Add(cli);
-
-            //    }
-
-            //    AdminPAQSDK.fPosSiguienteCteProv();
-            //}
+        private void obtenerClientes()
+        {
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
 
+            listaClientes.Clear();
             SqlConnection con = new SqlConnection();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
             con.Open();
@@ -103,15 +79,6 @@ namespace TerminalPedidos
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            //if (tCodigo.Focus())
-            //{
-            //    MessageBox.Show("No se pudo enfocar el control tCodigo");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Control tCodigo enfocado correctamente");
-            //}
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -195,6 +162,8 @@ namespace TerminalPedidos
         {
             frmClientes frmclientes = new frmClientes();
             frmclientes.ShowDialog();
+
+            obtenerClientes();
         }
     }
 }

@@ -60,10 +60,10 @@
             this.cbAlmacen = new AntdUI.Select();
             this.label1 = new AntdUI.Label();
             this.cbAgente = new AntdUI.Select();
+            this.button3 = new AntdUI.Button();
             this.pageHeader1 = new AntdUI.PageHeader();
             this.button5 = new AntdUI.Button();
             this.button4 = new AntdUI.Button();
-            this.button3 = new AntdUI.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -140,7 +140,7 @@
             this.button6.Location = new System.Drawing.Point(253, 3);
             this.button6.Name = "button6";
             this.button6.Radius = 15;
-            this.button6.Size = new System.Drawing.Size(75, 29);
+            this.button6.Size = new System.Drawing.Size(75, 31);
             this.button6.TabIndex = 7;
             this.button6.Text = "F3";
             this.button6.Click += new System.EventHandler(this.button2_Click);
@@ -303,6 +303,7 @@
             this.cbConcepto.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.cbConcepto.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.cbConcepto.CaretColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbConcepto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbConcepto.Font = new System.Drawing.Font("Poppins", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConcepto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(94)))), ((int)(((byte)(92)))));
             this.cbConcepto.List = true;
@@ -310,7 +311,7 @@
             this.cbConcepto.Location = new System.Drawing.Point(913, 3);
             this.cbConcepto.Name = "cbConcepto";
             this.cbConcepto.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(107)))), ((int)(((byte)(104)))));
-            this.cbConcepto.Size = new System.Drawing.Size(215, 24);
+            this.cbConcepto.Size = new System.Drawing.Size(222, 34);
             this.cbConcepto.TabIndex = 9;
             // 
             // dataGridView1
@@ -537,6 +538,22 @@
             this.cbAgente.Size = new System.Drawing.Size(144, 29);
             this.cbAgente.TabIndex = 21;
             // 
+            // button3
+            // 
+            this.button3.BackActive = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button3.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button3.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button3.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button3.IconSvg = resources.GetString("button3.IconSvg");
+            this.button3.Location = new System.Drawing.Point(978, 3);
+            this.button3.Name = "button3";
+            this.button3.Radius = 15;
+            this.button3.Size = new System.Drawing.Size(36, 29);
+            this.button3.TabIndex = 23;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // pageHeader1
             // 
             this.pageHeader1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
@@ -576,7 +593,7 @@
             this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(209)))), ((int)(((byte)(152)))));
             this.button4.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(209)))), ((int)(((byte)(152)))));
             this.button4.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(89)))), ((int)(((byte)(90)))));
+            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button4.IconSvg = resources.GetString("button4.IconSvg");
             this.button4.Location = new System.Drawing.Point(588, 3);
             this.button4.Name = "button4";
@@ -585,22 +602,6 @@
             this.button4.TabIndex = 0;
             this.button4.Text = "Historicos";
             this.button4.Click += new System.EventHandler(this.bReimprimir_Click);
-            // 
-            // button3
-            // 
-            this.button3.BackActive = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button3.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button3.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.button3.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button3.IconSvg = resources.GetString("button3.IconSvg");
-            this.button3.Location = new System.Drawing.Point(978, 3);
-            this.button3.Name = "button3";
-            this.button3.Radius = 15;
-            this.button3.Size = new System.Drawing.Size(36, 29);
-            this.button3.TabIndex = 23;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
@@ -612,7 +613,7 @@
             this.Controls.Add(this.pageHeader1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Terminal PDV";
