@@ -31,6 +31,8 @@ namespace AdministradorPV
             config.imprime_ticket = Convert.ToInt32(ckImprimeTicket.Checked);
             config.ivaincluido = Convert.ToInt32(ckIvaIncluido.Checked);
             config.muestraVentanaDescuentos = Convert.ToInt32(ckMuestraVentanaDescuentos.Checked);
+            config.limitePrecio1Precio3 = Convert.ToInt32(ckLimitarPrecios.Checked);
+            config.descuentoPorVolumen = Convert.ToInt32(ckDescuentoMayoreo.Checked);
 
             ConfigurationDBContext.actualizar(config);
 
@@ -74,6 +76,8 @@ namespace AdministradorPV
             ckImprimeTicket.Checked = Convert.ToBoolean(config.imprime_ticket);
             ckIvaIncluido.Checked= Convert.ToBoolean(config.ivaincluido);
             ckMuestraVentanaDescuentos.Checked = Convert.ToBoolean(config.muestraVentanaDescuentos);
+            ckLimitarPrecios.Checked = Convert.ToBoolean(config.limitePrecio1Precio3);
+            ckDescuentoMayoreo.Checked = Convert.ToBoolean(config.descuentoPorVolumen);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

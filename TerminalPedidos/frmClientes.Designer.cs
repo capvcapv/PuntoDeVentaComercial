@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
-            AntdUI.Tabs.StyleCard styleCard2 = new AntdUI.Tabs.StyleCard();
+            AntdUI.Tabs.StyleCard styleCard1 = new AntdUI.Tabs.StyleCard();
             this.pageHeader1 = new AntdUI.PageHeader();
             this.button2 = new AntdUI.Button();
             this.tabs1 = new AntdUI.Tabs();
             this.tabPage1 = new AntdUI.TabPage();
+            this.cbFormaPago = new AntdUI.Select();
+            this.label15 = new AntdUI.Label();
             this.cbUsodecfdi = new AntdUI.Select();
             this.label5 = new AntdUI.Label();
             this.cbRegimenfiscal = new AntdUI.Select();
@@ -63,9 +65,7 @@
             this.tCalle = new AntdUI.Input();
             this.label11 = new AntdUI.Label();
             this.tNumInt = new AntdUI.Input();
-            this.cbFormaPago = new AntdUI.Select();
-            this.label15 = new AntdUI.Label();
-            this.pageHeader1.SuspendLayout();
+            this.divider1 = new AntdUI.Divider();
             this.tabs1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -73,7 +73,6 @@
             // 
             // pageHeader1
             // 
-            this.pageHeader1.Controls.Add(this.button2);
             this.pageHeader1.DividerColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.pageHeader1.DividerShow = true;
             this.pageHeader1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -98,7 +97,7 @@
             this.button2.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button2.IconSvg = resources.GetString("button2.IconSvg");
-            this.button2.Location = new System.Drawing.Point(641, 3);
+            this.button2.Location = new System.Drawing.Point(633, 365);
             this.button2.Name = "button2";
             this.button2.Radius = 15;
             this.button2.Size = new System.Drawing.Size(159, 43);
@@ -110,7 +109,7 @@
             // 
             this.tabs1.Controls.Add(this.tabPage1);
             this.tabs1.Controls.Add(this.tabPage2);
-            this.tabs1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tabs1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabs1.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabs1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.tabs1.Location = new System.Drawing.Point(12, 55);
@@ -118,7 +117,7 @@
             this.tabs1.Pages.Add(this.tabPage1);
             this.tabs1.Pages.Add(this.tabPage2);
             this.tabs1.Size = new System.Drawing.Size(786, 274);
-            this.tabs1.Style = styleCard2;
+            this.tabs1.Style = styleCard1;
             this.tabs1.TabIndex = 24;
             this.tabs1.Text = "tabs1";
             this.tabs1.Type = AntdUI.TabType.Card;
@@ -144,6 +143,56 @@
             this.tabPage1.Size = new System.Drawing.Size(780, 243);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // cbFormaPago
+            // 
+            this.cbFormaPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbFormaPago.BorderActive = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbFormaPago.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbFormaPago.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbFormaPago.CaretColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.cbFormaPago.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbFormaPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(94)))), ((int)(((byte)(92)))));
+            this.cbFormaPago.Items.AddRange(new object[] {
+            "01 - Efectivo",
+            "02 - Cheque nominativo",
+            "03 - Transferencia electrónica de fondos",
+            "04 - Tarjeta de crédito",
+            "05 - Monedero electrónico",
+            "06 - Dinero electrónico",
+            "08 - Vales de despensa",
+            "12 - Dación en pago",
+            "13 - Pago por subrogación",
+            "14 - Pago por consignación",
+            "15 - Condonación",
+            "17 - Compensación",
+            "23 - Novación",
+            "24 - Confusión",
+            "25 - Remisión de deuda",
+            "26 - Prescripción o caducidad",
+            "27 - A satisfacción del acreedor",
+            "28 - Tarjeta de débito",
+            "29 - Tarjeta de servicios",
+            "30 - Aplicación de anticipos",
+            "31 - Intermediario de pagos",
+            "99 - Por definir"});
+            this.cbFormaPago.List = true;
+            this.cbFormaPago.ListAutoWidth = true;
+            this.cbFormaPago.Location = new System.Drawing.Point(452, 123);
+            this.cbFormaPago.Name = "cbFormaPago";
+            this.cbFormaPago.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(107)))), ((int)(((byte)(104)))));
+            this.cbFormaPago.Size = new System.Drawing.Size(325, 35);
+            this.cbFormaPago.TabIndex = 35;
+            // 
+            // label15
+            // 
+            this.label15.Font = new System.Drawing.Font("Poppins SemiBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.label15.Location = new System.Drawing.Point(452, 87);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(171, 29);
+            this.label15.TabIndex = 36;
+            this.label15.Text = "Forma de pago*";
             // 
             // cbUsodecfdi
             // 
@@ -541,61 +590,21 @@
             this.tNumInt.Size = new System.Drawing.Size(109, 35);
             this.tNumInt.TabIndex = 7;
             // 
-            // cbFormaPago
+            // divider1
             // 
-            this.cbFormaPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.cbFormaPago.BorderActive = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.cbFormaPago.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.cbFormaPago.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.cbFormaPago.CaretColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.cbFormaPago.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbFormaPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(94)))), ((int)(((byte)(92)))));
-            this.cbFormaPago.Items.AddRange(new object[] {
-            "01 - Efectivo",
-            "02 - Cheque nominativo",
-            "03 - Transferencia electrónica de fondos",
-            "04 - Tarjeta de crédito",
-            "05 - Monedero electrónico",
-            "06 - Dinero electrónico",
-            "08 - Vales de despensa",
-            "12 - Dación en pago",
-            "13 - Pago por subrogación",
-            "14 - Pago por consignación",
-            "15 - Condonación",
-            "17 - Compensación",
-            "23 - Novación",
-            "24 - Confusión",
-            "25 - Remisión de deuda",
-            "26 - Prescripción o caducidad",
-            "27 - A satisfacción del acreedor",
-            "28 - Tarjeta de débito",
-            "29 - Tarjeta de servicios",
-            "30 - Aplicación de anticipos",
-            "31 - Intermediario de pagos",
-            "99 - Por definir"});
-            this.cbFormaPago.List = true;
-            this.cbFormaPago.ListAutoWidth = true;
-            this.cbFormaPago.Location = new System.Drawing.Point(452, 123);
-            this.cbFormaPago.Name = "cbFormaPago";
-            this.cbFormaPago.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(107)))), ((int)(((byte)(104)))));
-            this.cbFormaPago.Size = new System.Drawing.Size(325, 35);
-            this.cbFormaPago.TabIndex = 35;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("Poppins SemiBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
-            this.label15.Location = new System.Drawing.Point(452, 87);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(171, 29);
-            this.label15.TabIndex = 36;
-            this.label15.Text = "Forma de pago*";
+            this.divider1.Location = new System.Drawing.Point(12, 345);
+            this.divider1.Name = "divider1";
+            this.divider1.Size = new System.Drawing.Size(783, 23);
+            this.divider1.TabIndex = 25;
+            this.divider1.Text = "";
             // 
             // frmClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 341);
+            this.ClientSize = new System.Drawing.Size(810, 413);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.divider1);
             this.Controls.Add(this.tabs1);
             this.Controls.Add(this.pageHeader1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -606,7 +615,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clientes";
             this.Load += new System.EventHandler(this.frmClientes_Load);
-            this.pageHeader1.ResumeLayout(false);
             this.tabs1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -651,5 +659,6 @@
         public AntdUI.Input tCodigopostal;
         private AntdUI.Select cbFormaPago;
         private AntdUI.Label label15;
+        private AntdUI.Divider divider1;
     }
 }

@@ -209,37 +209,7 @@ namespace TerminalPedidos
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
 
-            //string codigo = pro.codigo;
-            //Double existencia = 0;
-
-            //AdminPAQSDK.fRegresaExistencia(codigo,"1",DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen1.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "2", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen2.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "3", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen3.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "4", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen4.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "5", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen5.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "6", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen6.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "7", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen7.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "8", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen8.Text = existencia.ToString();
-
-            //AdminPAQSDK.fRegresaExistencia(codigo, "9", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Day.ToString(), ref existencia);
-            //lAlmacen9.Text = existencia.ToString();
         }
 
         private void tCodigo_TextChanged(object sender, EventArgs e)
@@ -264,18 +234,14 @@ namespace TerminalPedidos
             Producto pro = dataGridView1.CurrentRow.DataBoundItem as Producto;
 
             formularioPadre.tCodigo.Text = pro.codigo;
-            //formularioPadre.tPrecio.Text = Convert.ToDouble(pro.precio1).ToString("C");
+
             formularioPadre.cbPrecio.Items.Clear();
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio1).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio2).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
             formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-            //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
+
 
             formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -295,11 +261,6 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
                 formularioPadre.cbPrecio.SelectedIndex = 0;
 
@@ -328,11 +289,6 @@ namespace TerminalPedidos
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio3).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio4).ToString("C"));
                 formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio5).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio6).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio7).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio8).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio9).ToString("C"));
-                //formularioPadre.cbPrecio.Items.Add(Convert.ToDouble(pro.precio10).ToString("C"));
 
                 formularioPadre.cbPrecio.SelectedIndex = 0;
 

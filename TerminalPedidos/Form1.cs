@@ -119,6 +119,11 @@ namespace TerminalPedidos
                         }
 
                         loading.Close();
+
+                        if (config.limitePrecio1Precio3==0)
+                        {
+                            cbPrecio.List = true; 
+                        }
                     }
                     
                 }
@@ -480,7 +485,7 @@ namespace TerminalPedidos
                                 }
                                 else
                                 {
-                                    part.precio = Math.Round(Convert.ToDouble(precio.ToString()), 2).ToString();//cbPrecio.Text;//tPrecio.Text;
+                                    part.precio = Math.Round(Convert.ToDouble(cbPrecio.Text.Replace("$", "").Replace(",", "")), 2).ToString();//cbPrecio.Text;//tPrecio.Text;
                                 }
                             }
 
@@ -504,9 +509,17 @@ namespace TerminalPedidos
 
                             binding.Add(part);
 
-                            //actualizaTabla();
-                            actualizaTablaSinCalculo();
+                            var config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
+                            if (config.descuentoPorVolumen == 1)
+                            {
+                                actualizaTabla();
+                            }
+                            else
+                            {
+                                actualizaTablaSinCalculo();
+                            }
+                                                                
                             cbPrecio.Items.Clear();
                             cbPrecio.Refresh();
                         }
@@ -611,28 +624,13 @@ namespace TerminalPedidos
 
         private void actualizaTabla()
         {
-
-
-            //dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            //dataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            //dataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            //dataGridView1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            //dataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            //dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            //dataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            
-
             double subtotal = 0;
             double iva = 0;
             double total = 0;
 
-            foreach(var a in partidas)
+            verificarDescuentos();
+
+            foreach (var a in partidas)
             {
                 AdminPAQSDK.fBuscaProducto(a.codigo);
 
@@ -648,8 +646,6 @@ namespace TerminalPedidos
             lSubtotal.Text = subtotal.ToString("C");
             lIVA.Text = iva.ToString("C");
             lTotal.Text = total.ToString("C");
-
-            verificarDescuentos();
 
             dataGridView1.Refresh();
 
@@ -1314,6 +1310,56 @@ namespace TerminalPedidos
             frmObservaciones frmObservaciones = new frmObservaciones(_observaciones); 
             frmObservaciones.ShowDialog();
             _observaciones = frmObservaciones.Observaciones;
+        }
+
+        private void cbPrecio_Leave(object sender, EventArgs e)
+        {
+            var config = Modelos.Negocio.ConfigurationDBContext.obtener();
+
+            if (config.limitePrecio1Precio3 == 1)
+            {
+                // Limpia y valida el valor ingresado
+                string input = cbPrecio.Text.Replace("$", "").Replace(",", "").Trim();
+
+                if (!decimal.TryParse(input, out decimal valorIngresado))
+                {
+                    AntdUI.Message.error(this, "Por favor, ingresa un valor numérico válido.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    cbPrecio.Focus();
+                    cbPrecio.Text = "0";
+                    return;
+                }
+
+                // Asegúrate de que haya al menos 3 elementos en el ComboBox
+                if (cbPrecio.Items.Count < 3)
+                {
+                    AntdUI.Message.error(this, "No hay suficientes valores en la lista para validar el rango.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    cbPrecio.Text = "0";
+                    return;
+                }
+
+                // Extraer y limpiar primer y tercer elemento
+                string primerElementoStr = cbPrecio.Items[2].ToString().Replace("$", "").Replace(",", "").Trim();
+                string tercerElementoStr = cbPrecio.Items[0].ToString().Replace("$", "").Replace(",", "").Trim();
+
+                if (!decimal.TryParse(primerElementoStr, out decimal valorMinimo) ||
+                    !decimal.TryParse(tercerElementoStr, out decimal valorMaximo))
+                {
+                    AntdUI.Message.error(this, "Error al interpretar los valores mínimo y máximo del ComboBox.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    return;
+                }
+
+                if (valorIngresado < valorMinimo || valorIngresado > valorMaximo)
+                {
+                    AntdUI.Message.error(this, $"El precio debe estar entre {valorMinimo:C} y {valorMaximo:C}.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    cbPrecio.Focus();
+                    cbPrecio.SelectedIndex = 0;
+                    return;
+                }
+
+                // Si pasó todas las validaciones, opcionalmente formatearlo
+                cbPrecio.Text = valorIngresado.ToString("C");
+            }
+           
         }
     }
 }

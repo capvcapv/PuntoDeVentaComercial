@@ -17,6 +17,8 @@ namespace Modelos.Negocio
         public int imprime_ticket { get; set; }
         public int ivaincluido { get; set; }
         public int muestraVentanaDescuentos { get; set; }
+        public int limitePrecio1Precio3 { get; set; }
+        public int descuentoPorVolumen { get; set; }
     }
 
     public class ConfigurationDBContext

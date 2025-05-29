@@ -434,13 +434,14 @@
             this.cbPrecio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
             this.cbPrecio.BorderHover = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbPrecio.Font = new System.Drawing.Font("Poppins", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbPrecio.List = true;
+            this.cbPrecio.ListAutoWidth = true;
             this.cbPrecio.Location = new System.Drawing.Point(371, 3);
             this.cbPrecio.Name = "cbPrecio";
             this.cbPrecio.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
             this.cbPrecio.Size = new System.Drawing.Size(78, 29);
             this.cbPrecio.TabIndex = 16;
             this.cbPrecio.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbPrecio_KeyUp);
+            this.cbPrecio.Leave += new System.EventHandler(this.cbPrecio_Leave);
             // 
             // tDescuento
             // 
