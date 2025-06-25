@@ -1200,11 +1200,11 @@ namespace TerminalPedidos
                 if (result == DialogResult.Yes)
                 {
                     frmModificaCantidad frmModificaCantidad = new frmModificaCantidad();
-                    frmModificaCantidad.Cantidad =Convert.ToDouble(((Partida)binding.Current).cantidad);
+                    frmModificaCantidad.Cantidad = Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad);
                     frmModificaCantidad.ShowDialog();
 
-                    ((Partida)binding.Current).cantidad = frmModificaCantidad.Cantidad.ToString();
-                    ((Partida)binding.Current).importe = ((Convert.ToDouble(((Partida)binding.Current).precio.Replace("$", "").Replace(",", ""))- Convert.ToDouble(((Partida)binding.Current).descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(((Partida)binding.Current).cantidad)).ToString("C");
+                    ((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad = frmModificaCantidad.Cantidad.ToString();
+                    ((Partida)binding[dataGridView1.SelectedIndex - 1]).importe = ((Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).precio.Replace("$", "").Replace(",", ""))- Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad)).ToString("C");
 
                     actualizaTablaSinCalculo();
 
