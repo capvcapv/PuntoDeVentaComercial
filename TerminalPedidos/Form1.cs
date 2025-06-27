@@ -437,7 +437,7 @@ namespace TerminalPedidos
             {
                 if (!String.IsNullOrEmpty(tCodigo.Text))
                 {
-                    if (obtenerExistencia(tCodigo.Text) >= Convert.ToDouble(tCantidad.Value))
+                    if (Convert.ToDouble(tCantidad.Value) <= obtenerExistencia(tCodigo.Text))
                     {
                         if (AdminPAQSDK.fBuscaProducto(tCodigo.Text) == 0)
                         {
@@ -1203,10 +1203,18 @@ namespace TerminalPedidos
                     frmModificaCantidad.Cantidad = Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad);
                     frmModificaCantidad.ShowDialog();
 
-                    ((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad = frmModificaCantidad.Cantidad.ToString();
-                    ((Partida)binding[dataGridView1.SelectedIndex - 1]).importe = ((Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).precio.Replace("$", "").Replace(",", ""))- Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad)).ToString("C");
+                    if (frmModificaCantidad.Cantidad <= obtenerExistencia(((Partida)binding[dataGridView1.SelectedIndex - 1]).codigo))
+                    {
+                        ((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad = frmModificaCantidad.Cantidad.ToString();
+                        ((Partida)binding[dataGridView1.SelectedIndex - 1]).importe = ((Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).precio.Replace("$", "").Replace(",", "")) - Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).descuento.Replace("$", "").Replace(",", ""))) * Convert.ToDouble(((Partida)binding[dataGridView1.SelectedIndex - 1]).cantidad)).ToString("C");
 
-                    actualizaTablaSinCalculo();
+                        actualizaTablaSinCalculo();
+                    }
+                    else
+                    {
+                        AntdUI.Message.error(this, "No hay existencias suficientes para la cantidad capturada.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                        return;
+                    }
 
                     //dataGridView1.DataSource = null;
                     //dataGridView1.DataSource = binding;
