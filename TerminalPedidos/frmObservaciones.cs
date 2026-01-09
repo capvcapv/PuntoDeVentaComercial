@@ -30,5 +30,11 @@ namespace TerminalPedidos
             Observaciones = tObservacion.Text;
             this.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmCatalogoEnvios envios = new frmCatalogoEnvios();
+            envios.ShowDialog();
+        }
     }
 }

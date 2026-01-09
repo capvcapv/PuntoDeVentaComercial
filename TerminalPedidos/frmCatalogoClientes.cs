@@ -165,5 +165,10 @@ namespace TerminalPedidos
 
             obtenerClientes();
         }
+
+        private void pageHeader1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
