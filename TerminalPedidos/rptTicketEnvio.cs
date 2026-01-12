@@ -16,14 +16,14 @@ namespace TerminalPedidos {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rptTicket : ReportClass {
+    public class rptTicketEnvio : ReportClass {
         
-        public rptTicket() {
+        public rptTicketEnvio() {
         }
         
         public override string ResourceName {
             get {
-                return "rptTicket.rpt";
+                return "rptTicketEnvio.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace TerminalPedidos {
         
         public override string FullResourceName {
             get {
-                return "TerminalPedidos.rptTicket.rpt";
+                return "TerminalPedidos.rptTicketEnvio.rpt";
             }
             set {
                 // Do nothing
@@ -90,7 +90,7 @@ namespace TerminalPedidos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_cconcepto {
+        public CrystalDecisions.Shared.IParameterField Parameter_domicilio {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -98,7 +98,7 @@ namespace TerminalPedidos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_cfolio {
+        public CrystalDecisions.Shared.IParameterField Parameter_folio {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }
@@ -106,7 +106,7 @@ namespace TerminalPedidos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_cliente {
+        public CrystalDecisions.Shared.IParameterField Parameter_nombre {
             get {
                 return this.DataDefinition.ParameterFields[2];
             }
@@ -114,7 +114,7 @@ namespace TerminalPedidos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_domicilio {
+        public CrystalDecisions.Shared.IParameterField Parameter_localidad {
             get {
                 return this.DataDefinition.ParameterFields[3];
             }
@@ -122,81 +122,17 @@ namespace TerminalPedidos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_empresa {
-            get {
-                return this.DataDefinition.ParameterFields[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_titulo {
-            get {
-                return this.DataDefinition.ParameterFields[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_agente {
-            get {
-                return this.DataDefinition.ParameterFields[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_copia {
-            get {
-                return this.DataDefinition.ParameterFields[7];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_puntos {
-            get {
-                return this.DataDefinition.ParameterFields[8];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_nombre {
-            get {
-                return this.DataDefinition.ParameterFields[9];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_localizacion {
-            get {
-                return this.DataDefinition.ParameterFields[10];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.Shared.IParameterField Parameter_telefono {
             get {
-                return this.DataDefinition.ParameterFields[11];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_domicilioenv {
-            get {
-                return this.DataDefinition.ParameterFields[12];
+                return this.DataDefinition.ParameterFields[4];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedrptTicket : Component, ICachedReport {
+    public class CachedrptTicketEnvio : Component, ICachedReport {
         
-        public CachedrptTicket() {
+        public CachedrptTicketEnvio() {
         }
         
         [Browsable(false)]
@@ -233,7 +169,7 @@ namespace TerminalPedidos {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            rptTicket rpt = new rptTicket();
+            rptTicketEnvio rpt = new rptTicketEnvio();
             rpt.Site = this.Site;
             return rpt;
         }

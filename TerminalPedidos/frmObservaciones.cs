@@ -33,8 +33,7 @@ namespace TerminalPedidos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmCatalogoEnvios envios = new frmCatalogoEnvios();
-            envios.ShowDialog();
+            
         }
     }
 }

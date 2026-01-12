@@ -64,6 +64,7 @@
             this.pageHeader1 = new AntdUI.PageHeader();
             this.button5 = new AntdUI.Button();
             this.button4 = new AntdUI.Button();
+            this.button7 = new AntdUI.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -100,6 +101,7 @@
             this.flowLayoutPanel2.Controls.Add(this.textBox1);
             this.flowLayoutPanel2.Controls.Add(this.button6);
             this.flowLayoutPanel2.Controls.Add(this.lCliente);
+            this.flowLayoutPanel2.Controls.Add(this.button7);
             this.flowLayoutPanel2.Controls.Add(this.button1);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
@@ -150,7 +152,7 @@
             this.lCliente.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lCliente.Location = new System.Drawing.Point(334, 3);
             this.lCliente.Name = "lCliente";
-            this.lCliente.Size = new System.Drawing.Size(534, 37);
+            this.lCliente.Size = new System.Drawing.Size(485, 37);
             this.lCliente.TabIndex = 8;
             this.lCliente.Text = "-";
             // 
@@ -604,6 +606,19 @@
             this.button4.Text = "Historicos";
             this.button4.Click += new System.EventHandler(this.bReimprimir_Click);
             // 
+            // button7
+            // 
+            this.button7.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93)))));
+            this.button7.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button7.IconSvg = resources.GetString("button7.IconSvg");
+            this.button7.Location = new System.Drawing.Point(825, 3);
+            this.button7.Name = "button7";
+            this.button7.Radius = 15;
+            this.button7.Size = new System.Drawing.Size(75, 31);
+            this.button7.TabIndex = 24;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -672,6 +687,7 @@
         private AntdUI.Button button1;
         private AntdUI.InputNumber tDescuento;
         private AntdUI.Button button3;
+        public AntdUI.Button button7;
     }
 }
 
