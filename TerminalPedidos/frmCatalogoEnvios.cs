@@ -18,7 +18,7 @@ namespace TerminalPedidos
         private Form1 formularioPadre;
         private string folio="SIN FOLIO";
 
-        private List<Envios> listaEnvios = new List<Envios>();
+        private List<DireccionEnvios> listaEnvios = new List<DireccionEnvios>();
         public frmCatalogoEnvios(Form1 formulario,string pFolio)
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace TerminalPedidos
         public void obtenerEnvios()
         {
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
-            listaEnvios = new Envios().obtenerTodos();
+            listaEnvios = new DireccionEnvios().obtenerTodos();
 
             dataGridView1.DataSource = listaEnvios;
         }
@@ -54,19 +54,19 @@ namespace TerminalPedidos
 
         private void tCodigo_TextChanged(object sender, EventArgs e)
         {
-            List<Envios> temp = listaEnvios.FindAll(i => i.Codigo.ToUpper().Contains(tCodigo.Text.ToUpper()));
+            List<DireccionEnvios> temp = listaEnvios.FindAll(i => i.Codigo.ToUpper().Contains(tCodigo.Text.ToUpper()));
             dataGridView1.DataSource = temp;
         }
 
         private void tNombre_TextChanged(object sender, EventArgs e)
         {
-            List<Envios> temp = listaEnvios.FindAll(i => i.Nombre.ToUpper().Contains(tNombre.Text.ToUpper()));
+            List<DireccionEnvios> temp = listaEnvios.FindAll(i => i.Nombre.ToUpper().Contains(tNombre.Text.ToUpper()));
             dataGridView1.DataSource = temp;
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Envios envios = dataGridView1.CurrentRow.DataBoundItem as Envios;
+            DireccionEnvios envios = dataGridView1.CurrentRow.DataBoundItem as DireccionEnvios;
 
             formularioPadre.button7.BadgeMode= true;
             formularioPadre.button7.Badge = envios.Id.ToString() + " - " + envios.Nombre;
@@ -76,7 +76,7 @@ namespace TerminalPedidos
 
         private void bImprimir_Click(object sender, EventArgs e)
         {
-            Envios envios = dataGridView1.CurrentRow.DataBoundItem as Envios;
+            DireccionEnvios envios = dataGridView1.CurrentRow.DataBoundItem as DireccionEnvios;
 
             var reporte = new ReportDocument();
             string formato = "rptTicketEnvio.rpt";

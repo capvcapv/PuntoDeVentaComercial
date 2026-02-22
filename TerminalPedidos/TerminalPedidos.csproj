@@ -111,17 +111,26 @@
     <Compile Include="frmCatalogoProductos.Designer.cs">
       <DependentUpon>frmCatalogoProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmChoferes.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmClientes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmClientes.Designer.cs">
       <DependentUpon>frmClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDireccionEnvios.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmEnvios.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmEnvios.Designer.cs">
       <DependentUpon>frmEnvios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEnviosProgramados.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmExistencias.cs">
       <SubType>Form</SubType>
@@ -164,6 +173,9 @@
     </Compile>
     <Compile Include="frmTurnosDeCaja.Designer.cs">
       <DependentUpon>frmTurnosDeCaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVehiculos.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmVisorFormato.cs">
       <SubType>Form</SubType>

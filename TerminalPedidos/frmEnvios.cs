@@ -48,7 +48,7 @@ namespace TerminalPedidos
                 return;
             }
 
-            Envios envios = new Envios();
+            DireccionEnvios envios = new DireccionEnvios();
             envios.Codigo = tCodigo.Text;
             envios.Nombre = tNombre.Text;
             envios.Localidad = tLocalidad.Text;
