@@ -1408,6 +1408,9 @@ namespace TerminalPedidos
 
         private void button7_Click(object sender, EventArgs e)
         {
+            //frmImpresionTickets impresionTickets = new frmImpresionTickets();   
+            //impresionTickets.ShowDialog();
+
             frmEnviosProgramados enviosProgramados = new frmEnviosProgramados();
             enviosProgramados.ShowDialog();
 
