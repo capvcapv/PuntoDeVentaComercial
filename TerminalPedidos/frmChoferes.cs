@@ -20,6 +20,7 @@ namespace TerminalPedidos
         // Controles de la interfaz
         private DataGridView dgvChoferes;
         private AntdUI.Input tNombre;
+        private AntdUI.Input tClave;
         private AntdUI.Button btnGuardar;
         private AntdUI.Button btnEliminar;
         private AntdUI.Button btnLimpiar;
@@ -36,7 +37,7 @@ namespace TerminalPedidos
         private void InitializeComponents()
         {
             // Configuración de la ventana
-            this.ClientSize = new System.Drawing.Size(600, 500);
+            this.ClientSize = new System.Drawing.Size(700, 550);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestión de Choferes";
             this.Font = new Font("Poppins", 9.75f);
@@ -45,7 +46,7 @@ namespace TerminalPedidos
             var panelFormulario = new AntdUI.Panel()
             {
                 Location = new Point(10, 10),
-                Size = new Size(580, 140),
+                Size = new Size(680, 190),
                 BackColor = Color.White,
                 Radius = 8
             };
@@ -72,15 +73,32 @@ namespace TerminalPedidos
             tNombre = new AntdUI.Input()
             {
                 Location = new Point(100, 45),
-                Size = new Size(480, 33)
+                Size = new Size(580, 33)
             };
             panelFormulario.Controls.Add(tNombre);
+
+            // Clave
+            var lblClave = new AntdUI.Label()
+            {
+                Text = "Clave:",
+                Location = new Point(15, 95),
+                AutoSize = true
+            };
+            panelFormulario.Controls.Add(lblClave);
+
+            tClave = new AntdUI.Input()
+            {
+                Location = new Point(100, 90),
+                Size = new Size(580, 33),
+                //Type = AntdUI.InputType.Password
+            };
+            panelFormulario.Controls.Add(tClave);
 
             // Botones
             btnGuardar = new AntdUI.Button()
             {
                 Text = "Guardar",
-                Location = new Point(15, 85),
+                Location = new Point(15, 135),
                 Size = new Size(100, 40),
                 Radius = 8,
                 BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93))))),
@@ -95,7 +113,7 @@ namespace TerminalPedidos
             btnEliminar = new AntdUI.Button()
             {
                 Text = "Eliminar",
-                Location = new Point(125, 85),
+                Location = new Point(125, 135),
                 Size = new Size(100, 40),
                 Radius = 8,
                 Enabled = false,
@@ -111,7 +129,7 @@ namespace TerminalPedidos
             btnLimpiar = new AntdUI.Button()
             {
                 Text = "Limpiar",
-                Location = new Point(235, 85),
+                Location = new Point(235, 135),
                 Size = new Size(100, 40),
                 Radius = 8,
                 BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93))))),
@@ -126,7 +144,7 @@ namespace TerminalPedidos
             btnCancelar = new AntdUI.Button()
             {
                 Text = "Cancelar",
-                Location = new Point(345, 85),
+                Location = new Point(345, 135),
                 Size = new Size(100, 40),
                 Radius = 8,
                 BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(96)))), ((int)(((byte)(93))))),
@@ -143,17 +161,23 @@ namespace TerminalPedidos
             // DataGridView
             dgvChoferes = new DataGridView()
             {
-                Location = new Point(10, 160),
-                Size = new Size(580, 330),
+                Location = new Point(10, 210),
+                Size = new Size(680, 300),
                 AllowUserToAddRows = false,
                 AllowUserToDeleteRows = false,
                 ReadOnly = true,
-                BackgroundColor = Color.White
+                BackgroundColor = Color.White,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             // Columnas del grid
             dgvChoferes.Columns.Add("Id", "ID");
             dgvChoferes.Columns.Add("Nombre", "Nombre");
+            dgvChoferes.Columns.Add("Clave", "Clave");
+
+            dgvChoferes.Columns["Id"].Width = 50;
+            dgvChoferes.Columns["Nombre"].Width = 300;
+            dgvChoferes.Columns["Clave"].Width = 330;
 
             dgvChoferes.CellClick += DgvChoferes_CellClick;
 
@@ -185,7 +209,8 @@ namespace TerminalPedidos
             {
                 dgvChoferes.Rows.Add(
                     chofer.Id,
-                    chofer.Nombre
+                    chofer.Nombre,
+                    chofer.Clave
                 );
             }
         }
@@ -204,11 +229,19 @@ namespace TerminalPedidos
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(tClave.Text))
+            {
+                AntdUI.Notification.error(this, "Validación", "El campo Clave es requerido.");
+                tClave.Focus();
+                return;
+            }
+
             try
             {
                 var chofer = new Choferes
                 {
-                    Nombre = tNombre.Text
+                    Nombre = tNombre.Text,
+                    Clave = tClave.Text
                 };
 
                 if (modoEdicion)
@@ -278,6 +311,7 @@ namespace TerminalPedidos
                 modoEdicion = true;
 
                 tNombre.Text = choferSeleccionado.Nombre;
+                tClave.Text = choferSeleccionado.Clave;
 
                 btnEliminar.Enabled = true;
                 btnGuardar.Text = "Actualizar";
@@ -291,6 +325,7 @@ namespace TerminalPedidos
         private void LimpiarFormulario()
         {
             tNombre.Text = "";
+            tClave.Text = "";
 
             choferSeleccionado = null;
             modoEdicion = false;

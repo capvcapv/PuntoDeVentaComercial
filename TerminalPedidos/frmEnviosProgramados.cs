@@ -476,6 +476,7 @@ namespace TerminalPedidos
                 // Cargar direcciones
                 var direccion = new DireccionEnvios();
                 listaDirecciones = direccion.obtenerTodos();
+                cbDireccionEnvio.Items.Clear();
                 foreach (var dir in listaDirecciones)
                 {
                     cbDireccionEnvio.Items.Add(new AntdUI.SelectItem(dir.Nombre, dir.Id));
@@ -484,6 +485,7 @@ namespace TerminalPedidos
                 // Cargar choferes
                 var chofer = new Choferes();
                 listaChoferes = chofer.obtenerTodos();
+                cbChofer.Items.Clear();
                 foreach (var ch in listaChoferes)
                 {
                     cbChofer.Items.Add(new AntdUI.SelectItem(ch.Nombre, ch.Id));
@@ -492,6 +494,7 @@ namespace TerminalPedidos
                 // Cargar vehículos
                 var vehiculo = new Vehiculos();
                 listaVehiculos = vehiculo.obtenerTodos();
+                cbVehiculo.Items.Clear();
                 foreach (var veh in listaVehiculos)
                 {
                     cbVehiculo.Items.Add(new AntdUI.SelectItem($"{veh.Nombre} - {veh.Placa}", veh.Id));
@@ -793,7 +796,8 @@ namespace TerminalPedidos
                     Chofer = (int)cbChofer.SelectedValue,
                     Vehiculo = (int)cbVehiculo.SelectedValue,
                     FechaProgramada = (DateTime)dpFechaProgramada.Value,
-                    Estado = 0
+                    Estado = 0,
+                    Evidencia = ""
                 };
 
                 if (modoEdicion)
@@ -898,7 +902,7 @@ namespace TerminalPedidos
 
         private void GenerarReportePDF(string ruta, List<EnviosProgramados> envios)
         {
-            Document doc = new Document();
+            Document doc = new Document(PageSize.A4.Rotate()); // Horizontal para más espacio
             PdfWriter.GetInstance(doc, new FileStream(ruta, FileMode.Create));
             doc.Open();
 
@@ -917,13 +921,20 @@ namespace TerminalPedidos
 
             doc.Add(new Paragraph(" "));
 
-            PdfPTable tabla = new PdfPTable(6);
-            tabla.AddCell(new PdfPCell(new Phrase("Documento")));
-            tabla.AddCell(new PdfPCell(new Phrase("Dirección")));
-            tabla.AddCell(new PdfPCell(new Phrase("Localidad")));
-            tabla.AddCell(new PdfPCell(new Phrase("Teléfono")));
-            tabla.AddCell(new PdfPCell(new Phrase("Dirección Completa")));
-            tabla.AddCell(new PdfPCell(new Phrase("Importe")));
+            // Tabla a todo el ancho con 7 columnas
+            // Anchos relativos: Dirección Completa tiene prioridad, Por Cobrar en blanco
+            PdfPTable tabla = new PdfPTable(7);
+            tabla.WidthPercentage = 100;
+            tabla.SetWidths(new float[] { 8f, 14f, 10f, 9f, 35f, 12f, 12f }); // Documento, Nombre, Localidad, Teléfono, Dirección Completa, Importe, Por Cobrar
+
+            // Encabezados
+            tabla.AddCell(new PdfPCell(new Phrase("Documento"))   { BackgroundColor = BaseColor.LIGHT_GRAY });
+            tabla.AddCell(new PdfPCell(new Phrase("Nombre"))      { BackgroundColor = BaseColor.LIGHT_GRAY }); // Antes "Dirección"
+            tabla.AddCell(new PdfPCell(new Phrase("Localidad"))   { BackgroundColor = BaseColor.LIGHT_GRAY });
+            tabla.AddCell(new PdfPCell(new Phrase("Teléfono"))    { BackgroundColor = BaseColor.LIGHT_GRAY });
+            tabla.AddCell(new PdfPCell(new Phrase("Dirección Completa")) { BackgroundColor = BaseColor.LIGHT_GRAY });
+            tabla.AddCell(new PdfPCell(new Phrase("Importe"))     { BackgroundColor = BaseColor.LIGHT_GRAY });
+            tabla.AddCell(new PdfPCell(new Phrase("Por Cobrar"))  { BackgroundColor = BaseColor.LIGHT_GRAY });
 
             var configuracion = Modelos.Negocio.ConfigurationDBContext.obtener();
             string cadena = ConfigurationManager.ConnectionStrings["bd"].ConnectionString.Replace("PuntoVentaComercial", configuracion.empresa.Split('\\').Last());
@@ -931,21 +942,20 @@ namespace TerminalPedidos
             foreach (var envio in envios)
             {
                 var documento = new Admdocumentos().obtenerId(envio.Documento, cadena);
-
                 var direccion = listaDirecciones.FirstOrDefault(d => d.Id == envio.DirreccionEnvio);
-                string estado = envio.Estado == 0 ? "Pendiente" : "Entregado";
 
-                tabla.AddCell(envio.Documento.ToString());
-                tabla.AddCell(direccion?.Nombre ?? "N/A");
+                tabla.AddCell(documento != null ? $"{documento.CSERIEDOCUMENTO}-{documento.CFOLIO}" : "N/A");
+                tabla.AddCell(direccion?.Nombre ?? "N/A");          // Nombre del destinatario
                 tabla.AddCell(direccion?.Localidad ?? "N/A");
                 tabla.AddCell(direccion?.Telefono ?? "N/A");
-                tabla.AddCell(direccion?.Direccion ?? "N/A");
-                tabla.AddCell(documento != null ? documento.CTOTAL.ToString("C") : "0.00");
+                tabla.AddCell(direccion?.Direccion ?? "N/A");       // Dirección completa con prioridad de ancho
+                tabla.AddCell(documento != null ? documento.CTOTAL.ToString("C") : "$0.00");
+                tabla.AddCell("");                                  // Por Cobrar - en blanco
             }
 
             doc.Add(tabla);
 
-            // Agregar espacios para firmas
+            // Espacios para firmas
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));

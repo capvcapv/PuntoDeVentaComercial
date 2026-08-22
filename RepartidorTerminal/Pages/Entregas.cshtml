@@ -1,0 +1,700 @@
+﻿@page
+@model EntregasModel
+@{
+    ViewData["Title"] = "Mis Entregas";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Repartidor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .btn-back:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .entregas-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .entrega-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #667eea;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @@keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .entrega-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .entrega-numero {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .entrega-estado {
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-icon {
+            font-size: 16px;
+            min-width: 20px;
+        }
+
+        .info-text {
+            flex: 1;
+            color: #333;
+        }
+
+        .info-label {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .entrega-direccion {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid #667eea;
+        }
+
+        .direccion-titulo {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .direccion-texto {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .btn-entregar {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00b894 0%, #00a389 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-entregar:active {
+            transform: scale(0.98);
+        }
+
+        .btn-entregar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Modal de cámara */
+        .modal-camera {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .modal-camera.active {
+            display: flex;
+        }
+
+        .camera-header {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+        }
+
+        .camera-container {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-camera {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            color: white;
+        }
+
+        .btn-camera:active {
+            transform: scale(0.95);
+        }
+
+        .btn-capture {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-cancel {
+            background: #e74c3c;
+        }
+
+        .preview-container {
+            position: relative;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .preview-container.active {
+            display: block;
+        }
+
+        #preview {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .preview-img {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-retake, .btn-confirm {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-retake {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-confirm {
+            background: #00b894;
+            color: white;
+        }
+
+            .btn-retake:active, .btn-confirm:active {
+                transform: scale(0.95);
+            }
+
+            .btn-retake:disabled, .btn-confirm:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @@keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @@media (max-width: 480px) {
+            .header {
+                gap: 12px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .entrega-card {
+                padding: 12px;
+            }
+
+            .modal-camera {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a href="/dashboard" class="btn-back">←</a>
+            <h1>Mis Entregas</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">@Model.EnviosPendientes.Count</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">@(Model.EnviosPendientes.Count > 0 ? Model.EnviosPendientes.Min(e => (e.FechaProgramada - DateTime.Now).TotalHours).ToString("F0") : "—")</div>
+                <div class="stat-label">Horas Restantes</div>
+            </div>
+        </div>
+
+        @if (Model.EnviosPendientes.Count == 0)
+        {
+            <div class="empty-state">
+                <div class="empty-icon">✅</div>
+                <div class="empty-title">¡Sin entregas pendientes!</div>
+                <div class="empty-text">Todas tus entregas han sido completadas</div>
+            </div>
+        }
+        else
+        {
+            <div class="entregas-list">
+                @foreach (var envio in Model.EnviosPendientes)
+                {
+                    var direccion = Model.Direcciones.FirstOrDefault(d => d.Id == envio.DirreccionEnvio);
+                    var vehiculo = Model.Vehiculos.FirstOrDefault(v => v.Id == envio.Vehiculo);
+                    var horasRestantes = (envio.FechaProgramada - DateTime.Now).TotalHours;
+
+                    <div class="entrega-card">
+                        <div class="entrega-header">
+                            <div class="entrega-numero">Entrega #@envio.Id</div>
+                            <div class="entrega-estado">PENDIENTE</div>
+                        </div>
+
+                        <div class="info-row">
+                            <div class="info-icon">📅</div>
+                            <div class="info-text">
+                                <div class="info-label">Fecha programada</div>
+                                @envio.FechaProgramada.ToString("dd/MM/yyyy HH:mm")
+                            </div>
+                        </div>
+
+                        <div class="info-row">
+                            <div class="info-icon">⏱️</div>
+                            <div class="info-text">
+                                <div class="info-label">Tiempo restante</div>
+                                @if (horasRestantes > 0)
+                                {
+                                    @horasRestantes.ToString("F1") <text>horas</text>
+                                }
+                                else
+                                {
+                                    <text>Vencida</text>
+                                }
+                            </div>
+                        </div>
+
+                        @if (direccion != null)
+                        {
+                            <div class="entrega-direccion">
+                                <div class="direccion-titulo">📍 Dirección de Entrega</div>
+                                <div class="direccion-texto">
+                                    <div><strong>@direccion.Nombre</strong></div>
+                                    <div>@direccion.Direccion</div>
+                                    <div>@direccion.Localidad</div>
+                                    @if (!string.IsNullOrEmpty(direccion.Telefono))
+                                    {
+                                        <div>📞 @direccion.Telefono</div>
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                        @if (vehiculo != null)
+                        {
+                            <div class="info-row">
+                                <div class="info-icon">🚗</div>
+                                <div class="info-text">
+                                    <div class="info-label">Vehículo asignado</div>
+                                    @vehiculo.Nombre - @vehiculo.Placa
+                                </div>
+                            </div>
+                        }
+
+                        <div class="preview-container" data-envio-id="@envio.Id">
+                            <img id="preview-@envio.Id" class="preview-img" />
+                            <div class="preview-actions">
+                                <button type="button" class="btn-retake" onclick="abrirCamara(@envio.Id)">
+                                    📷 Retomar foto
+                                </button>
+                                <button type="button" class="btn-confirm" onclick="confirmarEntrega(@envio.Id)">
+                                    ✓ Confirmar Entrega
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-entregar" onclick="abrirCamara(@envio.Id)" data-envio-id="@envio.Id">
+                            📷 Tomar Foto de Evidencia
+                        </button>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Modal de Cámara -->
+    <div class="modal-camera" id="modalCamera">
+        <div class="camera-header">Captura tu Foto de Evidencia</div>
+        <div class="camera-container">
+            <video id="video" autoplay playsinline></video>
+        </div>
+        <canvas id="canvas"></canvas>
+        <div class="camera-controls">
+            <button type="button" class="btn-camera btn-capture" onclick="capturarFoto()">
+                📷 Capturar
+            </button>
+            <button type="button" class="btn-camera btn-cancel" onclick="cerrarCamara()">
+                ✕ Cancelar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentEnvioId = null;
+        let fotosCapturadas = {}; // Cambiar a objeto para almacenar múltiples fotos
+
+        async function abrirCamara(envioId) {
+            currentEnvioId = envioId;
+            const modal = document.getElementById('modalCamera');
+            const video = document.getElementById('video');
+
+            modal.classList.add('active');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                video.srcObject = stream;
+            } catch (err) {
+                alert('No se pudo acceder a la cámara: ' + err.message);
+                cerrarCamara();
+            }
+        }
+
+        function capturarFoto() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+
+            // Guardar foto en el objeto con la key del envioId
+            fotosCapturadas[currentEnvioId] = canvas.toDataURL('image/jpeg', 0.8);
+
+            // Mostrar preview
+            const preview = document.getElementById('preview-' + currentEnvioId);
+            preview.src = fotosCapturadas[currentEnvioId];
+
+            const previewContainer = document.querySelector(`[data-envio-id="${currentEnvioId}"]`);
+            previewContainer.classList.add('active');
+
+            cerrarCamara();
+        }
+
+        function cerrarCamara() {
+            const modal = document.getElementById('modalCamera');
+            const video = document.getElementById('video');
+
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+
+            modal.classList.remove('active');
+        }
+
+        async function confirmarEntrega(envioId) {
+            if (!fotosCapturadas[envioId]) {
+                alert('Debes tomar una foto primero');
+                return;
+            }
+
+            if (!confirm('¿Confirmar entrega con esta foto de evidencia?')) {
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Procesando...';
+
+            try {
+                const payload = {
+                    envioID: parseInt(envioId),
+                    evidencia: fotosCapturadas[envioId]
+                };
+
+                console.log('=== Iniciando envío de entrega ===');
+                console.log('EnvioID:', payload.envioID);
+                console.log('Tamaño foto base64:', payload.evidencia.length, 'caracteres');
+                console.log('Tamaño payload JSON:', JSON.stringify(payload).length, 'bytes');
+
+                const response = await fetch('?handler=MarcarEntregado', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response statusText:', response.statusText);
+
+                const contentType = response.headers.get('content-type');
+                console.log('Content-Type respuesta:', contentType);
+
+                let data;
+                const text = await response.text();
+                console.log('Response text:', text.substring(0, 500));
+
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    console.error('No se pudo parsear JSON:', e);
+                    throw new Error(`Respuesta no válida (${response.status}): ${text}`);
+                }
+
+                console.log('Parsed data:', data);
+
+                if (data.success) {
+                    console.log('✓ Éxito - Removiendo tarjeta');
+                    const card = document.querySelector(`[data-envio-id="${envioId}"]`).closest('.entrega-card');
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(100%)';
+
+                    setTimeout(() => {
+                        card.remove();
+                        delete fotosCapturadas[envioId];
+
+                        if (document.querySelectorAll('.entrega-card').length === 0) {
+                            console.log('Sin más entregas - Recargando página');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        }
+                    }, 500);
+                } else {
+                    console.error('Error en respuesta:', data.message);
+                    alert('Error: ' + (data.message || 'Error desconocido'));
+                    btn.disabled = false;
+                    btn.innerHTML = '✓ Confirmar Entrega';
+                }
+            } catch (error) {
+                console.error('❌ Error capturado:', error);
+                console.error('Error stack:', error.stack);
+                alert('Error al procesar la entrega:\n' + error.message);
+                btn.disabled = false;
+                btn.innerHTML = '✓ Confirmar Entrega';
+            }
+        }
+    </script>
+</body>
+</html>

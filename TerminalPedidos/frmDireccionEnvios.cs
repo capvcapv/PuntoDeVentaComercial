@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace TerminalPedidos
         private AntdUI.Button btnEliminar;
         private AntdUI.Button btnLimpiar;
         private AntdUI.Button btnCancelar;
+        private AntdUI.Button btnImprimir;
 
         public frmDireccionEnvios()
         {
@@ -209,6 +211,22 @@ namespace TerminalPedidos
             btnCancelar.Click += BtnCancelar_Click;
             panelFormulario.Controls.Add(btnCancelar);
 
+            btnImprimir = new AntdUI.Button()
+            {
+                Text = "Imprimir Ticket",
+                Location = new Point(455, 215),
+                Size = new Size(130, 40),
+                Radius = 8,
+                Enabled = false,
+                BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0))))),
+                BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0))))),
+                DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0))))),
+                Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))))
+            };
+            btnImprimir.Click += BtnImprimir_Click;
+            panelFormulario.Controls.Add(btnImprimir);
+
             this.Controls.Add(panelFormulario);
 
             // Panel Buscador
@@ -232,8 +250,7 @@ namespace TerminalPedidos
             tBuscador = new AntdUI.Input()
             {
                 Location = new Point(150, 10),
-                Size = new Size(300, 33),
-                //Placeholder = "Escribe el nombre..."
+                Size = new Size(300, 33)
             };
             tBuscador.TextChanged += TBuscador_TextChanged;
             panelBuscador.Controls.Add(tBuscador);
@@ -252,7 +269,6 @@ namespace TerminalPedidos
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
-            // Columnas del grid
             dgvDirecciones.Columns.Add("Id", "ID");
             dgvDirecciones.Columns.Add("Codigo", "Código");
             dgvDirecciones.Columns.Add("Nombre", "Nombre");
@@ -260,7 +276,6 @@ namespace TerminalPedidos
             dgvDirecciones.Columns.Add("Telefono", "Teléfono");
             dgvDirecciones.Columns.Add("Direccion", "Dirección");
 
-            // Ajustar ancho de columnas
             dgvDirecciones.Columns["Id"].Width = 40;
             dgvDirecciones.Columns["Codigo"].Width = 80;
             dgvDirecciones.Columns["Nombre"].Width = 150;
@@ -436,6 +451,128 @@ namespace TerminalPedidos
             this.Close();
         }
 
+        private void BtnImprimir_Click(object sender, EventArgs e)
+        {
+            if (direccionSeleccionada == null)
+            {
+                AntdUI.Notification.warn(this, "Advertencia", "Selecciona una dirección para imprimir.");
+                return;
+            }
+
+            try
+            {
+                PrintDocument pd = new PrintDocument();
+
+                // Tamaño ticket térmico 58mm aprox
+                pd.DefaultPageSettings.PaperSize = new PaperSize("Ticket", 280, 1000);
+
+                pd.DefaultPageSettings.Margins = new Margins(5, 5, 5, 5);
+
+                pd.PrintPage += (s, ev) =>
+                {
+                    Graphics g = ev.Graphics;
+
+                    Font fontTitulo = new Font("Courier New", 10, FontStyle.Bold);
+                    Font fontNormal = new Font("Courier New", 8, FontStyle.Regular);
+                    Font fontPeq = new Font("Courier New", 7, FontStyle.Regular);
+
+                    string separador = "--------------------------------";
+
+                    float x = 5;
+                    float y = 5;
+
+                    // Ancho REAL imprimible del ticket
+                    float ancho = 240;
+
+                    // Función helper
+                    void DrawLine(string texto, Font fuente, bool negrita = false)
+                    {
+                        SizeF size = g.MeasureString(texto, fuente, (int)ancho);
+
+                        g.DrawString(
+                            texto,
+                            fuente,
+                            Brushes.Black,
+                            new RectangleF(x, y, ancho, size.Height)
+                        );
+
+                        y += size.Height + 2;
+                    }
+
+                    // ENCABEZADO
+                    DrawLine("DOMICILIO DE ENVIO", fontTitulo);
+                    DrawLine(separador, fontPeq);
+
+                    // NOMBRE
+                    DrawLine("Nombre:", fontNormal);
+                    DrawLine(direccionSeleccionada.Nombre ?? "", fontTitulo);
+
+                    DrawLine(separador, fontPeq);
+
+                    // LOCALIDAD
+                    DrawLine("Localidad:", fontNormal);
+                    DrawLine(direccionSeleccionada.Localidad ?? "", fontNormal);
+
+                    // TELEFONO
+                    DrawLine("Telefono:", fontNormal);
+                    DrawLine(direccionSeleccionada.Telefono ?? "", fontNormal);
+
+                    DrawLine(separador, fontPeq);
+
+                    // DIRECCION
+                    DrawLine("Direccion:", fontNormal);
+
+                    string direccion = direccionSeleccionada.Direccion ?? "";
+
+                    SizeF dirSize = g.MeasureString(
+                        direccion,
+                        fontNormal,
+                        (int)ancho
+                    );
+
+                    g.DrawString(
+                        direccion,
+                        fontNormal,
+                        Brushes.Black,
+                        new RectangleF(x, y, ancho, dirSize.Height)
+                    );
+
+                    y += dirSize.Height + 5;
+
+                    DrawLine(separador, fontPeq);
+
+                    fontTitulo.Dispose();
+                    fontNormal.Dispose();
+                    fontPeq.Dispose();
+                };
+
+                PrintDialog dialogo = new PrintDialog();
+                dialogo.Document = pd;
+
+                if (dialogo.ShowDialog() == DialogResult.OK)
+                {
+                    pd.Print();
+
+                    AntdUI.Notification.success(
+                        this,
+                        "Éxito",
+                        "Ticket enviado a imprimir."
+                    );
+                }
+
+                dialogo.Dispose();
+                pd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                AntdUI.Notification.error(
+                    this,
+                    "Error",
+                    $"Error al imprimir: {ex.Message}"
+                );
+            }
+        }
+
         private void DgvDirecciones_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < dgvDirecciones.Rows.Count)
@@ -454,6 +591,7 @@ namespace TerminalPedidos
                     tDireccion.Text = direccionSeleccionada.Direccion;
 
                     btnEliminar.Enabled = true;
+                    btnImprimir.Enabled = true;
                     btnGuardar.Text = "Actualizar";
                 }
             }
@@ -479,6 +617,7 @@ namespace TerminalPedidos
             direccionSeleccionada = null;
             modoEdicion = false;
             btnEliminar.Enabled = false;
+            btnImprimir.Enabled = false;
             btnGuardar.Text = "Guardar";
         }
 

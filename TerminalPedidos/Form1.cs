@@ -68,7 +68,7 @@ namespace TerminalPedidos
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            VerificaLicencia();
+            //VerificaLicencia();
 
             var config = Modelos.Negocio.ConfigurationDBContext.obtener();
 
@@ -860,16 +860,128 @@ namespace TerminalPedidos
 
                 StringBuilder domicilio = new StringBuilder();
 
-                if (!String.IsNullOrEmpty(button7.Badge))
-                {
-                    var envios = new DireccionEnvios().obtenerId(Convert.ToInt32(button7.Badge.Split('-')[0]));
-                                        
-                    domicilio.AppendLine("Nombre:" + envios.Nombre);
-                    domicilio.AppendLine("Dirección:" + envios.Direccion);
-                    domicilio.AppendLine("Localidad:" + envios.Localidad);
-                    domicilio.AppendLine("Teléfono:" + envios.Telefono);
-                }
+                var result = MessageBox.Show(
+                    "¿Desea agregar un domicilio de envío?",
+                    "Domicilio de Envío",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    var listaDirecciones = new DireccionEnvios().obtenerTodos();
+
+                    if (listaDirecciones == null || listaDirecciones.Count == 0)
+                    {
+                        AntdUI.Message.warn(this, "No hay domicilios dados de alta.", new Font("Poppins", Globales.tamañoFuenteMensajes));
+                    }
+                    else
+                    {
+                        // Formulario de selección de domicilio
+                        var frmSeleccion = new Form()
+                        {
+                            Text = "Seleccionar Domicilio de Envío",
+                            Size = new Size(700, 450),
+                            StartPosition = FormStartPosition.CenterScreen,
+                            FormBorderStyle = FormBorderStyle.FixedDialog,
+                            MaximizeBox = false,
+                            MinimizeBox = false,
+                            Font = new Font("Poppins", 9.75f)
+                        };
+
+                        var dgv = new DataGridView()
+                        {
+                            Location = new Point(10, 10),
+                            Size = new Size(660, 320),
+                            AllowUserToAddRows = false,
+                            AllowUserToDeleteRows = false,
+                            ReadOnly = true,
+                            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                            MultiSelect = false,
+                            BackgroundColor = Color.White,
+                            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+                        };
+
+                        dgv.Columns.Add("Id", "ID");
+                        dgv.Columns.Add("Nombre", "Nombre");
+                        dgv.Columns.Add("Localidad", "Localidad");
+                        dgv.Columns.Add("Telefono", "Teléfono");
+                        dgv.Columns.Add("Direccion", "Dirección");
+
+                        dgv.Columns["Id"].Width = 40;
+                        dgv.Columns["Nombre"].Width = 130;
+                        dgv.Columns["Localidad"].Width = 110;
+                        dgv.Columns["Telefono"].Width = 90;
+                        dgv.Columns["Direccion"].Width = 250;
+
+                        foreach (var dir in listaDirecciones)
+                        {
+                            dgv.Rows.Add(dir.Id, dir.Nombre, dir.Localidad, dir.Telefono, dir.Direccion);
+                        }
+
+                        var btnSeleccionar = new System.Windows.Forms.Button()
+                        {
+                            Text = "Seleccionar",
+                            Location = new Point(10, 345),
+                            Size = new Size(120, 40),
+                            BackColor = Color.FromArgb(3, 96, 93),
+                            ForeColor = Color.White,
+                            FlatStyle = FlatStyle.Flat,
+                            Font = new Font("Poppins", 10f)
+                        };
+
+                        var btnSinDomicilio = new System.Windows.Forms.Button()
+                        {
+                            Text = "Sin Domicilio",
+                            Location = new Point(140, 345),
+                            Size = new Size(120, 40),
+                            BackColor = Color.FromArgb(108, 117, 125),
+                            ForeColor = Color.White,
+                            FlatStyle = FlatStyle.Flat,
+                            Font = new Font("Poppins", 10f)
+                        };
+
+                        DireccionEnvios direccionElegida = null;
+
+                        btnSeleccionar.Click += (s, ev) =>
+                        {
+                            if (dgv.SelectedRows.Count > 0)
+                            {
+                                int idSeleccionado = Convert.ToInt32(dgv.SelectedRows[0].Cells["Id"].Value);
+                                direccionElegida = listaDirecciones.FirstOrDefault(d => d.Id == idSeleccionado);
+                                frmSeleccion.DialogResult = DialogResult.OK;
+                                frmSeleccion.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Selecciona un domicilio de la lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        };
+
+                        btnSinDomicilio.Click += (s, ev) =>
+                        {
+                            frmSeleccion.DialogResult = DialogResult.Cancel;
+                            frmSeleccion.Close();
+                        };
+
+                        frmSeleccion.Controls.Add(dgv);
+                        frmSeleccion.Controls.Add(btnSeleccionar);
+                        frmSeleccion.Controls.Add(btnSinDomicilio);
+
+                        if (frmSeleccion.ShowDialog() == DialogResult.OK && direccionElegida != null)
+                        {
+                            domicilio.AppendLine("Nombre:" + direccionElegida.Nombre);
+                            domicilio.AppendLine("Dirección:" + direccionElegida.Direccion);
+                            domicilio.AppendLine("Localidad:" + direccionElegida.Localidad);
+                            domicilio.AppendLine("Teléfono:" + direccionElegida.Telefono);
+
+                            button7.Badge = direccionElegida.Id + "-" + direccionElegida.Nombre;
+                            button7.BadgeMode = true;
+                        }
+
+                        frmSeleccion.Dispose();
+                    }
+                }
+                
                 fac.observaciones = _observaciones + Environment.NewLine + domicilio.ToString();
                 _observaciones = "";
                 fac.part = new List<SDKContpaq.SDKContpaq.Partidas>();

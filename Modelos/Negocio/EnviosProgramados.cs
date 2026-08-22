@@ -25,6 +25,8 @@ namespace Modelos.Negocio
 
         public int Estado { get; set; } // 0 = Pendiente, 1 = Entregado
 
+        public string Evidencia { get; set; }
+
         public override string ToString()
         {
             return $"Folio: {FolioEnvio} - Documento: {Documento}";
